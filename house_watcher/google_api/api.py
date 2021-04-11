@@ -64,7 +64,7 @@ class API:
 
         '''
         if input_ == None:
-            raise Exception("Error: Need to specify an input for 'find_place_from_text'.")
+            raise Exception("Error: Need to specify an input for 'find_place_from_text' endpoint.")
 
         parameters = {
             "input": input_,
