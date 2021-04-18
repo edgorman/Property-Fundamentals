@@ -23,4 +23,12 @@ conda env create --file environment.yml
 ```
 
 ## Usage
-Python scripts are stored in the src folder, and notebooks are predominantly used for development work.
+The 'data' folder stores any data that is used within the project.
+
+The 'docs' folder stores any extra information that is useful to know.
+
+The 'models' folder stores any machine learning models.
+
+The 'notebooks' folder stores any development scripts.
+
+The 'property-fundamentals' folder stores any code written for the project.
