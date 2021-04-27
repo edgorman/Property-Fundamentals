@@ -5,6 +5,9 @@
 ### API Keys ###
 *key.txt
 
+### Data ###
+data/interim/*
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
