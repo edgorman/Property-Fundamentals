@@ -23,9 +23,8 @@ class API:
             # For each row in the csv file
             for county_code, county, district_code, district, ward_code, ward, _, _ in csv_results:
                 if district not in self.district_ward_dict.keys():
-                    self.district_ward_dict[district] = ([], [])
-                self.district_ward_dict[district][0].append(ward)
-                self.district_ward_dict[district][1].append(ward_code)
+                    self.district_ward_dict[district] = {}
+                self.district_ward_dict[district][ward] = ward_code
 
 
     def get_districts(self):
@@ -56,10 +55,10 @@ class API:
         elif district not in self.district_ward_dict.keys():
             raise Exception("Error: Could not find district '" + district + "' in the csv.")
         
-        return sorted(self.district_ward_dict[district][0])
+        return sorted(list(self.district_ward_dict[district].keys()))
     
 
-    def request(self, endpoint, parameters={}) -> dict:
+    def request(self, endpoint, parameters={}):
         '''
         Performs the request to the endpoint at self.url.
 
@@ -98,10 +97,10 @@ class API:
 
         if ward == None:
             raise Exception("Error: Need to specify a ward.")
-        elif ward not in self.district_ward_dict[district][0]:
+        elif ward not in self.district_ward_dict[district].keys():
             raise Exception("Error: Could not find district '" + district + "' in the csv.")
 
-        ward_id = self.district_ward_dict[district][1][self.district_ward_dict[district][0].index(ward)]
+        ward_id = self.district_ward_dict[district][ward]
 
         parameters = {
             "where": "wd17cd='" + ward_id + "'",
