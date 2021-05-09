@@ -1,24 +1,25 @@
-import simplekml
 from govuk_api.ofns.api import API
+ofns_api = API()
+#ofns_api.get_districts()
 
-kml = simplekml.Kml()
-pol1 = kml.newpolygon()
-pol2 = kml.newpolygon()
-pol3 = kml.newpolygon()
-pol4 = kml.newpolygon()
-pol5 = kml.newpolygon()
-pol6 = kml.newpolygon()
-pol7 = kml.newpolygon()
-pol8 = kml.newpolygon()
-pol9 = kml.newpolygon()
-pol10 = kml.newpolygon()
-pol11 = kml.newpolygon()
-pol12 = kml.newpolygon()
-pol13 = kml.newpolygon()
-pol14 = kml.newpolygon()
-pol15 = kml.newpolygon()
-pol16 = kml.newpolygon()
-pol17 = kml.newpolygon()
-pol18 = kml.newpolygon()
+coords_raw = []
+coords = []
+wards_raw = []
+wards = []
 
-print("made it")
+wards_raw.append(ofns_api.get_ward('Gloucester'))
+wards = wards_raw [0]
+
+#j=0
+#coords_raw.append(ofns_api.get_ward_polygon('Gloucester', wards[j]))
+#print(coords_raw)
+#print(ofns_api.get_ward_polygon('Gloucester', wards[j]))
+
+ofns_api.get_ward_polygon('Gloucester', 'Hucclecote')
+#coords_raw.append(ofns_api.get_ward_polygon('Gloucester', 'Hucclecote'))
+#print(coords_raw)
+
+#for j in range (0,len(wards)):
+#    coords_raw.append(ofns_api.get_ward_polygon('Gloucester', wards[j]))
+    #coords = coords_raw[j]
+#print(coords_raw(0))

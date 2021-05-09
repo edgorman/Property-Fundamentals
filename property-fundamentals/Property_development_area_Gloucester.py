@@ -1,64 +1,31 @@
 import simplekml
-#import sys
-
-#for p in sys.path:
-#    print(p)
-
-#sys.path.insert(0,'C:/Users/Anchal Goel/Desktop/Property Fundamentals/Github Repository/Property Fundamentals/property-fundamentals')
-from govuk_api.ofns.api import API
-ofns_api = API()
-ofns_api.get_districts()
 
 kml = simplekml.Kml()
-pol1 = kml.newpolygon()
-pol2 = kml.newpolygon()
-pol3 = kml.newpolygon()
-pol4 = kml.newpolygon()
-pol5 = kml.newpolygon()
-pol6 = kml.newpolygon()
-pol7 = kml.newpolygon()
-pol8 = kml.newpolygon()
-pol9 = kml.newpolygon()
-pol10 = kml.newpolygon()
-pol11 = kml.newpolygon()
-pol12 = kml.newpolygon()
-pol13 = kml.newpolygon()
-pol14 = kml.newpolygon()
-pol15 = kml.newpolygon()
-pol16 = kml.newpolygon()
-pol17 = kml.newpolygon()
-pol18 = kml.newpolygon()
-
-#pol[] = kml.newpolygon()
 
 price = [ 237250, 237500, 205000, 140000, 182000, 230000, 182250, 234000, 154000, 216000, 258000, 177000, 170000, 250000, 200000, 210000, 239000, 177000]
 
-#pol = {}
-#pol.clear()
-#for h in range(0,len(price)):
-#    pol["polygon{0}".format(h)] = kml.newpolygon()
+pol = []
+for h in range(0,len(price)):
+    pol.append(kml.newpolygon())
 
-#wards = ['Abbeydale',
-# 'Abbeymead',
-# 'Barnwood',
-# 'Barton and Tredworth',
-# 'Coney Hill',
-# 'Elmbridge',
-# 'Grange',
-# 'Hucclecote',
-# 'Kingsholm and Wotton',
-# 'Kingsway',
-# 'Longlevens',
-# 'Matson and Robinswood',
-# 'Moreland',
-# 'Podsmead',
-# 'Quedgeley Fieldcourt',
-# 'Quedgeley Severn Vale',
-# 'Tuffley',
-# 'Westgate'] ofns_api.get_ward('Gloucester')
-wards = ofns_api.get_ward('Gloucester')
-print(wards)
-#ofns_api.get_ward_polygon('Gloucester', 'Hucclecote')
+wards = ['Abbeydale',
+ 'Abbeymead',
+ 'Barnwood',
+ 'Barton and Tredworth',
+ 'Coney Hill',
+ 'Elmbridge',
+ 'Grange',
+ 'Hucclecote',
+ 'Kingsholm and Wotton',
+ 'Kingsway',
+ 'Longlevens',
+ 'Matson and Robinswood',
+ 'Moreland',
+ 'Podsmead',
+ 'Quedgeley Fieldcourt',
+ 'Quedgeley Severn Vale',
+ 'Tuffley',
+ 'Westgate'] 
 
 colour = ['4C14E7FF','4C14DEFF','4C14D5FF','4C14CCFF','4C14C3FF','4C14BAFF','4C14B1FF','4C14A8FF','4C14A0FF','4C1497FF','4C148EFF','4C1485FF','4C147CFF','4C1473FF','4C146AFF','4C1461FF','4C1458FF','4C1450FF','4C1447FF','4C143EFF','4C1435FF','4C142CFF','4C1423FF','4C141AFF','4C1411FF','4C1408FF','4C1400FF']
 max_price = max(price)
@@ -80,11 +47,11 @@ for j in range(0,len(price)):
             break
 
 
-pol1.name = wards[0]
-pol1.description = "£" + str(price[0])
-pol1.style.polystyle.color = price_scale[0]
-pol1.style.linestyle.width = "0"
-pol1.outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
+pol[0].name = wards[0]
+pol[0].description = "£" + str(price[0])
+pol[0].style.polystyle.color = price_scale[0]
+pol[0].style.linestyle.width = "0"
+pol[0].outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
   [-2.212601880999955, 51.850363300000026],
   [-2.2125161759999514, 51.850363455000036],
   [-2.212424692999946, 51.850356429000044],
@@ -731,11 +698,11 @@ pol1.outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
   [-2.2126990579999415, 51.85035952900006],
   [-2.2126236619999418, 51.850362361000066]]
   
-pol2.name = wards[1]
-pol2.description = "£" + str(price[1])
-pol2.style.polystyle.color = price_scale[1]
-pol2.style.linestyle.width = "0"
-pol2.outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
+pol[1].name = wards[1]
+pol[1].description = "£" + str(price[1])
+pol[1].style.polystyle.color = price_scale[1]
+pol[1].style.linestyle.width = "0"
+pol[1].outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
   [-2.186866656999939, 51.845919699000035],
   [-2.187298711999972, 51.84545422100007],
   [-2.1876195369999323, 51.84509579300004],
@@ -1425,11 +1392,11 @@ pol2.outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
   [-2.186696394999956, 51.84616364400006],
   [-2.186678901999926, 51.84615917700006]]
 
-pol3.name = wards[2]
-pol3.description = "£" + str(price[2])
-pol3.style.polystyle.color = price_scale[2]
-pol3.style.linestyle.width = "0"
-pol3.outerboundaryis.coords = [[-2.1920549319999623, 51.86434995400003],
+pol[2].name = wards[2]
+pol[2].description = "£" + str(price[2])
+pol[2].style.polystyle.color = price_scale[2]
+pol[2].style.linestyle.width = "0"
+pol[2].outerboundaryis.coords = [[-2.1920549319999623, 51.86434995400003],
   [-2.1921200509999608, 51.864289625000026],
   [-2.1921590419999575, 51.86425172000003],
   [-2.1922024609999653, 51.86421300000006],
@@ -2145,11 +2112,11 @@ pol3.outerboundaryis.coords = [[-2.1920549319999623, 51.86434995400003],
   [-2.192262863999929, 51.86442241900005],
   [-2.1920549319999623, 51.86434995400003]]
 
-pol4.name = wards[3]
-pol4.description = "£" + str(price[3])
-pol4.style.polystyle.color = price_scale[3]
-pol4.style.linestyle.width = "0"
-pol4.outerboundaryis.coords = [[-2.2365528059999633, 51.86437576700007],
+pol[3].name = wards[3]
+pol[3].description = "£" + str(price[3])
+pol[3].style.polystyle.color = price_scale[3]
+pol[3].style.linestyle.width = "0"
+pol[3].outerboundaryis.coords = [[-2.2365528059999633, 51.86437576700007],
   [-2.236503260999939, 51.864357890000065],
   [-2.2359241999999426, 51.86414953600007],
   [-2.2357320979999713, 51.86407262100005],
@@ -2329,11 +2296,11 @@ pol4.outerboundaryis.coords = [[-2.2365528059999633, 51.86437576700007],
   [-2.2366356949999613, 51.86440436300006],
   [-2.2365528059999633, 51.86437576700007]]
 
-pol5.name = wards[4]
-pol5.description = "£" + str(price[4])
-pol5.style.polystyle.color = price_scale[4]
-pol5.style.linestyle.width = "0"
-pol5.outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
+pol[4].name = wards[4]
+pol[4].description = "£" + str(price[4])
+pol[4].style.polystyle.color = price_scale[4]
+pol[4].style.linestyle.width = "0"
+pol[4].outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
   [-2.2126990579999415, 51.85035952900006],
   [-2.212905115999945, 51.85034567300005],
   [-2.2133681079999405, 51.85031876700003],
@@ -2833,11 +2800,11 @@ pol5.outerboundaryis.coords = [[-2.2126236619999418, 51.850362361000066],
   [-2.2126270089999593, 51.85046311500008],
   [-2.2126236619999418, 51.850362361000066]]
 
-pol6.name = wards[5]
-pol6.description = "£" + str(price[5])
-pol6.style.polystyle.color = price_scale[5]
-pol6.style.linestyle.width = "0"
-pol6.outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
+pol[5].name = wards[5]
+pol[5].description = "£" + str(price[5])
+pol[5].style.polystyle.color = price_scale[5]
+pol[5].style.linestyle.width = "0"
+pol[5].outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
   [-2.19962611699998, 51.87760788800006],
   [-2.1995000019999793, 51.877014693000035],
   [-2.1994260679999798, 51.876736091000055],
@@ -3049,11 +3016,11 @@ pol6.outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
   [-2.2000021429999492, 51.87789137000004],
   [-2.1996898299999543, 51.87790358600006]]
 
-pol7.name = wards[6]
-pol7.description = "£" + str(price[6])
-pol7.style.polystyle.color = price_scale[6]
-pol7.style.linestyle.width = "0"
-pol7.outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
+pol[6].name = wards[6]
+pol[6].description = "£" + str(price[6])
+pol[6].style.polystyle.color = price_scale[6]
+pol[6].style.linestyle.width = "0"
+pol[6].outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
  [-2.2570350509999457, 51.821614028000056],
  [-2.2571923299999526, 51.82171435300006],
  [-2.257278911999947, 51.82187784200005],
@@ -3423,11 +3390,11 @@ pol7.outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
  [-2.256581095999934, 51.82239548300004],
  [-2.25694929499997, 51.82157466600006]]
 
-pol8.name = wards[7]
-pol8.description = "£" + str(price[7])
-pol8.style.polystyle.color = price_scale[7]
-pol8.style.linestyle.width = "0"
-pol8.outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
+pol[7].name = wards[7]
+pol[7].description = "£" + str(price[7])
+pol[7].style.polystyle.color = price_scale[7]
+pol[7].style.linestyle.width = "0"
+pol[7].outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
  [-2.186696394999956, 51.84616364400006],
  [-2.1870613919999755, 51.84632395500006],
  [-2.187467131999938, 51.84649507600005],
@@ -4130,11 +4097,11 @@ pol8.outerboundaryis.coords = [[-2.186678901999926, 51.84615917700006],
  [-2.186563410999952, 51.84630587200007],
  [-2.186678901999926, 51.84615917700006]]
 
-pol9.name = wards[8]
-pol9.description = "£" + str(price[8])
-pol9.style.polystyle.color = price_scale[8]
-pol9.style.linestyle.width = "0"
-pol9.outerboundaryis.coords = [[-2.237960103999967, 51.883101916000044],
+pol[8].name = wards[8]
+pol[8].description = "£" + str(price[8])
+pol[8].style.polystyle.color = price_scale[8]
+pol[8].style.linestyle.width = "0"
+pol[8].outerboundaryis.coords = [[-2.237960103999967, 51.883101916000044],
   [-2.238268191999964, 51.882829756000035],
   [-2.238602344999947, 51.88227791400004],
   [-2.239089035999939, 51.881737446000045],
@@ -4473,11 +4440,11 @@ pol9.outerboundaryis.coords = [[-2.237960103999967, 51.883101916000044],
   [-2.2380227879999666, 51.883131451000054],
   [-2.237960103999967, 51.883101916000044]]
 
-pol10.name = wards[9]
-pol10.description = "£" + str(price[9])
-pol10.style.polystyle.color = price_scale[9]
-pol10.style.linestyle.width = "0"
-pol10.outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
+pol[9].name = wards[9]
+pol[9].description = "£" + str(price[9])
+pol[9].style.polystyle.color = price_scale[9]
+pol[9].style.linestyle.width = "0"
+pol[9].outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
  [-2.2566337799999587, 51.82145760700007],
  [-2.2567943639999726, 51.82112998800005],
  [-2.2568201889999386, 51.82108579800007],
@@ -4806,11 +4773,11 @@ pol10.outerboundaryis.coords = [[-2.25694929499997, 51.82157466600006],
  [-2.2570350509999457, 51.821614028000056],
  [-2.25694929499997, 51.82157466600006]]
 
-pol11.name = wards[10]
-pol11.description = "£" + str(price[10])
-pol11.style.polystyle.color = price_scale[10]
-pol11.style.linestyle.width = "0"
-pol11.outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
+pol[10].name = wards[10]
+pol[10].description = "£" + str(price[10])
+pol[10].style.polystyle.color = price_scale[10]
+pol[10].style.linestyle.width = "0"
+pol[10].outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
   [-2.2000021429999492, 51.87789137000004],
   [-2.2001055629999655, 51.878281376000075],
   [-2.200255135999953, 51.87827572900005],
@@ -5079,11 +5046,11 @@ pol11.outerboundaryis.coords = [[-2.1996898299999543, 51.87790358600006],
   [-2.199694339999951, 51.87792155400007],
   [-2.1996898299999543, 51.87790358600006]]
 
-pol12.name = wards[11]
-pol12.description = "£" + str(price[11])
-pol12.style.polystyle.color = price_scale[11]
-pol12.style.linestyle.width = "0"
-pol12.outerboundaryis.coords = [[-2.223576897999976, 51.848837917000026],
+pol[11].name = wards[11]
+pol[11].description = "£" + str(price[11])
+pol[11].style.polystyle.color = price_scale[11]
+pol[11].style.linestyle.width = "0"
+pol[11].outerboundaryis.coords = [[-2.223576897999976, 51.848837917000026],
   [-2.2234003029999485, 51.84863592500005],
   [-2.2232206179999707, 51.848414164000076],
   [-2.2229943839999464, 51.848170020000055],
@@ -5750,11 +5717,11 @@ pol12.outerboundaryis.coords = [[-2.223576897999976, 51.848837917000026],
   [-2.224711630999934, 51.84989754900005],
   [-2.223576897999976, 51.848837917000026]]
 
-pol13.name = wards[12]
-pol13.description = "£" + str(price[12])
-pol13.style.polystyle.color = price_scale[12]
-pol13.style.linestyle.width = "0"
-pol13.outerboundaryis.coords = [[-2.2420138769999767, 51.858844272000056],
+pol[12].name = wards[12]
+pol[12].description = "£" + str(price[12])
+pol[12].style.polystyle.color = price_scale[12]
+pol[12].style.linestyle.width = "0"
+pol[12].outerboundaryis.coords = [[-2.2420138769999767, 51.858844272000056],
   [-2.242602217999945, 51.858070690000034],
   [-2.242938439999932, 51.85767981100008],
   [-2.2431129839999358, 51.85747891900007],
@@ -5975,11 +5942,11 @@ pol13.outerboundaryis.coords = [[-2.2420138769999767, 51.858844272000056],
   [-2.2425156959999413, 51.85845566000006],
   [-2.2420138769999767, 51.858844272000056]]
 
-pol14.name = wards[13]
-pol14.description = "£" + str(price[13])
-pol14.style.polystyle.color = price_scale[13]
-pol14.style.linestyle.width = "0"
-pol14.outerboundaryis.coords = [[-2.2437417929999697, 51.84166077900005],
+pol[13].name = wards[13]
+pol[13].description = "£" + str(price[13])
+pol[13].style.polystyle.color = price_scale[13]
+pol[13].style.linestyle.width = "0"
+pol[13].outerboundaryis.coords = [[-2.2437417929999697, 51.84166077900005],
   [-2.2439513589999365, 51.84148588000005],
   [-2.244933297999978, 51.84082391000004],
   [-2.246007598999938, 51.84005298000005],
@@ -6072,11 +6039,11 @@ pol14.outerboundaryis.coords = [[-2.2437417929999697, 51.84166077900005],
   [-2.2438007329999436, 51.841804471000046],
   [-2.2437417929999697, 51.84166077900005]]
 
-pol15.name = wards[14]
-pol15.description = "£" + str(price[14])
-pol15.style.polystyle.color = price_scale[14]
-pol15.style.linestyle.width = "0"
-pol15.outerboundaryis.coords = [[-2.2727973149999343, 51.82884229600006],
+pol[14].name = wards[14]
+pol[14].description = "£" + str(price[14])
+pol[14].style.polystyle.color = price_scale[14]
+pol[14].style.linestyle.width = "0"
+pol[14].outerboundaryis.coords = [[-2.2727973149999343, 51.82884229600006],
   [-2.272839934999979, 51.82868849500005],
   [-2.2728584079999337, 51.82861735400007],
   [-2.2730847539999672, 51.827902969000036],
@@ -6709,11 +6676,11 @@ pol15.outerboundaryis.coords = [[-2.2727973149999343, 51.82884229600006],
   [-2.2730716309999366, 51.82885783800003],
   [-2.2727973149999343, 51.82884229600006]]
 
-pol16.name = wards[15]
-pol16.description = "£" + str(price[15])
-pol16.style.polystyle.color = price_scale[15]
-pol16.style.linestyle.width = "0"
-pol16.outerboundaryis.coords = [[-2.272819034999941, 51.83603413600008],
+pol[15].name = wards[15]
+pol[15].description = "£" + str(price[15])
+pol[15].style.polystyle.color = price_scale[15]
+pol[15].style.linestyle.width = "0"
+pol[15].outerboundaryis.coords = [[-2.272819034999941, 51.83603413600008],
   [-2.272638792999942, 51.83598961300004],
   [-2.272508112999958, 51.83596834300005],
   [-2.2722754789999726, 51.83590686200006],
@@ -7247,11 +7214,11 @@ pol16.outerboundaryis.coords = [[-2.272819034999941, 51.83603413600008],
   [-2.2730647199999794, 51.83609648400005],
   [-2.272819034999941, 51.83603413600008]]
 
-pol17.name = wards[16]
-pol17.description = "£" + str(price[16])
-pol17.style.polystyle.color = price_scale[16]
-pol17.style.linestyle.width = "0"
-pol17.outerboundaryis.coords = [[-2.236875900999962, 51.82557112200004],
+pol[16].name = wards[16]
+pol[16].description = "£" + str(price[16])
+pol[16].style.polystyle.color = price_scale[16]
+pol[16].style.linestyle.width = "0"
+pol[16].outerboundaryis.coords = [[-2.236875900999962, 51.82557112200004],
   [-2.237232846999973, 51.82556321100003],
   [-2.237421256999937, 51.82551510300004],
   [-2.2377995959999453, 51.82545771100007],
@@ -7882,11 +7849,11 @@ pol17.outerboundaryis.coords = [[-2.236875900999962, 51.82557112200004],
   [-2.236554514999966, 51.82626945000004],
   [-2.236875900999962, 51.82557112200004]]
 
-pol18.name = wards[17]
-pol18.description = "£" + str(price[17])
-pol18.style.polystyle.color = price_scale[17]
-pol18.style.linestyle.width = "0"
-pol18.outerboundaryis.coords = [[-2.2365528059999633, 51.86437576700007],
+pol[17].name = wards[17]
+pol[17].description = "£" + str(price[17])
+pol[17].style.polystyle.color = price_scale[17]
+pol[17].style.linestyle.width = "0"
+pol[17].outerboundaryis.coords = [[-2.2365528059999633, 51.86437576700007],
  [-2.2366356949999613, 51.86440436300006],
  [-2.2367592989999707, 51.864433775000066],
  [-2.2368727099999433, 51.86446051200005],
