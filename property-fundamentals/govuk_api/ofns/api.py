@@ -1,6 +1,7 @@
+import os
 import csv
 import json
-import urllib
+import urllib, urllib.parse, urllib.request
 
 class API:
     '''
@@ -17,7 +18,7 @@ class API:
         self.district_ward_dict = {}
 
         # Load admin_areas.csv file
-        with open('../data/external/admin_areas.csv') as csv_file:
+        with open(__file__ + '\\..\\..\\..\\..\\data\\external\\admin_areas.csv') as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # For each row in the csv file
