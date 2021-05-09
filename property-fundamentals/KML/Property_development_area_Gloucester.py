@@ -1,7 +1,10 @@
 import simplekml
-import sys
+#import sys
 
-sys.path.append('../property-fundamentals')
+#for p in sys.path:
+#    print(p)
+
+#sys.path.insert(0,'C:/Users/Anchal Goel/Desktop/Property Fundamentals/Github Repository/Property Fundamentals/property-fundamentals')
 from govuk_api.ofns.api import API
 ofns_api = API()
 ofns_api.get_districts()
