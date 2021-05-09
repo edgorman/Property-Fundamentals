@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,vscode,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,vscode,windows
 
+# Visual studio code
+.vscode
+
 ### API Keys ###
 *key.txt
 
