@@ -10,6 +10,7 @@ wards = []
 wards_raw.append(ofns_api.get_ward('Gloucester'))
 wards = wards_raw [0]
 
-#for j in range (0,len(wards)):
-#    coordinates_raw.append(ofns_api.get_ward_polygon('Gloucester', wards[j]))
-#    coordinates = coordinates_raw[j]
+for j in range (0,len(wards)):
+    coordinates_raw.append(ofns_api.get_ward_polygon('Gloucester', wards[j]))
+    coordinates = coordinates_raw[j]
+txt.save(coordinates[0])
