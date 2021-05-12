@@ -2,15 +2,14 @@ from govuk_api.ofns.api import API
 ofns_api = API()
 #ofns_api.get_districts()
 
-coordinates_raw = []
 coordinates = []
-wards_raw = []
 wards = []
 
-wards_raw.append(ofns_api.get_ward('Gloucester'))
-wards = wards_raw [0]
+wards.append(ofns_api.get_ward('Gloucester'))
 
-for j in range (0,len(wards)):
-    coordinates_raw.append(ofns_api.get_ward_polygon('Gloucester', wards[j]))
-    coordinates = coordinates_raw[j]
-txt.save(coordinates[0])
+for j in range (0,len(wards[0])):
+    coordinates.append(ofns_api.get_ward_polygon('Gloucester', wards[0][j]))
+    
+# with open('test.txt','w')as f:
+    # for element in coordinates:
+        # f.write("%s\n" % element)
