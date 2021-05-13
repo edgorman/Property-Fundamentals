@@ -16,7 +16,7 @@ class API:
         self.district_ward_dict = {}
 
         # Load admin_areas.csv file
-        with open('../data/external/admin_areas.csv') as csv_file:
+        with open('../data/external/admin_areas/data.csv') as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # Create dictionaries for district data
