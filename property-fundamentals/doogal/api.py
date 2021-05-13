@@ -15,7 +15,7 @@ class API:
         self.url = 'https://www.doogal.co.uk'
         self.district_ward_dict = {}
 
-        # Load admin_areas.csv file
+        # Load admin_areas folder
         with open('../data/external/admin_areas/data.csv') as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
