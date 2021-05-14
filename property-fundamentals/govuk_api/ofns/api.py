@@ -17,7 +17,7 @@ class API:
         self.output = 'pjson'
         self.district_ward_dict = {}
 
-        # Load admin_areas.csv file
+        # Load data.csv file
         with open(__file__ + '\\..\\..\\..\\..\\data\\external\\admin_areas\\data.csv') as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
@@ -30,7 +30,7 @@ class API:
 
     def get_districts(self):
         '''
-        Returns the districts that are present in admin_areas.csv.
+        Returns the districts that are present in data.csv.
 
                 Parameters:
                     None
@@ -41,7 +41,7 @@ class API:
         return sorted(list(self.district_ward_dict.keys()))
     
 
-    def get_ward(self, district):
+    def get_wards(self, district):
         '''
         Returns the wards that are present within a given district.
 
