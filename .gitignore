@@ -5,8 +5,9 @@
 # Visual studio code
 .vscode
 
-### API Keys ###
+### Property Fundamentals ###
 *key.txt
+*HPSSA Dataset 38 - Mean price paid by ward.xls
 
 ### Data ###
 data/interim/*
