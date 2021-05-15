@@ -152,5 +152,7 @@ class MedianPrice:
         elif ward not in self.district_ward_values[district].keys():
             raise Exception("Error: Could not find ward '" + ward + "' in district + '" + district + "' in the csv.")
         
-        return self.district_ward_values[district][ward][col]
-
+        value = self.district_ward_values[district][ward][col]
+        if value == ":":
+            return None
+        return value
