@@ -2,7 +2,7 @@ import simplekml
 from generate_development_area import wards
 from generate_development_area import coordinates
 from generate_development_area import area
-from generate_property_price import price
+from generate_property_price import price_median
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -12,33 +12,37 @@ colour_scale = []
 price_scale = []
 
 #Generate price scaling information
-max_price = max(price)
-min_price = min(price)
+max_price = max(price_median[0])
+min_price = min(price_median[0])
+print(max_price)
+print(min_price)
 delta = max_price - min_price
 step = delta / (len(colour)-1)
 
 #Generate KML polygon placeholders
-for h in range(0,len(price)):
-    pol.append(kml.newpolygon())
+for h in range(0,len(wards)):
+    pol.insert(h,kml.newpolygon())
 
 #Normalise the colours in the price range
 for i in range(0,len(colour)):
-    colour_scale.append(int(min_price + (i*step)))
+    colour_scale.insert(i,int(min_price + (i*step)))
+print(colour_scale)
 
 #Assign a colour to the normalised house prices
-for j in range(0,len(price)):
+for j in range(0,len(wards)):
     for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= price[j]):
-            price_scale.append(colour[k])
+        if (colour_scale[k] >= price_median[0][j]):
+            price_scale.insert(j,colour[k])
             break
+print(price_scale)
 
 #Make the polygons
-for k in range(0,len(price)):
-    pol[k].name = wards[0][k]
-    pol[k].description = "£" + str(price[k])
-    pol[k].style.polystyle.color = price_scale[k]
-    pol[k].style.linestyle.width = "0"
-    pol[k].outerboundaryis.coords = coordinates[k] 
+for m in range(0,len(wards)):
+    pol[m].name = wards[0][m]
+    pol[m].description = "£" + str(price_median[0][m])
+    pol[m].style.polystyle.color = price_scale[m]
+    pol[m].style.linestyle.width = "0"
+    pol[m].outerboundaryis.coords = coordinates[m] 
 
 #Save the polygons to a KML file
 kml.save(area + ".kml")
