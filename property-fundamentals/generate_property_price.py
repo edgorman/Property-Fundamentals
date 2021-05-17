@@ -3,13 +3,15 @@ from generate_development_area import wards
 from generate_development_area import area
 median_price = MedianPrice()
 
+#Define lists
 house_types = []
 price_median = []
 price_median_raw = []
 
+#Get house types
 house_types.append(median_price.get_house_types())
 
-# Median price
+#Get median price for house types
 for h in range (0,len(house_types[0])):
     price_median_raw.append([])
     price_median.append([])
@@ -19,10 +21,7 @@ for h in range (0,len(house_types[0])):
             price_median[h].insert(i,0)
         else:
             price_median[h].insert(i,(int(float(price_median_raw[h][i]))))
-print(price_median)
-print(price_median_raw)
 
-#median_price_all.append(int(float(median_price.get_ward_data(area, wards[0][i], "all"))))
 
 
 

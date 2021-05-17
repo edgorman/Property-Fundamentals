@@ -12,46 +12,39 @@ pol = []
 colour_scale = []
 price_scale = []
 
-#Generate / Draw KML polygons
+#Generate / Draw polygons
 for h in range(0,len(coordinates)):
     pol.insert(h,kml.newpolygon())
     pol[h].name = wards[0][h]
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
+    
+#Create the KML files    
+for n in range (0,len(house_types[0])):
+ 
+    #Generate price scaling information
+    max_price = max(price_median[n])
+    min_price = min(price_median[n])
+    delta = max_price - min_price
+    step = delta / (len(colour)-1)    
 
-#Generate price scaling information
-max_price = max(price_median[0])
-min_price = min(price_median[0])
-print(max_price)
-print(min_price)
-delta = max_price - min_price
-step = delta / (len(colour)-1)    
+    #Normalise the colours in the price range
+    for i in range(0,len(colour)):
+        colour_scale.insert(i,int(min_price + (i*step)))
 
-#Normalise the colours in the price range
-for i in range(0,len(colour)):
-    colour_scale.insert(i,int(min_price + (i*step)))
-print(colour_scale)
-print(len(colour_scale))
-print(len(wards[0]))
-print(len(coordinates))
-
-#Assign a colour to the normalised house prices
-for j in range(0,len(coordinates)):
-    #price_scale.append([])
-    for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= price_median[0][j]):
-            price_scale.insert(j,colour[k])
-            break
-print(price_scale)
-
-#Add price and colour to the polygons
-for m in range(0,len(coordinates)):
-    pol[m].description = "£" + str(price_median[0][m])
-    pol[m].style.polystyle.color = price_scale[m]
-
-
-#Save the polygons to a KML file
-kml.save(area + "_median_" + house_types[0][0] + ".kml")
+    #Assign a colour to the normalised house prices
+    for j in range(0,len(coordinates)):
+        price_scale.append([])
+        for k in range(0,len(colour_scale)):
+            if (colour_scale[k] >= price_median[n][j]):
+                price_scale[n].insert(j,colour[k])
+                break
+        #Add price and colour to the polygons
+        pol[j].description = "£" + str(price_median[n][j])
+        pol[j].style.polystyle.color = price_scale[n][j]
+        
+    #Save the polygons to a KML file
+    kml.save(area + "_median_" + house_types[0][n] + ".kml")
 
 
 
