@@ -8,18 +8,18 @@ import requests
 
 import xlrd
 
-class MedianPrice:
+class MeanPrice:
     '''
-    The class for managing the Median Price dataset from OFNS. 
+    The class for managing the Mean Price dataset from OFNS. 
     
     The following OFNS dataset is used:
 
-    https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/medianpricepaidbywardhpssadataset37
+    https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/meanpricepaidbywardhpssadataset38
     '''
 
     def __init__(self):
-        self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'median_price_per_ward'))
-        self.dataset_path = 'peoplepopulationandcommunity/housing/datasets/medianpricepaidbywardhpssadataset37/'
+        self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'mean_price_per_ward'))
+        self.dataset_path = 'peoplepopulationandcommunity/housing/datasets/meanpricepaidbywardhpssadataset38/'
         self.zippage_url = 'https://www.ons.gov.uk/file?uri=/' + self.dataset_path
         self.webpage_url = 'https://www.ons.gov.uk/' + self.dataset_path
 
@@ -27,7 +27,7 @@ class MedianPrice:
         self.district_ward_values = {}
 
         # Load data.csv file
-        with open(os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'median_price_per_ward', self.dataset_fold, 'data.csv'))) as csv_file:
+        with open(os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'mean_price_per_ward', self.dataset_fold, 'data.csv'))) as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # For each row in the csv file
@@ -51,17 +51,17 @@ class MedianPrice:
 
         # If this dataset hasn't been seen before
         if dataset not in os.listdir(self.dataset_dest):
-            print("[INFO]", "Starting collecting the most recent median price ward dataset")
+            print("[INFO]", "Starting collecting the most recent mean price ward dataset")
             print("[INFO]", "This will take about half a minute to complete...")
 
-            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset37medianpricepaidbyward.zip")
+            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward.zip")
             print("[DONE]", "Downloaded most recent zip:\t", dataset)
 
             zip_file = zipfile.ZipFile(io.BytesIO(response.content))
             zip_file.extractall(os.path.join(self.dataset_dest, dataset))
             print("[DONE]", "Extracted zip folder to:\t\t", os.path.join(self.dataset_dest, dataset))
 
-            xls_file = xlrd.open_workbook(os.path.join(self.dataset_dest, dataset, "HPSSA Dataset 37 - Median price paid by ward.xls"), on_demand=True)
+            xls_file = xlrd.open_workbook(os.path.join(self.dataset_dest, dataset, "HPSSA Dataset 38 - Mean price paid by ward.xls"), on_demand=True)
             usable_sheets = ['1a', '1b', '1c', '1d', '1e']
             
             # Write data to csv in folder

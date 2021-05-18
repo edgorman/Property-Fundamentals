@@ -2,7 +2,7 @@ import simplekml
 from generate_development_area import wards
 from generate_development_area import coordinates
 from generate_development_area import area
-from generate_property_price import price_median
+from generate_missing_data import price_mean
 from generate_property_price import house_types
 
 #Define variables / lists
@@ -18,15 +18,15 @@ for h in range(0,len(coordinates)):
     pol[h].name = wards[0][h]
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
-    
-#Create the KML files    
+
+#Create the Mean price KML files    
 for n in range (0,len(house_types[0])):
- 
+    
     #Generate price scaling information
-    max_price = max(price_median[n])
-    min_price = min(price_median[n])
+    max_price = max(price_mean[n])
+    min_price = min(price_mean[n])
     delta = max_price - min_price
-    step = delta / (len(colour)-1)    
+    step = delta / (len(colour)-1)
 
     #Normalise the colours in the price range
     for i in range(0,len(colour)):
@@ -36,15 +36,14 @@ for n in range (0,len(house_types[0])):
     for j in range(0,len(coordinates)):
         price_scale.append([])
         for k in range(0,len(colour_scale)):
-            if (colour_scale[k] >= price_median[n][j]):
+            if (colour_scale[k] >= price_mean[n][j]):
                 price_scale[n].insert(j,colour[k])
                 break
         #Add price and colour to the polygons
-        pol[j].description = "£" + str(price_median[n][j])
+        pol[j].description = "£" + str(price_mean[n][j])
         pol[j].style.polystyle.color = price_scale[n][j]
         
     #Save the polygons to a KML file
-    kml.save(area + "_median_" + house_types[0][n] + ".kml")
-
+    kml.save(area + "_mean_" + house_types[0][n] + ".kml")
 
 
