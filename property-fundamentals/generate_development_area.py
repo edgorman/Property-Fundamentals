@@ -11,7 +11,7 @@ print(ofns_api.get_districts())
 area = input("Please type an area and press enter:")
 
 #Get the wards within an area
-wards.append(ofns_api.get_wards(area))
+wards.append(ofns_api.get_wards_from_district(area))
 
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):

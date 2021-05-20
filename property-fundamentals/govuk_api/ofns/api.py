@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+from collections import defaultdict
 import urllib, urllib.parse, urllib.request
 
 class API:
@@ -15,7 +16,8 @@ class API:
     def __init__(self):
         self.url = 'https://ons-inspire.esriuk.com/arcgis/rest/services/Administrative_Boundaries/WGS84_UK_Wards_December_2017_Boundaries/MapServer/0'
         self.output = 'pjson'
-        self.district_ward_dict = {}
+        self.county_district_dict = defaultdict(set)
+        self.district_ward_dict = defaultdict(dict)
 
         # Load data.csv file
         with open(__file__ + '\\..\\..\\..\\..\\data\\external\\admin_areas\\data.csv') as csv_file:
@@ -23,9 +25,21 @@ class API:
 
             # For each row in the csv file
             for county_code, county, district_code, district, ward_code, ward, _, _ in csv_results:
-                if district not in self.district_ward_dict.keys():
-                    self.district_ward_dict[district] = {}
+                self.county_district_dict[county].add(district)
                 self.district_ward_dict[district][ward] = ward_code
+
+
+    def get_counties(self):
+        '''
+        Returns the counties that are present in data.csv.
+
+                Parameters:
+                    None
+                
+                Returns:
+                    counties (list): List of counties in alphabetical order.
+        '''
+        return sorted(list(self.county_district_dict.keys()))
 
 
     def get_districts(self):
@@ -41,7 +55,25 @@ class API:
         return sorted(list(self.district_ward_dict.keys()))
     
 
-    def get_wards(self, district):
+    def get_districts_from_county(self, county):
+        '''
+        Returns the districts that belong to the county passed.
+
+                Parameters:
+                    None
+                
+                Returns:
+                    districts (list): List of districts in alphabetical order.
+        '''
+        if county == None:
+            raise Exception("Error: Need to specify a county.")
+        elif county not in self.county_district_dict.keys():
+            raise Exception("Error: Could not find county '" + county + "' in the csv.")
+
+        return sorted(list(self.county_district_dict[county]))
+    
+
+    def get_wards_from_district(self, district):
         '''
         Returns the wards that are present within a given district.
 
