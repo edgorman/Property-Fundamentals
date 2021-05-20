@@ -4,13 +4,13 @@ ofns_api = API()
 coordinates = []
 wards = []
 
-#Show the areas available
+#Show the districts available
 print(ofns_api.get_districts())
 
-#Ask the user for an area
+#Ask the user for a district
 area = input("Please type an area and press enter:")
 
-#Get the wards within an area
+#Get the wards within a district
 wards.append(ofns_api.get_wards_from_district(area))
 
 #Get the coordinates of the wards
