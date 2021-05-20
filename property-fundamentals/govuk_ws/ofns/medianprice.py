@@ -49,6 +49,10 @@ class MedianPrice:
         webpage = requests.get(self.webpage_url)
         dataset = re.search('(\w*)\/(\w*)\.zip', webpage.text).group(1)
 
+        # Check if parent folder exists
+        if not os.path.exists(self.dataset_dest):
+            os.mkdir(self.dataset_dest)
+
         # If this dataset hasn't been seen before
         if dataset not in os.listdir(self.dataset_dest):
             print("[INFO]", "Starting collecting the most recent median price ward dataset")
