@@ -60,7 +60,7 @@ class API:
         Returns the districts that belong to the county passed.
 
                 Parameters:
-                    None
+                    county (str): The county to search.
                 
                 Returns:
                     districts (list): List of districts in alphabetical order.
@@ -78,7 +78,7 @@ class API:
         Returns the wards that are present within a given district.
 
                 Parameters:
-                    None
+                    district (str): The district to search.
                 
                 Returns:
                     wards (list): List of wards in alphabetical order.

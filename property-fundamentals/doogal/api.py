@@ -60,7 +60,29 @@ class API:
         return result
 
 
-    def get_postcodes(self, postcodes) -> dict:
+    def get_postcode_info(self, postcode):
+        '''
+        Get the postcode information for a given postcode.
+
+        https://www.doogal.co.uk/GetPostcode.ashx
+
+                Parameters:
+                    postcode (str): Postcode to search (required).
+                
+                Returns:
+                    info (dict): Info about postcode.
+        '''
+        if postcode == None:
+            raise Exception("Error: No postcode was passed to the API.")
+        
+        parameters = {
+            "postcode": postcode
+        }
+
+        return self.request('GetPostcode.ashx', parameters).read().decode('utf-8').split('\t')
+
+
+    def get_postcodes(self, postcodes):
         '''
         Get the KML for individual postcodes for individual postcodes.
 
@@ -83,7 +105,7 @@ class API:
         return self.request('GetAreaKml.ashx', parameters).read()
 
 
-    def get_kml(self, district) -> dict:
+    def get_kml(self, district):
         '''
         Contacts several endpoints and save the kml file for the wards within.
 
