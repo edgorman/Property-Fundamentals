@@ -40,9 +40,6 @@ class SchoolRatings:
                         row[14]
                     )
                 )
-        
-        # Load doogal api
-
 
 
     def get_districts(self):
