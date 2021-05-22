@@ -90,7 +90,7 @@ class SchoolRatings:
         for s in district_schools:
             i = doogal_api.get_postcode_info(s[1])
             c = i[6]
-            k = [float(i[1]), float(i[2])]
+            k = [float(i[2]), float(i[1])]
             schools_with_coords.append((s[0], s[1], s[2], c, k))
         
         return schools_with_coords
