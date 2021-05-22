@@ -1,7 +1,7 @@
 import os
 import csv
 import json
-import urllib
+import urllib, urllib.parse, urllib.request
 from collections import defaultdict
 
 class API:
@@ -14,9 +14,10 @@ class API:
     def __init__(self):
         self.url = 'https://www.doogal.co.uk'
         self.district_ward_dict = {}
+        self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'data', 'external', 'admin_areas', 'data.csv'))
 
         # Load admin_areas folder
-        with open('../data/external/admin_areas/data.csv') as csv_file:
+        with open(self.dataset_dest) as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # Create dictionaries for district data
