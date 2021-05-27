@@ -1,8 +1,9 @@
 from govuk_ws.ofsted.schoolratings import SchoolRatings
 from doogal.api import API
-import simplekml
 #from generate_development_area import wards
 from generate_development_area import area
+import simplekml
+import zipfile
 school_ratings = SchoolRatings()
 doogal_api = API()
 kml = simplekml.Kml()
@@ -12,7 +13,7 @@ kml = simplekml.Kml()
 #school_ratings.get_schools_with_coordinates_from_district(doogal_api, 'Gloucester')
 
 point = []
-ofsted_colour = ['ff387109', 'ff00d6ff', 'ff25a8f9', 'ff1427a5']
+icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
 
 school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_api, area)
@@ -22,9 +23,14 @@ for name, postcode, rating, ward, school_coordinates in school_data:
     point.name = name
     point.description = ofsted_rating[int(rating)-1]
     point.coords = [school_coordinates]
-    point.style.iconstyle.color = ofsted_colour[int(rating)-1]
-    point.style.iconstyle.icon.href = 'https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png'
-    point.style.labelstyle.color = '00000000'  
-kml.save("Gloucester" + "_school_rating" + ".kml")
+    point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
+kml.save(area + "_school_rating" + ".kml")
 
-   
+zf = zipfile.ZipFile(area + "_school_rating" + ".kmz", "w")
+zf.write("images/icon-1.png")
+zf.write("images/icon-2.png")
+zf.write("images/icon-3.png")
+zf.write("images/icon-4.png")
+zf.write(area + "_school_rating" + ".kml")
+zf.close()
+
