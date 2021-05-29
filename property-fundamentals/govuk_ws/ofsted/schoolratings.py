@@ -14,26 +14,39 @@ class SchoolRatings:
 
     def __init__(self):
         self.dataset_file = "Data_View_Download__Full_Data_data.csv"
+        self.dataset_helper = "constituency_to_local_authority_mapping.csv"
         self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'school_ratings'))
-        self.dataset_path = os.path.join(self.dataset_dest, self.dataset_file)
+        self.dataset_file_path = os.path.join(self.dataset_dest, self.dataset_file)
+        self.dataset_helper_path = os.path.join(self.dataset_dest, self.dataset_helper)
 
         self.district_school_values = defaultdict(list)
+        self.constituency_local_authority_dict = defaultdict(list)
 
         # Check if csv exists
-        if not os.path.exists(self.dataset_path):
-            raise Exception("Error:", self.dataset_file, "not found at", self.dataset_dest)
+        if not os.path.exists(self.dataset_file_path):
+            raise Exception("Error:", self.dataset_file_path, "not found at", self.dataset_dest)
         
+        # Load helper.csv file
+        with open(self.dataset_helper_path) as csv_file:
+            csv_results = csv.reader(csv_file, delimiter=',')
+            next(csv_results, None)
+            
+            self.constituency_local_authority_dict = {k: v for k, v in csv_results}
+
         # Load data.csv file
-        with open(self.dataset_path) as csv_file:
-            csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
+        with open(self.dataset_file_path) as csv_file:
+            csv_results = csv.reader(csv_file, delimiter=',')
+            next(csv_results, None)
 
             # For each row in the csv file
             for row in csv_results:
                 # Ignore redacted rows
                 if row[18] == 'REDACTED':
                     continue
-
-                self.district_school_values[row[9]].append(
+                
+                self.district_school_values[
+                    self.constituency_local_authority_dict[row[9]]
+                ].append(
                     (
                         row[18],
                         row[17],
