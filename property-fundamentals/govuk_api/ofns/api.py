@@ -144,7 +144,9 @@ class API:
         response = self.request('query', parameters)
 
         if len(response['features']) == 0:
-            raise Exception("Error: The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+            # raise Exception("Error: The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+            print("The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+            return None
 
         polygon = response['features'][0]['geometry']['rings'][0]
         return polygon
