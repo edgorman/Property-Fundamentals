@@ -131,7 +131,7 @@ class API:
         if ward == None:
             raise Exception("Error: Need to specify a ward.")
         elif ward not in self.district_ward_dict[district].keys():
-            raise Exception("Error: Could not find district '" + district + "' in the csv.")
+            raise Exception("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
 
         ward_id = self.district_ward_dict[district][ward]
 
@@ -142,5 +142,9 @@ class API:
         }
 
         response = self.request('query', parameters)
+
+        if len(response['features']) == 0:
+            raise Exception("Error: The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+
         polygon = response['features'][0]['geometry']['rings'][0]
         return polygon
