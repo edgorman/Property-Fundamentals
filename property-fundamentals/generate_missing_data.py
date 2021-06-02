@@ -41,7 +41,10 @@ for n in range (0,len(house_types[0])):
                         if price_mean[n][k] == 0:
                             running_ward_count -= 1
                 if running_ward_count < 1:
-                    price_mean[n][j] = int(float((sum(price_mean[n]))/(len(coordinates)-(price_mean[n].count(0)))))
+                    if len(coordinates) == price_mean[n].count(0):         
+                        price_mean[n][j] = int(float((sum(price_mean[0]))/(len(coordinates)-(price_mean[0].count(0)))))
+                    else:
+                        price_mean[n][j] = int(float((sum(price_mean[n]))/(len(coordinates)-(price_mean[n].count(0)))))
                 else:
                     price_mean[n][j] = int(float((running_total)/running_ward_count))
             else:
