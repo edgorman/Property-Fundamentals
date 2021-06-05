@@ -8,9 +8,7 @@
 ### Property Fundamentals ###
 *key.txt
 *HPSSA Dataset 38 - Mean price paid by ward.xls
-
-### Data ###
-data/interim/*
+data/interim/google_requests/data.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

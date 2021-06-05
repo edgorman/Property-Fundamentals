@@ -1,0 +1,1 @@
+Stores requests that were previously made to the google api.

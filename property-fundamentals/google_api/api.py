@@ -1,4 +1,6 @@
+import os
 import json
+from json.decoder import JSONDecodeError
 import urllib
 
 class API:
@@ -35,6 +37,16 @@ class API:
                 self.key = key_file.readline()
         else:
             raise Exception("Error: Need to specify a key or path to file containing key.")
+        
+        self.cache_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'interim', 'google_requests')
+        self.cache_file = os.path.join(self.cache_path, 'data.json')
+        if not os.path.exists(self.cache_file):
+            open(self.cache_file, "x")
+        with open(self.cache_file) as json_file:
+            try: 
+                self.cache_dict = json.load(json_file)
+            except JSONDecodeError:
+                self.cache_dict = {}
 
 
     def get_place_types(self):
@@ -52,6 +64,38 @@ class API:
         return self.valid_types
 
 
+    def check_cache(self, request):
+        '''
+        Checks whether the request has been made previously, and returns the cached version.
+
+                Parameters:
+                    request (str): The request being made.
+                
+                Returns:
+                    response (dict): Dict of api response (or None).
+        '''
+        if request in self.cache_dict:
+            return self.cache_dict[request]
+        else:
+            return None
+    
+
+    def store_cache(self, request, response):
+        '''
+        Stores the response from the API in the cache.
+
+                Parameters:
+                    request (str): The request being made.
+                    response (dict): The response being stored in cache.
+                
+                Returns:
+                    None
+        '''
+        self.cache_dict[request] = response
+        with open(self.cache_file, 'w') as json_file:
+            json.dump(self.cache_dict, json_file)
+
+
     def request(self, endpoint, parameters={}) -> dict:
         '''
         Performs the request to the endpoint at self.url.
@@ -66,11 +110,20 @@ class API:
         parameters["key"] = self.key
         params = urllib.parse.urlencode(parameters)
         request = f"{self.url}/{endpoint}/{self.output}?{params}"
+
+        if self.check_cache(request):
+            return self.check_cache(request)
+
         result = json.load(urllib.request.urlopen(request))
 
-        if result["status"] in ["OK", "ZERO_RESULTS"]:
-            return result
-        raise Exception(result["error_message"])
+        if result["status"] in ["OK"]:
+            self.store_cache(request, result)
+        elif result["status"] in ["ZERO_RESULTS"]:
+            self.store_cache(request, [])
+        else:
+            raise Exception(result["error_message"])
+        
+        return self.check_cache(request)
 
 
     def find_place_from_text(self, input_, input_type='textquery', fields='', location_bias='', location_area='') -> dict:
@@ -104,7 +157,7 @@ class API:
         return self.request('place/findplacefromtext', parameters)
 
 
-    def nearby_search(self, lat, lon, radius, type_=None) -> dict:
+    def nearby_search(self, lat, lon, radius, location_type=None) -> dict:
         '''
         Returns the API request for the 'nearby search' endpoint.
 
@@ -120,15 +173,33 @@ class API:
                     result (json): JSON formatted response.
 
         '''
-        if type_ != None and type_ not in self.valid_types:
-            raise Exception("Error: The type '" + type_ + "' is not valid for the 'nearby search' endpoint.")
+        if location_type != None and location_type not in self.valid_types:
+            raise Exception("Error: The type '" + location_type + "' is not valid for the 'nearby search' endpoint.")
         
         parameters = {
             "location": f"{lat},{lon}",
             "radius": radius
         }
 
-        if type_ != None:
-            parameters['type'] = type_
+        if location_type != None:
+            parameters['type'] = location_type
         
-        return self.request('place/nearbysearch', parameters)
+        response = self.request('place/nearbysearch', parameters)
+
+        places = []
+        for place in response['results']:
+            try:
+                places.append((
+                    place['name'],
+                    place['business_status'],
+                    place['geometry']['location'],
+                    place['rating']
+                ))
+            except:
+                places.append((
+                    place['name'],
+                    place['business_status'],
+                    place['geometry']['location'],
+                    None
+                ))
+        return places
