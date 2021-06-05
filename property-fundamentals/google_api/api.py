@@ -2,6 +2,7 @@ import os
 import json
 from json.decoder import JSONDecodeError
 import urllib
+import time
 
 class API:
     '''
@@ -114,14 +115,13 @@ class API:
         if self.check_cache(request):
             return self.check_cache(request)
 
+        time.sleep(2)
         result = json.load(urllib.request.urlopen(request))
 
         if result["status"] in ["OK"]:
             self.store_cache(request, result)
-        elif result["status"] in ["ZERO_RESULTS"]:
+        elif result["status"] in ["ZERO_RESULTS", "INVALID_REQUEST"]:
             self.store_cache(request, [])
-        else:
-            raise Exception(result["error_message"])
         
         return self.check_cache(request)
 
@@ -184,22 +184,32 @@ class API:
         if location_type != None:
             parameters['type'] = location_type
         
-        response = self.request('place/nearbysearch', parameters)
-
         places = []
-        for place in response['results']:
-            try:
-                places.append((
-                    place['name'],
-                    place['business_status'],
-                    place['geometry']['location'],
-                    place['rating']
-                ))
-            except:
-                places.append((
-                    place['name'],
-                    place['business_status'],
-                    place['geometry']['location'],
-                    None
-                ))
+        while True:
+            response = self.request('place/nearbysearch', parameters)
+
+            if response == []:
+                break
+
+            for place in response['results']:
+                try:
+                    places.append((
+                        place['name'],
+                        place['business_status'],
+                        place['geometry']['location'],
+                        place['rating']
+                    ))
+                except:
+                    places.append((
+                        place['name'],
+                        place['business_status'],
+                        place['geometry']['location'],
+                        None
+                    ))
+            
+            if 'next_page_token' in response:
+                parameters['pagetoken'] = response['next_page_token']
+            else:
+                break
+
         return places
