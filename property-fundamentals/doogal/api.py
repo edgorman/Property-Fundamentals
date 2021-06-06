@@ -3,6 +3,7 @@ import csv
 import json
 import urllib, urllib.parse, urllib.request
 from collections import defaultdict
+from xml.etree.ElementTree import fromstring
 
 class API:
     '''
@@ -21,13 +22,13 @@ class API:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # Create dictionaries for district data
-            self.district_code_dict = defaultdict(str)
-            self.district_ward_dict = defaultdict(list)
+            self.district_code_dict = {}
+            self.district_ward_dict = defaultdict(dict)
 
             # For each row in the csv file
             for row in csv_results:
                 self.district_code_dict[row[3]] = row[2]
-                self.district_ward_dict[row[3]].append((row[5], row[4]))
+                self.district_ward_dict[row[3]][row[5]] = row[4]
     
 
     def get_districts(self):
@@ -41,6 +42,22 @@ class API:
                     districts (list): List of districts in alphabetical order.
         '''
         return sorted(list(self.district_ward_dict.keys()))
+
+
+    def get_wards_from_district(self, district):
+        '''
+        Returns the wards that are present within a given district.
+
+                Parameters:
+                    district (str): The district to search.
+                
+                Returns:
+                    wards (list): List of wards in alphabetical order.
+        '''
+        if district not in self.district_ward_dict.keys():
+            raise Exception("Error: Could not find district '" + district + "' in the csv.")
+        
+        return sorted(list(self.district_ward_dict[district].keys()))
             
 
     def request(self, endpoint, parameters={}) -> dict:
@@ -83,92 +100,42 @@ class API:
         return self.request('GetPostcode.ashx', parameters).read().decode('utf-8').split('\t')
 
 
-    def get_postcodes(self, postcodes):
+    def get_ward_polygon(self, district, ward):
         '''
-        Get the KML for individual postcodes for individual postcodes.
+        Returns the API request for retrieving ward polygons.
 
         https://www.doogal.co.uk/GetAreaKml.ashx
 
                 Parameters:
-                    postcodes (list): List of postcodes to get (required).
+                    district (str): The district to find (required).
+                    ward (str): The ward to find (required).
                 
                 Returns:
-                    result (kml): KML formatted response.
-        '''
-        if postcodes == None:
-            raise Exception("Error: No postcodes were passed to the API.")
-        
-        parameters = {
-            "topLevel": "false",
-            "postcodes": postcodes
-        }
-
-        return self.request('GetAreaKml.ashx', parameters).read()
-
-
-    def get_kml(self, district):
-        '''
-        Contacts several endpoints and save the kml file for the wards within.
-
-        https://www.doogal.co.uk/AdministrativeAreasCSV.ashx
-
-                Parameters:
-                    district (str): The district to search (required).
-                
-                Returns:
-                    result (kml): KML formatted response.
+                    result (list): List of point for the ward polygon.
         '''
         if district == None:
-            raise Exception("Error: Need to specify a district to identify postcodes for.")
-        
-        if district not in self.district_code_dict.keys():
-            raise Exception("Error: Could not find district '" + district + "' within district_code_dict keys.")
+            raise Exception("Error: Need to specify a district.")
+        elif district not in self.district_ward_dict.keys():
+            raise Exception("Error: Could not find district '" + district + "' in the csv.")
 
-        if district not in self.district_ward_dict.keys():
-            raise Exception("Error: Could not find district '" + district + "' within district_ward_dict keys.")
+        if ward == None:
+            raise Exception("Error: Need to specify a ward.")
+        elif ward not in self.district_ward_dict[district].keys():
+            raise Exception("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
 
-        # Check if district folder exists in interim data
-        if district not in os.listdir('../data/interim/'):
-            # Create district directory
-            os.mkdir('../data/interim/' + district)
+        parameters = {
+            "postcodes": self.district_ward_dict[district][ward]
+        }
 
-            district_code = self.district_code_dict[district]
-            ward_list = self.district_ward_dict[district]
-            ward_kmls = []
+        kml_file = self.request('GetAreaKml.ashx', parameters).read().decode('utf-8')
+        kml_object = fromstring(kml_file)
+        polygon_object = kml_object.find('{http://www.opengis.net/kml/2.2}Document').find('{http://www.opengis.net/kml/2.2}Placemark').find('{http://www.opengis.net/kml/2.2}Polygon')
+        coordinates_string = polygon_object[0][0][0]
 
-            # For each ward in the district
-            for ward_name, ward_code in ward_list:
-                # Create ward directory
-                os.mkdir('../data/interim/' + district + '/' + ward_name)
+        coordinates = []
+        for c_string in coordinates_string.text.split(',0 '):
+            coordinates.append(
+                list(map(float, c_string.split(',')))
+            )
+        return coordinates
 
-                postcodes = []
-
-                # Make API request for postcode list
-                parameters = {
-                    "district": district_code,
-                    "ward": ward_code
-                }
-
-                postcodes_results = self.request('AdministrativeAreasCSV.ashx', parameters).read().decode().split('\n')
-
-                # Parse postcodes returned
-                for postcode_line in postcodes_results[1:-1]:
-                    postcodes.append(postcode_line.split(',')[0])
-                
-                # Split postcodes into upper levels
-                postcodes_dict = defaultdict(list)
-                for postcode in postcodes:
-                    postcodes_dict[postcode[:postcode.index(' ') + 2]].append(postcode)
-                
-                # For each upper postcode level
-                for key, values in postcodes_dict.items():
-
-                    # Get postcode areas
-                    postcodes_kml = self.get_postcodes(', '.join(values))
-
-                    # Save kml files to interim folder
-                    with open('../data/interim/' + district + '/' + ward_name + '/' + key + '.kml', "w", encoding="utf-8") as kml_file:
-                        kml_file.write(postcodes_kml.decode("utf-8"))
-
-        else:
-            print("didn't have to load")
