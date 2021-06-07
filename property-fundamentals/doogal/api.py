@@ -130,10 +130,12 @@ class API:
         kml_file = self.request('GetAreaKml.ashx', parameters).read().decode('utf-8')
         kml_object = fromstring(kml_file)
         polygon_object = kml_object.find('{http://www.opengis.net/kml/2.2}Document').find('{http://www.opengis.net/kml/2.2}Placemark').find('{http://www.opengis.net/kml/2.2}Polygon')
-        coordinates_string = polygon_object[0][0][0]
+        coordinates_string = polygon_object[0][0][0].text.replace(',0', '')
 
         coordinates = []
-        for c_string in coordinates_string.text.split(',0 '):
+        for c_string in coordinates_string.split(' '):
+            if c_string == '':
+                continue
             coordinates.append(
                 list(map(float, c_string.split(',')))
             )
