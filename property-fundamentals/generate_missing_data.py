@@ -1,4 +1,4 @@
-from generate_development_area import coordinates
+from generate_development_district import coordinates
 from generate_property_price import price_mean
 from generate_property_price import house_types
 

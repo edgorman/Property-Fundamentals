@@ -1,7 +1,7 @@
 from govuk_ws.ofns.meanprice import MeanPrice
 #from govuk_ws.ofns.meanprice import MedianPrice
-from generate_development_area import wards
-from generate_development_area import area
+from generate_development_district import wards
+from generate_development_district import district
 mean_price = MeanPrice()
 #median_price = MedianPrice()
 
@@ -20,7 +20,7 @@ for h in range (0,len(house_types[0])):
     price_mean_raw.append([])
     price_mean.append([])
     for i in range (0,len(wards[0])):
-        price_mean_raw[h].insert(i,mean_price.get_ward_data(area, wards[0][i], house_types[0][h]))
+        price_mean_raw[h].insert(i,mean_price.get_ward_data(district, wards[0][i], house_types[0][h]))
         if (price_mean_raw[h][i] == None):
             price_mean[h].insert(i,0)
         else:
@@ -31,7 +31,7 @@ for h in range (0,len(house_types[0])):
     # price_median_raw.append([])
     # price_median.append([])
     # for i in range (0,len(wards[0])):
-        # price_median_raw[h].insert(i,median_price.get_ward_data(area, wards[0][i], house_types[0][h]))
+        # price_median_raw[h].insert(i,median_price.get_ward_data(district, wards[0][i], house_types[0][h]))
         # if (price_median_raw[h][i] == None):
             # price_median[h].insert(i,0)
         # else:

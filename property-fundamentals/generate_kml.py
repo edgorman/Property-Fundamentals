@@ -1,7 +1,7 @@
 import simplekml
-from generate_development_area import wards
-from generate_development_area import coordinates
-from generate_development_area import area
+from generate_development_district import wards
+from generate_development_district import coordinates
+from generate_development_district import district
 from generate_missing_data import price_mean
 from generate_property_price import house_types
 
@@ -46,6 +46,6 @@ for n in range (0,len(house_types[0])):
         pol[j].style.polystyle.color = price_scale[n][j]
         
     #Save the polygons to a KML file
-    kml.save(area + "_mean_" + house_types[0][n] + ".kml")
+    kml.save(district + "_mean_" + house_types[0][n] + ".kml")
 
 
