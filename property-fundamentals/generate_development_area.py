@@ -15,5 +15,7 @@ wards.append(ofns_api.get_wards_from_district(area))
 
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):
+    #try:
     coordinates.append(ofns_api.get_ward_polygon(area, wards[0][j]))
+    #except:
    
