@@ -1,5 +1,5 @@
 from govuk_ws.ofsted.schoolratings import SchoolRatings
-from doogal.api import API
+from doogal_api.api import API
 #from generate_development_area import wards
 from county_generate_development_area import county
 import simplekml

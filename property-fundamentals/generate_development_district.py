@@ -1,5 +1,5 @@
 from govuk_api.ofns.api import API
-from doogal.api import API
+from doogal_api.api import API
 ofns_api = API()
 doogal_api = API()
 
