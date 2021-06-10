@@ -1,7 +1,7 @@
-from govuk_api.ofns.api import API
-from doogal_api.api import API
-ofns_api = API()
-doogal_api = API()
+from govuk_api.ofns.api import API as OFNS_API
+from doogal_api.api import API as DOOGAL_API
+ofns_api = OFNS_API()
+doogal_api = DOOGAL_API()
 
 coordinates = []
 wards = []

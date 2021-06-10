@@ -1,5 +1,5 @@
-from govuk_api.ofns.api import API
-ofns_api = API()
+from govuk_api.ofns.api import API as OFNS_API
+ofns_api = OFNS_API()
 
 districts = []
 wards = []

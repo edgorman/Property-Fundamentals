@@ -1,11 +1,11 @@
 from govuk_ws.ofsted.schoolratings import SchoolRatings
-from doogal_api.api import API
+from doogal_api.api import API as DOOGAL_API
 #from generate_development_area import wards
 from county_generate_development_area import county
 import simplekml
 import zipfile
 school_ratings = SchoolRatings()
-doogal_api = API()
+doogal_api = DOOGAL_API()
 kml = simplekml.Kml()
 
 #school_ratings.get_districts()
