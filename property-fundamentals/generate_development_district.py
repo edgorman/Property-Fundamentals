@@ -5,6 +5,8 @@ doogal_api = DOOGAL_API()
 
 coordinates = []
 wards = []
+lat_list = []
+lng_list = []
 
 #Show the districts available
 print(ofns_api.get_districts())
@@ -31,3 +33,16 @@ for j in range (0,len(wards[0])):
         elif str(e) == "Error: The OFNS server has no coordinate data for ward '" + wards[0][j] + "' from district '" + district + "'.":
             print("Using Doogal API")
             coordinates.append(doogal_api.get_ward_polygon(district, wards[0][j]))
+
+
+
+for j in range (0,len(wards[0])):
+    for k in range (0,len(coordinates[j])):
+        lat , lng = map(float, str(coordinates[j][k]).strip('[]').split(','))
+        lat_list.append(lat)
+        lng_list.append(lng)
+
+max_lat = max(lat_list)
+min_lat = min(lat_list)
+max_lng = max(lng_list)
+min_lng = min(lng_list)
