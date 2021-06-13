@@ -38,7 +38,7 @@ for j in range (0,len(wards[0])):
 
 for j in range (0,len(wards[0])):
     for k in range (0,len(coordinates[j])):
-        lat , lng = map(float, str(coordinates[j][k]).strip('[]').split(','))
+        lng , lat = map(float, str(coordinates[j][k]).strip('[]').split(','))
         lat_list.append(lat)
         lng_list.append(lng)
 

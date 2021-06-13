@@ -16,10 +16,10 @@ kml = simplekml.Kml()
 point = []
 icon_style = ['images/icon-5.png']
 parameters = {
-    'minLat': min_lng,
-    'minLng': min_lat,
-    'maxLat': max_lng,
-    'maxLng': max_lat,
+    'minLat': min_lat,
+    'minLng': min_lng,
+    'maxLat': max_lat,
+    'maxLng': max_lng,
 }
 result = doogal_api.request('GetPlacesNear.ashx', parameters).read().decode('utf-8')
 places = json.loads(result)
