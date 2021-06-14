@@ -1,5 +1,6 @@
 from govuk_api.ofns.api import API as OFNS_API
 from doogal_api.api import API as DOOGAL_API
+from math import sin, cos, sqrt, atan2, radians
 ofns_api = OFNS_API()
 doogal_api = DOOGAL_API()
 
@@ -35,14 +36,38 @@ for j in range (0,len(wards[0])):
             coordinates.append(doogal_api.get_ward_polygon(district, wards[0][j]))
 
 
-
+#Seperate the Latitude and Longitude coordinates
 for j in range (0,len(wards[0])):
     for k in range (0,len(coordinates[j])):
         lng , lat = map(float, str(coordinates[j][k]).strip('[]').split(','))
         lat_list.append(lat)
         lng_list.append(lng)
 
+#Doogal API Coordinates
 max_lat = max(lat_list)
 min_lat = min(lat_list)
 max_lng = max(lng_list)
 min_lng = min(lng_list)
+
+#Google API Coordintes
+centre_lat = (max_lat + min_lat)/2
+centre_lng = (max_lng + min_lng)/2
+
+R = 6373000
+
+max_lat_rad = radians(max_lat)
+min_lat_rad = radians(min_lat)
+max_lng_rad = radians(max_lng)
+min_lng_rad = radians(min_lng)
+
+dlon = min_lng_rad - max_lng_rad
+dlat = min_lat_rad - max_lat_rad
+
+a = sin(dlat / 2)**2 + cos(min_lat_rad) * cos(max_lat_rad) * sin(dlon / 2)**2
+c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+distance = R * c
+
+print(distance)
+print(centre_lat)
+print(centre_lng)
