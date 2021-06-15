@@ -3,6 +3,7 @@ from doogal_api.api import API as DOOGAL_API
 from math import sin, cos, sqrt, atan2, radians
 ofns_api = OFNS_API()
 doogal_api = DOOGAL_API()
+import geopy.distance
 
 coordinates = []
 wards = []
@@ -53,21 +54,19 @@ min_lng = min(lng_list)
 centre_lat = (max_lat + min_lat)/2
 centre_lng = (max_lng + min_lng)/2
 
-R = 6373000
+coords1 = (max_lat, max_lng)
+coords2 = (min_lat, min_lng)
+coords3 = (max_lat, min_lng)
+coords4 = (min_lat, max_lng)
 
-max_lat_rad = radians(max_lat)
-min_lat_rad = radians(min_lat)
-max_lng_rad = radians(max_lng)
-min_lng_rad = radians(min_lng)
+distance1 = geopy.distance.distance(coords1,coords2).m
+distance2 = geopy.distance.distance(coords1,coords3).m
+distance3 = geopy.distance.distance(coords1,coords4).m
+distance4 = geopy.distance.distance(coords2,coords3).m
+distance5 = geopy.distance.distance(coords2,coords4).m
+distance6 = geopy.distance.distance(coords3,coords4).m
 
-dlon = min_lng_rad - max_lng_rad
-dlat = min_lat_rad - max_lat_rad
-
-a = sin(dlat / 2)**2 + cos(min_lat_rad) * cos(max_lat_rad) * sin(dlon / 2)**2
-c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-distance = R * c
+distance = max(distance1,distance2,distance3,distance4,distance5,distance6)
 
 print(distance)
-print(centre_lat)
-print(centre_lng)
+
