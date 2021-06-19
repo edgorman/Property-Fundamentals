@@ -45,10 +45,10 @@ for j in range (0,len(wards[0])):
         lng_list.append(lng)
 
 #Doogal API Coordinates
-max_lat = max(lat_list)
-min_lat = min(lat_list)
-max_lng = max(lng_list)
-min_lng = min(lng_list)
+max_lat = max(lat_list) + 0.025
+min_lat = min(lat_list) - 0.025
+max_lng = max(lng_list) + 0.05
+min_lng = min(lng_list) - 0.05
 
 #Google API Coordintes
 centre_lat = (max_lat + min_lat)/2
@@ -67,6 +67,4 @@ distance5 = geopy.distance.distance(coords2,coords4).m
 distance6 = geopy.distance.distance(coords3,coords4).m
 
 distance = max(distance1,distance2,distance3,distance4,distance5,distance6)
-
-print(distance)
 

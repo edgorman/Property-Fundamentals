@@ -1,6 +1,6 @@
-from generate_development_district import coordinates
-from generate_property_price import price_mean
-from generate_property_price import house_types
+from development_district import coordinates
+from property_price import price_mean
+from property_price import house_types
 
 #Define variables / lists
 wards_neighbour = [] # [[0] * len(coordinates)] * len(coordinates)
