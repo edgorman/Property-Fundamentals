@@ -2,10 +2,10 @@ from govuk_api.ofns.api import API as OFNS_API
 from doogal_api.api import API as DOOGAL_API
 from development_district import district
 from development_district import coordinates
-from development_district import max_lat
-from development_district import min_lat
-from development_district import max_lng
-from development_district import min_lng
+from development_district import transport_max_lat
+from development_district import transport_min_lat
+from development_district import transport_max_lng
+from development_district import transport_min_lng
 ofns_api = OFNS_API()
 doogal_api = DOOGAL_API()
 import json
@@ -17,10 +17,10 @@ point = []
 icon_style = ['images/icon-5.png','images/icon-6.png','images/icon-7.png','images/icon-8.png','images/icon-9.png']
 
 parameters = {
-    'minLat': min_lat,
-    'minLng': min_lng,
-    'maxLat': max_lat,
-    'maxLng': max_lng,
+    'minLat': transport_min_lat,
+    'minLng': transport_min_lng,
+    'maxLat': transport_max_lat,
+    'maxLng': transport_max_lng,
 }
 result = doogal_api.request('GetPlacesNear.ashx', parameters).read().decode('utf-8')
 places = json.loads(result)

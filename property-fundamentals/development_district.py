@@ -45,10 +45,20 @@ for j in range (0,len(wards[0])):
         lng_list.append(lng)
 
 #Doogal API Coordinates
-max_lat = max(lat_list) + 0.025
-min_lat = min(lat_list) - 0.025
-max_lng = max(lng_list) + 0.05
-min_lng = min(lng_list) - 0.05
+transport_max_lat = max(lat_list) + 0.1
+transport_min_lat = min(lat_list) - 0.1
+transport_max_lng = max(lng_list) + 0.05
+transport_min_lng = min(lng_list) - 0.05
+
+school_max_lat = max(lat_list)
+school_min_lat = min(lat_list)
+school_max_lng = max(lng_list)
+school_min_lng = min(lng_list)
+
+max_lat = max(lat_list)
+min_lat = min(lat_list)
+max_lng = max(lng_list)
+min_lng = min(lng_list)
 
 #Google API Coordintes
 centre_lat = (max_lat + min_lat)/2
