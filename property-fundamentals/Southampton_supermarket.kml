@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+    <Document id="1">
+        <Style id="4">
+            <IconStyle id="5">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="6">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="9">
+            <IconStyle id="10">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="11">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="14">
+            <IconStyle id="15">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="16">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="19">
+            <IconStyle id="20">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="21">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="24">
+            <IconStyle id="25">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="26">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="29">
+            <IconStyle id="30">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="31">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="34">
+            <IconStyle id="35">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="36">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="39">
+            <IconStyle id="40">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="41">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="44">
+            <IconStyle id="45">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="46">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="49">
+            <IconStyle id="50">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="51">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="54">
+            <IconStyle id="55">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="56">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="59">
+            <IconStyle id="60">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="61">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="64">
+            <IconStyle id="65">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="66">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="69">
+            <IconStyle id="70">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="71">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="74">
+            <IconStyle id="75">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="76">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="79">
+            <IconStyle id="80">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="81">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="84">
+            <IconStyle id="85">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="86">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Style id="89">
+            <IconStyle id="90">
+                <colorMode>normal</colorMode>
+                <scale>1</scale>
+                <heading>0</heading>
+                <Icon id="91">
+                    <href>images/icon-10.png</href>
+                </Icon>
+            </IconStyle>
+        </Style>
+        <Placemark id="3">
+            <name>Barclays Bank</name>
+            <description>Barclays Bank</description>
+            <styleUrl>#4</styleUrl>
+            <Point id="2">
+                <coordinates>-1.4045298,50.9049475,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="8">
+            <name>Halifax</name>
+            <description>Halifax</description>
+            <styleUrl>#9</styleUrl>
+            <Point id="7">
+                <coordinates>-1.4045452,50.9045725,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="13">
+            <name>Natwest</name>
+            <description>Natwest</description>
+            <styleUrl>#14</styleUrl>
+            <Point id="12">
+                <coordinates>-1.4040613,50.9046801,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="18">
+            <name>The Co-operative Bank - Southampton</name>
+            <description>The Co-operative Bank - Southampton</description>
+            <styleUrl>#19</styleUrl>
+            <Point id="17">
+                <coordinates>-1.4044665,50.90447890000001,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="23">
+            <name>TSB Bank</name>
+            <description>TSB Bank</description>
+            <styleUrl>#24</styleUrl>
+            <Point id="22">
+                <coordinates>-1.4045769,50.90363149999999,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="28">
+            <name>Virgin Money</name>
+            <description>Virgin Money</description>
+            <styleUrl>#29</styleUrl>
+            <Point id="27">
+                <coordinates>-1.4018897,50.9135924,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="33">
+            <name>Dovetail Compliance Services</name>
+            <description>Dovetail Compliance Services</description>
+            <styleUrl>#34</styleUrl>
+            <Point id="32">
+                <coordinates>-1.4039419,50.913229,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="38">
+            <name>Handelsbanken Southampton</name>
+            <description>Handelsbanken Southampton</description>
+            <styleUrl>#39</styleUrl>
+            <Point id="37">
+                <coordinates>-1.4116403,50.9091597,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="43">
+            <name>Lloyds Bank</name>
+            <description>Lloyds Bank</description>
+            <styleUrl>#44</styleUrl>
+            <Point id="42">
+                <coordinates>-1.4040418,50.9055227,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="48">
+            <name>Santander</name>
+            <description>Santander</description>
+            <styleUrl>#49</styleUrl>
+            <Point id="47">
+                <coordinates>-1.4045564,50.90436940000001,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="53">
+            <name>HSBC</name>
+            <description>HSBC</description>
+            <styleUrl>#54</styleUrl>
+            <Point id="52">
+                <coordinates>-1.4044563,50.9042708,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="58">
+            <name>RBS</name>
+            <description>RBS</description>
+            <styleUrl>#59</styleUrl>
+            <Point id="57">
+                <coordinates>-1.4041981,50.9008966,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="63">
+            <name>Barclays Bank</name>
+            <description>Barclays Bank</description>
+            <styleUrl>#64</styleUrl>
+            <Point id="62">
+                <coordinates>-1.4116403,50.9091597,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="68">
+            <name>ATM (Mitre)</name>
+            <description>ATM (Mitre)</description>
+            <styleUrl>#69</styleUrl>
+            <Point id="67">
+                <coordinates>-1.3909072,50.9267631,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="73">
+            <name>Nationwide Building Society</name>
+            <description>Nationwide Building Society</description>
+            <styleUrl>#74</styleUrl>
+            <Point id="72">
+                <coordinates>-1.4040089,50.9050016,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="78">
+            <name>Metro Bank</name>
+            <description>Metro Bank</description>
+            <styleUrl>#79</styleUrl>
+            <Point id="77">
+                <coordinates>-1.4045532,50.9039065,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="83">
+            <name>Southampton Trust Bank</name>
+            <description>Southampton Trust Bank</description>
+            <styleUrl>#84</styleUrl>
+            <Point id="82">
+                <coordinates>-1.3963773,50.93403980000001,0.0</coordinates>
+            </Point>
+        </Placemark>
+        <Placemark id="88">
+            <name>Royal Bank of Scotland Plc</name>
+            <description>Royal Bank of Scotland Plc</description>
+            <styleUrl>#89</styleUrl>
+            <Point id="87">
+                <coordinates>-1.4042328,50.90090439999999,0.0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>

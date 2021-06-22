@@ -19,7 +19,7 @@ supermarket_result = google_api.nearby_search(
     centre_lat,
     centre_lng,
     distance,
-    location_type='supermarket'
+    location_type='bank'
 )
 
 for j in range (0,len(supermarket_result)):
