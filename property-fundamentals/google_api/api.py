@@ -6,7 +6,7 @@ import time
 
 class API:
     '''
-    The class for manaing Google API endpoints. 
+    The class for managing Google API endpoints. 
     
     The following Google APIs are used:
 
@@ -97,7 +97,7 @@ class API:
             json.dump(self.cache_dict, json_file)
 
 
-    def request(self, endpoint, parameters={}) -> dict:
+    def request(self, endpoint, parameters={}):
         '''
         Performs the request to the endpoint at self.url.
 
@@ -141,7 +141,6 @@ class API:
                 
                 Returns:
                     result (json): JSON formatted response.
-
         '''
         parameters = {
             "input": input_,

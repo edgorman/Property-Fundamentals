@@ -1,0 +1,67 @@
+import math
+import json
+import urllib
+import geopy
+from geopy import distance
+
+class API:
+    '''
+    The class for managing Police API endpoints. 
+    
+    The following Police API are used:
+
+    https://data.police.uk/docs/
+    '''
+
+    def __init__(self):
+        self.url = 'https://data.police.uk/api'
+        self.earth_radius = 6378137
+    
+
+    def request(self, endpoint, parameters={}):
+        '''
+        Performs the request to the endpoint at self.url.
+
+                Parameters:
+                    endpoint (str): The endpoint to request from the api.
+                    parameters (dict): The parameters to pass to the endpoint.
+                
+                Returns:
+                    result (json): JSON formatted response.
+        '''
+        params = urllib.parse.urlencode(parameters)
+        request = f"{self.url}/{endpoint}?{params}"
+        result = json.load(urllib.request.urlopen(request))
+
+        return result
+
+
+    def get_street_level_crimes(self, lat, lon, r):
+        '''
+        Returns the API request for the 'street level crimes' endpoint.
+
+        https://data.police.uk/docs/method/crime-street/
+
+                Parameters:
+                    lat (float): The latitude of the circle (required).
+                    lon (float): The longitude of the circle (required).
+                    radius (float): The radius of the circle (required).
+                
+                Returns:
+                    result (json): JSON formatted response.
+        '''
+        coordinate_list = []
+
+        # Calculate the coordinates of a circle originating around lat, lon at radius
+        centre = geopy.Point(lat, lon)
+        radius = distance.distance(kilometers=r / 1000)
+        for bearing in range(0, 360, 36):
+            a, b = radius.destination(point=centre, bearing=bearing).format_decimal().split(", ")
+            coordinate_list.append((round(float(a), 3), round(float(b), 3)))
+
+        coordinate_str = ":".join([f"{a},{b}" for a, b in coordinate_list])
+        parameters = {
+            "poly": coordinate_str
+        }
+
+        return self.request('crimes-street/all-crime', parameters)
