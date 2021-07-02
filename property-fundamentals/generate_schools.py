@@ -2,10 +2,10 @@ from govuk_ws.ofsted.schoolratings import SchoolRatings
 from doogal_api.api import API as DOOGAL_API
 #from development_area import wards
 from development_district import district
-from development_district import school_max_lat
-from development_district import school_min_lat
-from development_district import school_max_lng
-from development_district import school_min_lng
+from development_district import max_lat
+from development_district import min_lat
+from development_district import max_lng
+from development_district import min_lng
 import simplekml
 import zipfile
 school_ratings = SchoolRatings()
@@ -24,7 +24,7 @@ school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_a
 
 for name, postcode, rating, ward, school_coordinates in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
-    if (lat <= school_max_lat) and (lat >= school_min_lat) and (lng <= school_max_lng) and (lng >= school_min_lng):
+    if (lat <= max_lat) and (lat >= min_lat) and (lng <= max_lng) and (lng >= min_lng):
         point = kml.newpoint()
         point.name = name
         point.description = ofsted_rating[int(rating)-1]

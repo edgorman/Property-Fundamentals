@@ -13,24 +13,24 @@ import zipfile
 kml = simplekml.Kml()
 
 point = []
-icon_style = ['images/icon-10.png']
+icon_style = ['images/icon-11.png']
 
-supermarket_result = google_api.nearby_search(
+subway_station_result = google_api.nearby_search(
     centre_lat,
     centre_lng,
     distance,
-    location_type='bank'
+    location_type='subway_station'
 )
 
-for j in range (0,len(supermarket_result)):
+for j in range (0,len(subway_station_result)):
     point = kml.newpoint()
-    point.name = supermarket_result[j][0]
-    point.description = supermarket_result[j][0]
-    point.coords = [(supermarket_result[j][2]['lng'],supermarket_result[j][2]['lat'])]
+    point.name = subway_station_result[j][0]
+    point.description = subway_station_result[j][0]
+    point.coords = [(subway_station_result[j][2]['lng'],subway_station_result[j][2]['lat'])]
     point.style.iconstyle.icon.href = icon_style[0] 
-kml.save(district + "_supermarket" + ".kml")
+kml.save(district + "_subway_station" + ".kml")
         
-zf = zipfile.ZipFile(district + "_supermarket" + ".kmz", "w")
-zf.write("images/icon-10.png")
-zf.write(district + "_supermarket" + ".kml")
+zf = zipfile.ZipFile(district + "_subway_station" + ".kmz", "w")
+zf.write("images/icon-11.png")
+zf.write(district + "_subway_station" + ".kml")
 zf.close()

@@ -1,0 +1,36 @@
+from govuk_api.ofns.api import API as OFNS_API
+from google_api.api import API as GOOGLE_API
+from development_district import district
+#from development_district import coordinates
+from development_district import centre_lat
+from development_district import centre_lng
+from development_district import distance
+
+ofns_api = OFNS_API()
+google_api = GOOGLE_API(key_path="../property-fundamentals/google_api/key.txt")
+import simplekml
+import zipfile
+kml = simplekml.Kml()
+
+point = []
+icon_style = ['images/icon-10.png']
+
+further_education_result = google_api.nearby_search(
+    centre_lat,
+    centre_lng,
+    distance,
+    location_type='university'
+)
+
+for j in range (0,len(further_education_result)):
+    point = kml.newpoint()
+    point.name = further_education_result[j][0]
+    point.description = further_education_result[j][0]
+    point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
+    point.style.iconstyle.icon.href = icon_style[0] 
+kml.save(district + "_further_education" + ".kml")
+        
+zf = zipfile.ZipFile(district + "_further_education" + ".kmz", "w")
+zf.write("images/icon-10.png")
+zf.write(district + "_further_education" + ".kml")
+zf.close()
