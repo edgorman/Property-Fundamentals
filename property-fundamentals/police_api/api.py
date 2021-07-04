@@ -1,3 +1,4 @@
+import re
 import math
 import json
 import urllib
@@ -15,7 +16,6 @@ class API:
 
     def __init__(self):
         self.url = 'https://data.police.uk/api'
-        self.earth_radius = 6378137
     
 
     def request(self, endpoint, parameters={}):
@@ -36,7 +36,7 @@ class API:
         return result
 
 
-    def get_street_level_crimes(self, lat, lon, r):
+    def get_street_level_crimes(self, lat, lon, radius, date=None):
         '''
         Returns the API request for the 'street level crimes' endpoint.
 
@@ -46,6 +46,7 @@ class API:
                     lat (float): The latitude of the circle (required).
                     lon (float): The longitude of the circle (required).
                     radius (float): The radius of the circle (required).
+                    date (str): The latest data to return. Format YYYY-MM (required).
                 
                 Returns:
                     result (json): JSON formatted response.
@@ -54,14 +55,20 @@ class API:
 
         # Calculate the coordinates of a circle originating around lat, lon at radius
         centre = geopy.Point(lat, lon)
-        radius = distance.distance(kilometers=r / 1000)
+        chord = distance.distance(kilometers=radius / 1000)
         for bearing in range(0, 360, 36):
-            a, b = radius.destination(point=centre, bearing=bearing).format_decimal().split(", ")
+            a, b = chord.destination(point=centre, bearing=bearing).format_decimal().split(", ")
             coordinate_list.append((round(float(a), 3), round(float(b), 3)))
 
         coordinate_str = ":".join([f"{a},{b}" for a, b in coordinate_list])
         parameters = {
             "poly": coordinate_str
         }
+
+        if date is not None:
+            if re.match("[0-9]{4}-[0-9]{2}", date):
+                parameters["date"] = date
+            else:
+                raise Exception("Error: Date for API request was in the inccorect format, expecting YYYY-MM.")
 
         return self.request('crimes-street/all-crime', parameters)
