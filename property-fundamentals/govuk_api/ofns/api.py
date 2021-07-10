@@ -89,6 +89,30 @@ class API:
             raise Exception("Error: Could not find district '" + district + "' in the csv.")
         
         return sorted(list(self.district_ward_dict[district].keys()))
+        
+        
+    def get_ward_codes_from_district(self, district, ward):
+        '''
+        Returns the ward codes that are present within a given district.
+
+                Parameters:
+                    district (str): The district to search.
+                    ward (str): The ward to search.
+                
+                Returns:
+                    ward code (list): The ward code
+        '''
+        if district == None:
+            raise Exception("Error: Need to specify a district.")
+        elif district not in self.district_ward_dict.keys():
+            raise Exception("Error: Could not find district '" + district + "' in the csv.")
+            
+        if ward == None:
+            raise Exception("Error: Need to specify a ward.")
+        elif ward not in self.district_ward_dict[district].keys():
+            raise Exception("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
+        
+        return self.district_ward_dict[district][ward]
     
 
     def request(self, endpoint, parameters={}):

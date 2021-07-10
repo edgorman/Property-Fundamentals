@@ -7,6 +7,7 @@ import geopy.distance
 
 coordinates = []
 wards = []
+ward_codes = []
 lat_list = []
 lng_list = []
 
@@ -18,6 +19,12 @@ district = input("Please type an district and press enter:")
 
 #Get the wards within a district
 wards.append(ofns_api.get_wards_from_district(district))
+
+#Get the wards within a district
+for j in range (0,len(wards[0])):
+    ward_codes.append(ofns_api.get_ward_codes_from_district(district, wards[0][j]))
+    
+print(ward_codes)
 
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):
