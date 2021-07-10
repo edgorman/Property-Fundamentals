@@ -2,6 +2,7 @@ import simplekml
 from development_district import wards
 from development_district import coordinates
 from development_district import district
+from statxplore_api.api import API as STATXPLORE_API
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -13,6 +14,7 @@ universal_credit = [2388, 776, 2800, 1990, 1063, 1281, 1879, 1450, 1670, 1265, 1
 pol = []
 colour_scale = []
 universal_credit_scale = []
+statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/stat-xplore_api/key.txt")
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
