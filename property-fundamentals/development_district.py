@@ -50,11 +50,6 @@ transport_min_lat = min(lat_list) - 0.1
 transport_max_lng = max(lng_list) + 0.05
 transport_min_lng = min(lng_list) - 0.05
 
-school_max_lat = max(lat_list)
-school_min_lat = min(lat_list)
-school_max_lng = max(lng_list)
-school_min_lng = min(lng_list)
-
 max_lat = max(lat_list)
 min_lat = min(lat_list)
 max_lng = max(lng_list)

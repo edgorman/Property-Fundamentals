@@ -3,10 +3,10 @@ from doogal_api.api import API as DOOGAL_API
 from google_api.api import API as GOOGLE_API
 from development_district import district
 from development_district import coordinates
-from development_district import transport_max_lat
-from development_district import transport_min_lat
-from development_district import transport_max_lng
-from development_district import transport_min_lng
+from development_district import max_lat
+from development_district import min_lat
+from development_district import max_lng
+from development_district import min_lng
 from development_district import centre_lat
 from development_district import centre_lng
 from development_district import distance
@@ -23,10 +23,10 @@ point = []
 icon_style = ['images/icon-5.png','images/icon-6.png','images/icon-7.png','images/icon-8.png','images/icon-9.png','images/icon-11.png']
 
 parameters = {
-    'minLat': transport_min_lat,
-    'minLng': transport_min_lng,
-    'maxLat': transport_max_lat,
-    'maxLng': transport_max_lng,
+    'minLat': min_lat,
+    'minLng': min_lng,
+    'maxLat': max_lat,
+    'maxLng': max_lng,
 }
 result = doogal_api.request('GetPlacesNear.ashx', parameters).read().decode('utf-8')
 places = json.loads(result)
@@ -77,14 +77,14 @@ for j in range (0,len(subway_station_result)):
     point.coords = [(subway_station_result[j][2]['lng'],subway_station_result[j][2]['lat'])]
     point.style.iconstyle.icon.href = icon_style[5] 
 
-kml.save(district + "_transport" + ".kml")
+kml.save(district + "_transport_small" + ".kml")
         
-zf = zipfile.ZipFile(district + "_transport" + ".kmz", "w")
+zf = zipfile.ZipFile(district + "_transport_small" + ".kmz", "w")
 zf.write("images/icon-5.png")
 zf.write("images/icon-6.png")
 zf.write("images/icon-7.png")
 zf.write("images/icon-8.png")
 zf.write("images/icon-9.png")
 zf.write("images/icon-11.png")
-zf.write(district + "_transport" + ".kml")
+zf.write(district + "_transport_small" + ".kml")
 zf.close()
