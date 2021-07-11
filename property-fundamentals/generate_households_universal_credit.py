@@ -3,8 +3,7 @@ from development_district import wards
 from development_district import coordinates
 from development_district import district
 from development_district import ward_codes
-#from statxplore_api.api import API as STATXPLORE_API
-import requests
+from statxplore_api.api import API as STATXPLORE_API
 import json
 
 #Define variables / lists
@@ -19,6 +18,7 @@ pol = []
 colour_scale = []
 universal_credit_scale = []
 #statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/stat-xplore_api/key.txt")
+statxplore_api = STATXPLORE_API
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -27,46 +27,9 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
     
-    data = {
-    "database" : "str:database:UC_Households",
-    "measures" : ["str:count:UC_Households:V_F_UC_HOUSEHOLDS"],
-    "recodes": {
-      "str:field:UC_Households:V_F_UC_HOUSEHOLDS:WARD_CODE": {
-        "map": [
-          [
-            "str:value:UC_Households:V_F_UC_HOUSEHOLDS:WARD_CODE:V_C_MASTERGEOG11_WARD_TO_LA:" + ward_codes[h]
-          ],
-        ],
-        "total": True
-      },
-      "str:field:UC_Households:F_UC_DATE:DATE_NAME": {
-        "map": [
-          [
-            "str:value:UC_Households:F_UC_DATE:DATE_NAME:C_UC_DATE:202102"
-          ]
-        ],
-        "total": False
-      }
-    },
-    "dimensions": [
-      [
-        "str:field:UC_Households:F_UC_DATE:DATE_NAME"
-      ],
-      [
-        "str:field:UC_Households:V_F_UC_HOUSEHOLDS:WARD_CODE"
-      ]
-    ]
-    }   
-
-    url = 'https://stat-xplore.dwp.gov.uk/webapi/rest/v1/table'
-    headers = {'Content-type': 'application/json','apikey':'65794a30655841694f694a4b563151694c434a68624763694f694a49557a49314e694a392e65794a7063334d694f694a7a644849756333526c6247786863694973496e4e3159694936496e646b5a323979625746755147647459576c734c6d4e7662534973496d6c68644349364d5459794e5451354e5449334d5377695958566b496a6f69633352794c6d396b59534a392e664e67356b71762d506763346a376a3274496a67394d535f5f384748547833315251456c6330342d58586f'}
-    r = requests.post(url, data=json.dumps(data), headers=headers)
-    json_object = json.loads(r.content)
-    json_formatted_str = json.dumps(json_object, indent=2)
-    universal_credit.append(json_object["cubes"]["str:count:UC_Households:V_F_UC_HOUSEHOLDS"]['values'][0][0])
-
+    universal_credit.append(statxplore_api.get_universal_credit(ward_codes[h]))
+    
 print(universal_credit)
-
 
 #Generate price scaling information
 max_universal_credit = max(universal_credit)
@@ -86,7 +49,7 @@ for j in range(0,len(coordinates)):
             universal_credit_scale.insert(j,colour[k])
             break
     #Add price and colour to the polygons
-    pol[j].description = json_object["fields"][0]["items"][0]["labels"][0] + ": " + str(int(universal_credit[j])) + " " + json_object["measures"][0]["label"]
+    #pol[j].description = json_object["fields"][0]["items"][0]["labels"][0] + ": " + str(int(universal_credit[j])) + " " + json_object["measures"][0]["label"]
     pol[j].style.polystyle.color = universal_credit_scale[j]
     
 #Save the polygons to a KML file
