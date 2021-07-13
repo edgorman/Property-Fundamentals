@@ -17,8 +17,7 @@ universal_credit = []
 pol = []
 colour_scale = []
 universal_credit_scale = []
-#statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/stat-xplore_api/key.txt")
-statxplore_api = STATXPLORE_API
+statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -27,7 +26,7 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
     
-    universal_credit.append(statxplore_api.get_universal_credit(ward_codes[h]))
+    universal_credit.append(statxplore_api.get_universal_credit('table', ward_codes[h]))
     
 print(universal_credit)
 
