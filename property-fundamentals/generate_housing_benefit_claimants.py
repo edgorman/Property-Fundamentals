@@ -17,8 +17,7 @@ housing_benefit = []
 pol = []
 colour_scale = []
 housing_benefit_scale = []
-#statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/stat-xplore_api/key.txt")
-statxplore_api = STATXPLORE_API
+statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -27,7 +26,7 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
     
-    housing_benefit.append(statxplore_api.get_housing_benefit(ward_codes[h]))
+    housing_benefit.append(statxplore_api.get_housing_benefit('table', ward_codes[h]))
     
 print(housing_benefit)
 
@@ -49,10 +48,10 @@ for j in range(0,len(coordinates)):
             housing_benefit_scale.insert(j,colour[k])
             break
     #Add price and colour to the polygons
-    #pol[j].description = json_object2["fields"][1]["items"][0]["labels"][0] + ": " + str(int(housing_benefit[j])) + " " + json_object2["measures"][0]["label"]
+    pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(int(housing_benefit[j])) + " Housing Benefit claimants"
     pol[j].style.polystyle.color = housing_benefit_scale[j]
     
 #Save the polygons to a KML file
-kml.save(district + "_housing benefit" + ".kml")
+kml.save(district + "_housing_benefit" + ".kml")
 
 

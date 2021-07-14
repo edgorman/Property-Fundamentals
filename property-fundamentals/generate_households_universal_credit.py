@@ -48,10 +48,10 @@ for j in range(0,len(coordinates)):
             universal_credit_scale.insert(j,colour[k])
             break
     #Add price and colour to the polygons
-    #pol[j].description = json_object["fields"][0]["items"][0]["labels"][0] + ": " + str(int(universal_credit[j])) + " " + json_object["measures"][0]["label"]
+    pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(int(universal_credit[j])) + " Households on universal credit"
     pol[j].style.polystyle.color = universal_credit_scale[j]
     
 #Save the polygons to a KML file
-kml.save(district + "_universal credit" + ".kml")
+kml.save(district + "_universal_credit" + ".kml")
 
 
