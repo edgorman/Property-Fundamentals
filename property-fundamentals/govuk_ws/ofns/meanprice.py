@@ -47,7 +47,8 @@ class MeanPrice:
 
     def _update_dataset(self):
         webpage = requests.get(self.webpage_url)
-        dataset = re.search('(\w*)\/(\w*)\.zip', webpage.text).group(1)
+        #dataset = re.search('(\w*)\/(\w*)\.zip', webpage.text).group(2)
+        dataset = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
 
         # Check if parent folder exists
         if not os.path.exists(self.dataset_dest):
@@ -57,7 +58,7 @@ class MeanPrice:
         if dataset not in os.listdir(self.dataset_dest):
             print("[INFO]", "Starting collecting the most recent mean price ward dataset")
             print("[INFO]", "This will take about half a minute to complete...")
-
+            
             response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward.zip")
             print("[DONE]", "Downloaded most recent zip:\t", dataset)
 
