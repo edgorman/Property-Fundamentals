@@ -34,11 +34,12 @@ further_education_result = google_api.nearby_search(
 )
 
 for j in range (0,len(further_education_result)):
-    point = kml.newpoint()
-    point.name = further_education_result[j][0]
-    point.description = further_education_result[j][0]
-    point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
-    point.style.iconstyle.icon.href = icon_style[4]
+    if (further_education_result[j][2]['lat'] <= max_lat) and (further_education_result[j][2]['lat'] >= min_lat) and (further_education_result[j][2]['lng'] <= max_lng) and (further_education_result[j][2]['lng'] >= min_lng):
+        point = kml.newpoint()
+        point.name = further_education_result[j][0]
+        point.description = further_education_result[j][0]
+        point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
+        point.style.iconstyle.icon.href = icon_style[4]
     
 for name, postcode, rating, ward, school_coordinates in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
