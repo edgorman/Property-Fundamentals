@@ -1,4 +1,6 @@
 import simplekml
+import matplotlib.pyplot as plt
+import numpy as np
 from development_district import wards
 from development_district import coordinates
 from development_district import district
@@ -9,13 +11,15 @@ import json
 #Define variables / lists
 kml = simplekml.Kml()
 colour = ['191400FF', '1E1400FF', '231400FF', '281400FF', '2D1400FF', '321400FF', '371400FF', '3C1400FF', '411400FF', '461400FF', '4B1400FF', '501400FF', '551400FF' ,'5A1400FF', '5F1400FF', '641400FF', '691400FF', '6E1400FF', '731400FF', '781400FF', '7D1400FF', '821400FF', '871400FF', '8C1400FF', '911400FF', '961400FF', '9B1400FF', 'A01400FF', 'A51400FF', 'AA1400FF']
-#colour = ['1914E7FF', '1E14E7FF', '2314E7FF', '2814E7FF', '2D14E7FF', '3214E7FF', '3714E7FF', '3C14E7FF', '4114E7FF', '4614E7FF', '4B14E7FF', '5014E7FF', '5514E7FF' ,'5A14E7FF', '5F14E7FF', '6414E7FF', '6914E7FF', '6E14E7FF', '7314E7FF', '7814E7FF', '7D14E7FF', '8214E7FF', '8714E7FF', '8C14E7FF', '9114E7FF', '9614E7FF', '9B14E7FF', 'A014E7FF', 'A514E7FF', 'AA14E7FF']
+colour_plot = ['#FF001419', '#FF00141E', '#FF001423', '#FF001428', '#FF00142D', '#FF001432', '#FF001437', '#FF00143C', '#FF001441', '#FF001446', '#FF00144B', '#FF001450', '#FF001455', '#FF00145A', '#FF00145F', '#FF001464', '#FF001469', '#FF00146E', '#FF001473', '#FF001478', '#FF00147D', '#FF001482', '#FF001487', '#FF00148C', '#FF001491', '#FF001496', '#FF00149B', '#FF0014A0', '#FF0014A5', '#FF0014AA']
 
 print(ward_codes)
 
 universal_credit = []
 pol = []
 colour_scale = []
+price_plot = []
+y_pos = np.arange(len(wards[0]))
 universal_credit_scale = []
 statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
 
@@ -46,6 +50,7 @@ for j in range(0,len(coordinates)):
     for k in range(0,len(colour_scale)):
         if (colour_scale[k] >= universal_credit[j]):
             universal_credit_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
             break
     #Add price and colour to the polygons
     pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(int(universal_credit[j])) + " Households on universal credit"
@@ -54,4 +59,11 @@ for j in range(0,len(coordinates)):
 #Save the polygons to a KML file
 kml.save(district + "_universal_credit" + ".kml")
 
-
+#plot the data
+plt.barh(y_pos, universal_credit, color= price_plot, edgecolor='black')
+plt.yticks(y_pos,wards[0])
+plt.gca().invert_yaxis()
+plt.xlabel("Number of Households")
+plt.title(district + " Households on Universal Credit")
+plt.savefig(district + "_Households_on_universal_credit" + ".png", bbox_inches='tight')
+plt.clf()

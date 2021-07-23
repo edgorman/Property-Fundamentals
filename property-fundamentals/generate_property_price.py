@@ -54,12 +54,11 @@ for n in range (0,len(house_types[0])):
     #Save the polygons to a KML file
     kml.save(district + "_mean_" + house_types[0][n] + ".kml")
     
+    #plot the data
     plt.barh(y_pos, price_mean[n], color= price_plot, edgecolor='black')
     plt.yticks(y_pos,wards[0])
     plt.gca().invert_yaxis()
     plt.xlabel("(£)")
-    #plt.ylabel(district + " wards")
     plt.title(district + " Ward Mean Sold Price (" + house_types[0][n] + ")")
-    #plt.tight_layout()
     plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight')
     plt.clf()
