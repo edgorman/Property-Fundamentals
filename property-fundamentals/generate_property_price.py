@@ -11,7 +11,7 @@ from property_price import house_types
 kml = simplekml.Kml()
 #colour = ['4C14E7FF','4C14DEFF','4C14D5FF','4C14CCFF','4C14C3FF','4C14BAFF','4C14B1FF','4C14A8FF','4C14A0FF','4C1497FF','4C148EFF','4C1485FF','4C147CFF','4C1473FF','4C146AFF','4C1461FF','4C1458FF','4C1450FF','4C1447FF','4C143EFF','4C1435FF','4C142CFF','4C1423FF','4C141AFF','4C1411FF','4C1408FF','4C1400FF']
 colour = ['19F07814', '1EF07814', '23F07814', '28F07814', '2DF07814', '32F07814', '37F07814', '3CF07814', '41F07814', '46F07814', '4BF07814', '50F07814', '55F07814' ,'5AF07814', '5FF07814', '64F07814', '69F07814', '6EF07814', '73F07814', '78F07814', '7DF07814', '82F07814', '87F07814', '8CF07814', '91F07814', '96F07814', '9BF07814', 'A0F07814', 'A5F07814', 'AAF07814']
-colour2 = ['#19F07814', '#1EF07814', '#23F07814', '#28F07814', '#2DF07814', '#32F07814', '#37F07814', '#3CF07814', '#41F07814', '#46F07814', '#4BF07814', '#50F07814', '#55F07814' ,'#5AF07814', '#5FF07814', '#64F07814', '#69F07814', '#6EF07814', '#73F07814', '#78F07814', '#7DF07814', '#82F07814', '#87F07814', '#8CF07814', '#91F07814', '#96F07814', '#9BF07814', '#A0F07814', '#A5F07814', '#AAF07814']
+colour_plot = ['#1478F019', '#1478F01E', '#1478F023', '#1478F028', '#1478F02D', '#1478F032', '#1478F037', '#1478F03C', '#1478F041', '#1478F046', '#1478F04B', '#1478F050', '#1478F055' ,'#1478F05A', '#1478F05F', '#1478F064', '#1478F069', '#1478F06E', '#1478F073', '#1478F078', '#1478F07D', '#1478F082', '#1478F087', '#1478F08C', '#1478F091', '#1478F096', '#1478F09B', '#1478F0A0', '#1478F0A5', '#1478F0AA']
 
 
 pol = []
@@ -46,7 +46,7 @@ for n in range (0,len(house_types[0])):
         for k in range(0,len(colour_scale)):
             if (colour_scale[k] >= price_mean[n][j]):
                 price_scale[n].insert(j,colour[k])
-                price_plot.insert(j,'#'+colour[k])
+                price_plot.insert(j,colour_plot[k])
                 break
         #Add price and colour to the polygons
         pol[j].description = "£" + str(price_mean[n][j])
@@ -57,8 +57,8 @@ for n in range (0,len(house_types[0])):
     
     print(price_plot)
     #plt.barh(y_pos, price_mean[n], color= ['black','red','black','red','black','red','black','red','black','red','black','red','black','red','black','red'], edgecolor='black')
-    plt.barh(y_pos, price_mean[n], color= ['#0099ff19','#0099ffAA','black','red','black','red','black','red','black','red','black','red','black','red','black','red'], edgecolor='black')
-    #plt.barh(y_pos, price_mean[n], color= price_plot, edgecolor='black')
+    #plt.barh(y_pos, price_mean[n], color= ['#0099ff19','#0099ffAA','#1478F019','#1478F0AA','black','red','black','red','black','red','black','red','black','red','black','red'], edgecolor='black')
+    plt.barh(y_pos, price_mean[n], color= price_plot, edgecolor='black')
     #plt.barh(wards[0], price_mean[n], color='#'+price_scale[n])
     #plt.barh(wards[0], price_mean[n],color='black')
     plt.yticks(y_pos,wards[0])
