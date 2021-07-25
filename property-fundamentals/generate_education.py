@@ -26,6 +26,7 @@ kml = simplekml.Kml()
 y_pos = np.arange(len(wards[0]))
 
 point = []
+school_ward = []
 icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png','images/icon-10.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
 #school_count = [[0] * len(wards[0])] * 4
@@ -63,8 +64,35 @@ for name, postcode, rating, ward, school_coordinates in school_data:
         point.description = ofsted_rating[int(rating)-1]
         point.coords = [school_coordinates]
         point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
-        school_ward = postcode_mapping.get_ward_from_postcode(postcode)
-        print(school_ward)
+        school_ward.insert(0,doogal_api.get_postcode_info(postcode))
+        print(school_ward[0][6])
+        if ofsted_rating[int(rating)] == 1:
+            print(rating)
+            for j in range (0,len(wards[0])):
+                print(wards[0][j])
+                if school_ward[0][6] == wards[0][j]:
+                    school_count_outstanding[j] +=1
+                    print(school_count_outstanding)
+        elif ofsted_rating[int(rating)] == 2:
+             for j in range (0,len(wards[0])):
+                if school_ward[0][6] == wards[j]:
+                    school_count_good[0][j] +=1
+                    print(school_count_good)                    
+        elif ofsted_rating[int(rating)] == 3:
+            for j in range (0,len(wards[0])):
+                if school_ward[0][6] == wards[j]:
+                    school_count_requires_improvement[0][j] +=1
+                    print(school_count_requires_improvement)                    
+        elif ofsted_rating[int(rating)] == 4:
+            for j in range (0,len(wards[0])):
+                if school_ward[0][6] == wards[j]:
+                    school_count_poor[0][j] +=1
+                    print(school_count_poor)
+
+# print(school_count_outstanding[0])
+# print(school_count_good[0])
+# print(school_count_requires_improvement[0])
+# print(school_count_poor[0])
     
 kml.save(district + "_education" + ".kml")
         
