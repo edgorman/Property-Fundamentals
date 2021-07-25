@@ -66,27 +66,27 @@ for name, postcode, rating, ward, school_coordinates in school_data:
         point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
         school_ward.insert(0,doogal_api.get_postcode_info(postcode))
         print(school_ward[0][6])
-        if ofsted_rating[int(rating)] == 1:
+        if int(rating) == 1:
             print(rating)
             for j in range (0,len(wards[0])):
                 print(wards[0][j])
                 if school_ward[0][6] == wards[0][j]:
                     school_count_outstanding[j] +=1
                     print(school_count_outstanding)
-        elif ofsted_rating[int(rating)] == 2:
+        elif int(rating) == 2:
              for j in range (0,len(wards[0])):
-                if school_ward[0][6] == wards[j]:
-                    school_count_good[0][j] +=1
+                if school_ward[0][6] == wards[0][j]:
+                    school_count_good[j] +=1
                     print(school_count_good)                    
-        elif ofsted_rating[int(rating)] == 3:
+        elif int(rating) == 3:
             for j in range (0,len(wards[0])):
-                if school_ward[0][6] == wards[j]:
-                    school_count_requires_improvement[0][j] +=1
+                if school_ward[0][6] == wards[0][j]:
+                    school_count_requires_improvement[j] +=1
                     print(school_count_requires_improvement)                    
-        elif ofsted_rating[int(rating)] == 4:
+        elif int(rating) == 4:
             for j in range (0,len(wards[0])):
-                if school_ward[0][6] == wards[j]:
-                    school_count_poor[0][j] +=1
+                if school_ward[0][6] == wards[0][j]:
+                    school_count_poor[j] +=1
                     print(school_count_poor)
 
 # print(school_count_outstanding[0])
