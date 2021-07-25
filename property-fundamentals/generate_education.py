@@ -29,10 +29,14 @@ point = []
 icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png','images/icon-10.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
 #school_count = [[0] * len(wards[0])] * 4
-school_count_outstanding = np.array([1,2,1,0,1,2,1,3,0,1,2,3,1,0,2,1])
-school_count_good = np.array([0,1,3,2,1,3,2,1,0,2,3,1,2,3,1,0])
-school_count_requires_improvement = np.array([1,2,3,2,1,2,1,1,0,0,0,1,1,1,1,0])
-school_count_poor = np.array([0,2,1,2,1,2,1,0,1,2,1,2,1,2,1,2])
+#school_count_outstanding = np.array([1,2,1,0,1,2,1,3,0,1,2,3,1,0,2,1])
+#school_count_good = np.array([0,1,3,2,1,3,2,1,0,2,3,1,2,3,1,0])
+#school_count_requires_improvement = np.array([1,2,3,2,1,2,1,1,0,0,0,1,1,1,1,0])
+#school_count_poor = np.array([0,2,1,2,1,2,1,0,1,2,1,2,1,2,1,2])
+school_count_outstanding = np.array([0]*len(wards[0]))
+school_count_good = np.array([0]*len(wards[0]))
+school_count_requires_improvement = np.array([0]*len(wards[0]))
+school_count_poor = np.array([0]*len(wards[0]))
 
 school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_api, district)
 
@@ -59,7 +63,8 @@ for name, postcode, rating, ward, school_coordinates in school_data:
         point.description = ofsted_rating[int(rating)-1]
         point.coords = [school_coordinates]
         point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
-        #school_ward = postcode_mapping.get_ward_from_postcode(postcode)
+        school_ward = postcode_mapping.get_ward_from_postcode(postcode)
+        print(school_ward)
     
 kml.save(district + "_education" + ".kml")
         
