@@ -3,6 +3,7 @@ from google_api.api import API as GOOGLE_API
 from govuk_ws.ofsted.schoolratings import SchoolRatings
 from doogal_api.api import API as DOOGAL_API
 #from govuk_ws.geoportal.postcode_to_ward import PostcodeMapping
+from postcodes_api.postcode_api import API as POSTCODE_API
 from development_district import district
 from development_district import wards
 from development_district import centre_lat
@@ -14,12 +15,14 @@ from development_district import max_lng
 from development_district import min_lng
 import matplotlib.pyplot as plt
 import numpy as np
+import json
 
 school_ratings = SchoolRatings()
 doogal_api = DOOGAL_API()
 ofns_api = OFNS_API()
 google_api = GOOGLE_API(key_path="../property-fundamentals/google_api/key.txt")
 #postcode_mapping = PostcodeMapping()
+postcodes_api = POSTCODE_API()
 import simplekml
 import zipfile
 kml = simplekml.Kml()
@@ -27,8 +30,10 @@ kml = simplekml.Kml()
 y_pos = np.arange(len(wards[0]))
 point = []
 school_ward = []
+further_education_ward = []
 icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png','images/icon-10.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
+further_education_count = np.array([0]*len(wards[0]))
 school_count_outstanding = np.array([0]*len(wards[0]))
 school_count_good = np.array([0]*len(wards[0]))
 school_count_requires_improvement = np.array([0]*len(wards[0]))
@@ -45,20 +50,29 @@ further_education_result = google_api.nearby_search(
 
 for j in range (0,len(further_education_result)):
     if (further_education_result[j][2]['lat'] <= max_lat) and (further_education_result[j][2]['lat'] >= min_lat) and (further_education_result[j][2]['lng'] <= max_lng) and (further_education_result[j][2]['lng'] >= min_lng):
+        #create the KML
         point = kml.newpoint()
         point.name = further_education_result[j][0]
         point.description = further_education_result[j][0]
         point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
         point.style.iconstyle.icon.href = icon_style[4]
+        #Create the plot
+        further_education_postcode = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
+        further_education_ward.insert(0,doogal_api.get_postcode_info(further_education_postcode))
+        for j in range (0,len(wards[0])):
+            if further_education_ward[0][6] == wards[0][j]:
+                further_education_count[j] +=1
     
 for name, postcode, rating, ward, school_coordinates in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
     if (lat <= max_lat) and (lat >= min_lat) and (lng <= max_lng) and (lng >= min_lng):
+        #create the KML
         point = kml.newpoint()
         point.name = name
         point.description = ofsted_rating[int(rating)-1]
         point.coords = [school_coordinates]
         point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
+        #Create the plot
         school_ward.insert(0,doogal_api.get_postcode_info(postcode))
         if int(rating) == 1:
             for j in range (0,len(wards[0])):
@@ -77,9 +91,8 @@ for name, postcode, rating, ward, school_coordinates in school_data:
                 if school_ward[0][6] == wards[0][j]:
                     school_count_poor[j] +=1
 
-    
-kml.save(district + "_education" + ".kml")
-        
+#Save and zip the KML/KMZ  
+kml.save(district + "_education" + ".kml")      
 zf = zipfile.ZipFile(district + "_education" + ".kmz", "w")
 zf.write("images/icon-1.png")
 zf.write("images/icon-2.png")
@@ -89,7 +102,17 @@ zf.write("images/icon-10.png")
 zf.write(district + "_education" + ".kml")
 zf.close()
 
-#plot the data
+#plot the further education data
+plt.barh(y_pos, school_count_outstanding, color = 'blue', edgecolor='black')
+plt.yticks(y_pos,wards[0])
+plt.gca().invert_yaxis()
+plt.xlabel("Number of Further Education Institutions")
+plt.title(district + " Further Education Institutions")
+plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
+plt.clf()
+
+
+#plot the school data
 p1 = plt.barh(y_pos, school_count_poor, color = 'red', edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding)
 p2 = plt.barh(y_pos, school_count_requires_improvement, color = 'yellow', edgecolor='black', left=school_count_good+school_count_outstanding)
 p3 = plt.barh(y_pos, school_count_good, color = 'springgreen', edgecolor='black', left=school_count_outstanding)
