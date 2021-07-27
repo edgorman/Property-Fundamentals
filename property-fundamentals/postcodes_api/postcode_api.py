@@ -37,7 +37,8 @@ class API:
         headers = {'Content-type': 'application/json'}
         r = requests.get(self.url + lon + '&lat=' + lat, headers=headers)
         json_object = json.loads(r.content)
-        for j in range (0,9):
-            if isinstance (json_object["result"][j]["postcode"], type(str)):
+        for j in range (0,len(json_object)):
+            #if not isinstance (json_object["result"][j]["postcode"], type(None)):
+            if json_object["result"] is not None:
                 return json_object["result"][j]["postcode"]
-                j=10
+                j=len(json_object) 

@@ -57,11 +57,13 @@ for j in range (0,len(further_education_result)):
         point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
         point.style.iconstyle.icon.href = icon_style[4]
         #Create the plot
+        print(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
         further_education_postcode = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
-        further_education_ward.insert(0,doogal_api.get_postcode_info(further_education_postcode))
-        for j in range (0,len(wards[0])):
-            if further_education_ward[0][6] == wards[0][j]:
-                further_education_count[j] +=1
+        if further_education_postcode is not None:
+            further_education_ward.insert(0,doogal_api.get_postcode_info(further_education_postcode))
+            for j in range (0,len(wards[0])):
+                if further_education_ward[0][6] == wards[0][j]:
+                    further_education_count[j] +=1
     
 for name, postcode, rating, ward, school_coordinates in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
@@ -108,7 +110,7 @@ plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Further Education Institutions")
 plt.title(district + " Further Education Institutions")
-plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
+plt.savefig(district + "_further_education" + ".png", bbox_inches='tight')#, transparent=True)
 plt.clf()
 
 
