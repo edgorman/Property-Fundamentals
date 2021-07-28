@@ -49,20 +49,19 @@ further_education_result = google_api.nearby_search(
 
 for j in range (0,len(further_education_result)):
     if (further_education_result[j][2]['lat'] <= max_lat) and (further_education_result[j][2]['lat'] >= min_lat) and (further_education_result[j][2]['lng'] <= max_lng) and (further_education_result[j][2]['lng'] >= min_lng):
-        #create the KML
-        point = kml.newpoint()
-        point.name = further_education_result[j][0]
-        point.description = further_education_result[j][0]
-        point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
-        point.style.iconstyle.icon.href = icon_style[4]
         #Create the plot
-        print(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
         further_education_ward = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
-        print(further_education_ward)
         if further_education_ward is not None:
-            for j in range (0,len(wards[0])):
-                if further_education_ward == wards[0][j]:
-                    further_education_count[j] +=1
+            for i in range (0,len(wards[0])):
+                if further_education_ward == wards[0][i]:
+                    further_education_count[i] +=1
+            #create the KML
+            point = kml.newpoint()
+            point.name = further_education_result[j][0]
+            point.description = further_education_result[j][0]
+            point.coords = [(further_education_result[j][2]['lng'],further_education_result[j][2]['lat'])]
+            point.style.iconstyle.icon.href = icon_style[4]
+
     
 for name, postcode, rating, ward, school_coordinates in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
@@ -109,7 +108,7 @@ plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Further Education Institutions")
 plt.title(district + " Further Education Institutions")
-plt.savefig(district + "_further_education" + ".png", bbox_inches='tight')#, transparent=True)
+plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
 
