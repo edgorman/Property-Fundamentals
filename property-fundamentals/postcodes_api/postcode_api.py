@@ -40,5 +40,5 @@ class API:
         for j in range (0,len(json_object)):
             #if not isinstance (json_object["result"][j]["postcode"], type(None)):
             if json_object["result"] is not None:
-                return json_object["result"][j]["postcode"]
+                return json_object["result"][j]["admin_ward"]
                 j=len(json_object) 

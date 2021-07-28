@@ -30,7 +30,6 @@ kml = simplekml.Kml()
 y_pos = np.arange(len(wards[0]))
 point = []
 school_ward = []
-further_education_ward = []
 icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png','images/icon-10.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
 further_education_count = np.array([0]*len(wards[0]))
@@ -58,11 +57,11 @@ for j in range (0,len(further_education_result)):
         point.style.iconstyle.icon.href = icon_style[4]
         #Create the plot
         print(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
-        further_education_postcode = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
-        if further_education_postcode is not None:
-            further_education_ward.insert(0,doogal_api.get_postcode_info(further_education_postcode))
+        further_education_ward = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
+        print(further_education_ward)
+        if further_education_ward is not None:
             for j in range (0,len(wards[0])):
-                if further_education_ward[0][6] == wards[0][j]:
+                if further_education_ward == wards[0][j]:
                     further_education_count[j] +=1
     
 for name, postcode, rating, ward, school_coordinates in school_data:
@@ -105,7 +104,7 @@ zf.write(district + "_education" + ".kml")
 zf.close()
 
 #plot the further education data
-plt.barh(y_pos, school_count_outstanding, color = 'blue', edgecolor='black')
+plt.barh(y_pos, further_education_count, color = 'blue', edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Further Education Institutions")
