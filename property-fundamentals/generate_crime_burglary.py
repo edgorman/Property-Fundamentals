@@ -3,6 +3,7 @@ from doogal_api.api import API as DOOGAL_API
 from postcodes_api.postcode_api import API as POSTCODE_API
 from development_district import district
 from development_district import wards
+from development_district import households
 from development_district import max_lat
 from development_district import min_lat
 from development_district import max_lng
@@ -97,13 +98,19 @@ zf.write("images/icon-14.png")
 zf.write(district + "_crime_burglary" + ".kml")
 zf.close()
 
+#Calculate the burglaies per 1000 households per ward
+burglaries_per_household = np.divide(crime_count,households)
+print(burglaries_per_household)
+burglaries_per_1000_households = [x*1000 for x in burglaries_per_household]
+print(burglaries_per_1000_households)
+
 #plot the crime data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, crime_count, color = 'red', edgecolor='black')
+plt.barh(y_pos, burglaries_per_1000_households, color = 'red', edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
-plt.xlabel("Number of Burglaries")
+plt.xlabel("Number of Burglaries per 100 Households")
 plt.title(district + " Burglaries in the last 3 Months",weight='bold')
 plt.savefig(district + "_burglaries" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()

@@ -4,6 +4,8 @@ from math import sin, cos, sqrt, atan2, radians
 ofns_api = OFNS_API()
 doogal_api = DOOGAL_API()
 import geopy.distance
+import matplotlib.pyplot as plt
+import numpy as np
 
 coordinates = []
 wards = []
@@ -20,11 +22,18 @@ district = input("Please type an district and press enter:")
 #Get the wards within a district
 wards.append(ofns_api.get_wards_from_district(district))
 
-#Get the wards within a district
+#Get the ward codes within a district
 for j in range (0,len(wards[0])):
     ward_codes.append(ofns_api.get_ward_codes_from_district(district, wards[0][j]))
     
 print(ward_codes)
+    
+#Get the households within a district
+households = np.empty(len(wards[0]), dtype = int)
+for j in range (0,len(wards[0])):
+    households[j] = ofns_api.get_households_from_district(district, wards[0][j])
+    
+print(households)
 
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):

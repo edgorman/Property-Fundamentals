@@ -18,15 +18,17 @@ class API:
         self.output = 'pjson'
         self.county_district_dict = defaultdict(set)
         self.district_ward_dict = defaultdict(dict)
+        self.district_ward_household_dict = defaultdict(dict)
 
         # Load data.csv file
         with open(__file__ + '\\..\\..\\..\\..\\data\\external\\admin_areas\\data.csv') as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
             # For each row in the csv file
-            for county_code, county, district_code, district, ward_code, ward, _, _ in csv_results:
+            for county_code, county, district_code, district, ward_code, ward, population, households in csv_results:
                 self.county_district_dict[county].add(district)
                 self.district_ward_dict[district][ward] = ward_code
+                self.district_ward_household_dict[district][ward] = households
 
 
     def get_counties(self):
@@ -114,6 +116,30 @@ class API:
         
         return self.district_ward_dict[district][ward]
     
+
+    def get_households_from_district(self, district, ward):
+        '''
+        Returns the number of households that are present within a given district.
+
+                Parameters:
+                    district (str): The district to search.
+                    ward (str): The ward to search.
+                
+                Returns:
+                    households (list): The number of households
+        '''
+        if district == None:
+            raise Exception("Error: Need to specify a district.")
+        elif district not in self.district_ward_household_dict.keys():
+            raise Exception("Error: Could not find district '" + district + "' in the csv.")
+            
+        if ward == None:
+            raise Exception("Error: Need to specify a ward.")
+        elif ward not in self.district_ward_household_dict[district].keys():
+            raise Exception("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
+        
+        return self.district_ward_household_dict[district][ward]
+
 
     def request(self, endpoint, parameters={}):
         '''
