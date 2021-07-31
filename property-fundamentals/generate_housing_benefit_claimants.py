@@ -60,11 +60,13 @@ for j in range(0,len(coordinates)):
 kml.save(district + "_housing_benefit" + ".kml")
 
 #plot the data
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
 plt.barh(y_pos, housing_benefit, color= price_plot, edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Claimants")
-plt.title(district + " Housing Benefit Claimants")
-plt.savefig(district + "_housing_benefit_claimants" + ".png", bbox_inches='tight')
+plt.title(district + " Housing Benefit Claimants", weight='bold')
+plt.savefig(district + "_housing_benefit_claimants" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

@@ -60,12 +60,12 @@ for j in range(0,len(coordinates)):
 kml.save(district + "_universal_credit" + ".kml")
 
 #plot the data
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
 plt.barh(y_pos, universal_credit, color= price_plot, edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Households")
-plt.title(district + " Households on Universal Credit")
-#plt.rcParams["figure.figsize"] = (20,3)
-#plt.savefig(district + "_Households_on_universal_credit" + ".png")
-plt.savefig(district + "_Households_on_universal_credit" + ".png", bbox_inches='tight')
+plt.title(district + " Households on Universal Credit", weight='bold')
+plt.savefig(district + "_Households_on_universal_credit" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()

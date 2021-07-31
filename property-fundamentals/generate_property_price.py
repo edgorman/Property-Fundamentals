@@ -55,10 +55,12 @@ for n in range (0,len(house_types[0])):
     kml.save(district + "_mean_" + house_types[0][n] + ".kml")
     
     #plot the data
+    plt.rcParams["font.weight"] = "bold"
+    plt.rcParams["axes.labelweight"] = "bold"
     plt.barh(y_pos, price_mean[n], color= price_plot, edgecolor='black')
     plt.yticks(y_pos,wards[0])
     plt.gca().invert_yaxis()
     plt.xlabel("(£)")
-    plt.title(district + " Ward Mean Sold Price (" + house_types[0][n] + ")")
-    plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight')
+    plt.title(district + " Ward Mean Sold Price (" + house_types[0][n] + ")", weight='bold')
+    plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
     plt.clf()

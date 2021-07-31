@@ -103,16 +103,20 @@ zf.write(district + "_education" + ".kml")
 zf.close()
 
 #plot the further education data
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
 plt.barh(y_pos, further_education_count, color = 'blue', edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Further Education Institutions")
-plt.title(district + " Further Education Institutions")
+plt.title(district + " Further Education Institutions", weight='bold')
 plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
 
 #plot the school data
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
 p1 = plt.barh(y_pos, school_count_poor, color = 'red', edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding)
 p2 = plt.barh(y_pos, school_count_requires_improvement, color = 'yellow', edgecolor='black', left=school_count_good+school_count_outstanding)
 p3 = plt.barh(y_pos, school_count_good, color = 'springgreen', edgecolor='black', left=school_count_outstanding)
@@ -120,7 +124,7 @@ p4 = plt.barh(y_pos, school_count_outstanding, color = 'green', edgecolor='black
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Schools")
-plt.title(district + " Primary and Secondary School Ofsted Rating")
+plt.title(district + " Primary and Secondary School Ofsted Rating", weight='bold')
 plt.legend([p4,p3,p2,p1],["Outstanding", "Good", "Requires Improvement", "Poor"], loc="lower center", bbox_to_anchor=(0.5,-0.4), framealpha=0)
 plt.savefig(district + "_ofsted_rating" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
