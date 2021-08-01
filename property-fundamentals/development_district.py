@@ -12,6 +12,8 @@ wards = []
 ward_codes = []
 lat_list = []
 lng_list = []
+households = []
+population = []
 
 #Show the districts available
 print(ofns_api.get_districts())
@@ -29,11 +31,18 @@ for j in range (0,len(wards[0])):
 print(ward_codes)
     
 #Get the households within a district
-households = np.empty(len(wards[0]), dtype = int)
+#households = np.empty(len(wards[0]), dtype = int)
 for j in range (0,len(wards[0])):
-    households[j] = ofns_api.get_households_from_district(district, wards[0][j])
+    households.append(ofns_api.get_households_from_district(district, wards[0][j]))
     
 print(households)
+
+#Get the population within a district
+#population = np.empty(len(wards[0]), dtype = int)
+for j in range (0,len(wards[0])):
+    population.append(ofns_api.get_population_from_district(district, wards[0][j]))
+
+print(population)
 
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):

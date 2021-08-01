@@ -5,6 +5,7 @@ from development_district import wards
 from development_district import coordinates
 from development_district import district
 from development_district import ward_codes
+from development_district import population
 from statxplore_api.api import API as STATXPLORE_API
 import json
 
@@ -15,12 +16,13 @@ colour_plot = ['#FF001419', '#FF00141E', '#FF001423', '#FF001428', '#FF00142D', 
 
 print(ward_codes)
 
-universal_credit = []
+housing_benefit = []
+housing_benefit_percentage = []
 pol = []
 colour_scale = []
 price_plot = []
 y_pos = np.arange(len(wards[0]))
-universal_credit_scale = []
+housing_benefit_percentage_scale = []
 statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
 
 #Generate / Draw polygons
@@ -30,42 +32,44 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
     
-    universal_credit.append(statxplore_api.get_universal_credit('table', ward_codes[h]))
+    housing_benefit.append(statxplore_api.get_housing_benefit('table', ward_codes[h]))
+    housing_benefit_percentage.append((int(housing_benefit[h])*100) / int(population[h]))
     
-print(universal_credit)
+print(housing_benefit_percentage)
 
 #Generate price scaling information
-max_universal_credit = max(universal_credit)
-min_universal_credit = min(universal_credit)
-delta = max_universal_credit - min_universal_credit
+max_housing_benefit_percentage = max(housing_benefit_percentage)
+min_housing_benefit_percentage = min(housing_benefit_percentage)
+delta = max_housing_benefit_percentage - min_housing_benefit_percentage
 step = delta / (len(colour)-1)
 
 #Normalise the colours in the price range
 for i in range(0,len(colour)):
-    colour_scale.insert(i,int(min_universal_credit + (i*step)))
+    colour_scale.insert(i,int(min_housing_benefit_percentage + (i*step)))
 
 #Assign a colour to the normalised house prices
 for j in range(0,len(coordinates)):
-    universal_credit_scale.append([])
+    housing_benefit_percentage_scale.append([])
     for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= universal_credit[j]):
-            universal_credit_scale.insert(j,colour[k])
+        if (colour_scale[k] >= int(housing_benefit_percentage[j])):
+            housing_benefit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
     #Add price and colour to the polygons
-    pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(int(universal_credit[j])) + " Households on universal credit"
-    pol[j].style.polystyle.color = universal_credit_scale[j]
+    pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(int(housing_benefit_percentage[j])) + "% of people claim Housing Benefits"
+    pol[j].style.polystyle.color = housing_benefit_percentage_scale[j]
     
 #Save the polygons to a KML file
-kml.save(district + "_universal_credit" + ".kml")
+kml.save(district + "_housing_benefit_percentage" + ".kml")
 
 #plot the data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, universal_credit, color= price_plot, edgecolor='black')
+plt.barh(y_pos, housing_benefit_percentage, color= price_plot, edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
-plt.xlabel("Number of Households")
-plt.title(district + " Households on Universal Credit", weight='bold')
-plt.savefig(district + "_Households_on_universal_credit" + ".png", bbox_inches='tight', transparent=True)
+plt.xlabel("Percentage (%)")
+plt.title(district + " % of people who claim Housing Benefits", weight='bold')
+plt.savefig(district + "_housing_benefit_claimants_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
+
