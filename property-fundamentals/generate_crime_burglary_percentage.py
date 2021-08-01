@@ -26,7 +26,8 @@ kml = simplekml.Kml()
 today = datetime.date.today()
 point = []
 icon_style = ['images/icon-14.png']
-crime_count = np.array([0]*len(wards[0]))
+burglary_count = np.array([0]*len(wards[0]))
+burglary_percentage = []
 
 month1 = (today.month - 5) % 12
 year1 = today.year + ((today.month - 5) // 12)
@@ -47,11 +48,11 @@ for crime in results1:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         if crime['category'] == 'burglary':
             #Create the plot data
-            crime_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if crime_ward is not None:
+            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+            if burglary_ward is not None:
                 for i in range (0,len(wards[0])):
-                    if crime_ward == wards[0][i]:
-                        crime_count[i] +=1
+                    if burglary_ward == wards[0][i]:
+                        burglary_count[i] +=1
                         #create the KML data
                         point = kml.newpoint()
                         point.name = crime['category']
@@ -63,11 +64,11 @@ for crime in results2:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         if crime['category'] == 'burglary':
             #Create the plot data
-            crime_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if crime_ward is not None:
+            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+            if burglary_ward is not None:
                 for i in range (0,len(wards[0])):
-                    if crime_ward == wards[0][i]:
-                        crime_count[i] +=1
+                    if burglary_ward == wards[0][i]:
+                        burglary_count[i] +=1
                         #create the KML data
                         point = kml.newpoint()
                         point.name = crime['category']
@@ -79,11 +80,11 @@ for crime in results3:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         if crime['category'] == 'burglary':
             #Create the plot data
-            crime_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if crime_ward is not None:
+            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+            if burglary_ward is not None:
                 for i in range (0,len(wards[0])):
-                    if crime_ward == wards[0][i]:
-                        crime_count[i] +=1
+                    if burglary_ward == wards[0][i]:
+                        burglary_count[i] +=1
                         #create the KML data
                         point = kml.newpoint()
                         point.name = crime['category']
@@ -92,25 +93,23 @@ for crime in results3:
                         point.style.iconstyle.icon.href = icon_style[0]
 
 #Save and zip the KML/KMZ
-kml.save(district + "_crime_burglary" + ".kml")
-zf = zipfile.ZipFile(district + "_crime_burglary" + ".kmz", "w")
+kml.save(district + "_crime_burglary_percentage" + ".kml")
+zf = zipfile.ZipFile(district + "_crime_burglary_percentage" + ".kmz", "w")
 zf.write("images/icon-14.png")
-zf.write(district + "_crime_burglary" + ".kml")
+zf.write(district + "_crime_burglary_percentage" + ".kml")
 zf.close()
 
 #Calculate the burglaies per 1000 households per ward
-burglaries_per_household = np.divide(crime_count,households)
-print(burglaries_per_household)
-burglaries_per_1000_households = [x*1000 for x in burglaries_per_household]
-print(burglaries_per_1000_households)
+for i in range (0,len(wards[0])):
+    burglary_percentage.append((int(burglary_count[i])*100) / int(households[i]))
 
 #plot the crime data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, burglaries_per_1000_households, color = 'red', edgecolor='black')
+plt.barh(y_pos, burglary_percentage, color = 'red', edgecolor='black')
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
-plt.xlabel("Number of Burglaries per 100 Households")
-plt.title(district + " Burglaries in the last 3 Months",weight='bold')
-plt.savefig(district + "_burglaries" + ".png", bbox_inches='tight', transparent=True)
+plt.xlabel("Percentage (%)")
+plt.title(district + " % of properties burgled in the last 3 Months",weight='bold')
+plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
