@@ -40,57 +40,54 @@ print((str(year1) + "-" + (f"{month1:02}")))
 print((str(year2) + "-" + (f"{month2:02}")))
 print((str(year3) + "-" + (f"{month3:02}")))
 
-results1 = police_api.get_street_level_crimes(centre_lat, centre_lng, distance, (str(year1) + "-" + (f"{month1:02}")))
-results2 = police_api.get_street_level_crimes(centre_lat, centre_lng, distance, (str(year2) + "-" + (f"{month2:02}")))
-results3 = police_api.get_street_level_crimes(centre_lat, centre_lng, distance, (str(year3) + "-" + (f"{month3:02}")))
+results1 = police_api.get_burglary_street_level_crimes(centre_lat, centre_lng, distance, (str(year1) + "-" + (f"{month1:02}")))
+results2 = police_api.get_burglary_street_level_crimes(centre_lat, centre_lng, distance, (str(year2) + "-" + (f"{month2:02}")))
+results3 = police_api.get_burglary_street_level_crimes(centre_lat, centre_lng, distance, (str(year3) + "-" + (f"{month3:02}")))
 
 for crime in results1:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
-        if crime['category'] == 'burglary':
-            #Create the plot data
-            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if burglary_ward is not None:
-                for i in range (0,len(wards[0])):
-                    if burglary_ward == wards[0][i]:
-                        burglary_count[i] +=1
-                        #create the KML data
-                        point = kml.newpoint()
-                        point.name = crime['category']
-                        point.description = crime['month']
-                        point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
-                        point.style.iconstyle.icon.href = icon_style[0]
+        #Create the plot data
+        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    burglary_count[i] +=1
+                    #create the KML data
+                    point = kml.newpoint()
+                    point.name = crime['category']
+                    point.description = crime['month']
+                    point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
+                    point.style.iconstyle.icon.href = icon_style[0]
             
 for crime in results2:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
-        if crime['category'] == 'burglary':
-            #Create the plot data
-            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if burglary_ward is not None:
-                for i in range (0,len(wards[0])):
-                    if burglary_ward == wards[0][i]:
-                        burglary_count[i] +=1
-                        #create the KML data
-                        point = kml.newpoint()
-                        point.name = crime['category']
-                        point.description = crime['month']
-                        point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
-                        point.style.iconstyle.icon.href = icon_style[0]
+        #Create the plot data
+        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    burglary_count[i] +=1
+                    #create the KML data
+                    point = kml.newpoint()
+                    point.name = crime['category']
+                    point.description = crime['month']
+                    point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
+                    point.style.iconstyle.icon.href = icon_style[0]
 
 for crime in results3:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
-        if crime['category'] == 'burglary':
-            #Create the plot data
-            burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
-            if burglary_ward is not None:
-                for i in range (0,len(wards[0])):
-                    if burglary_ward == wards[0][i]:
-                        burglary_count[i] +=1
-                        #create the KML data
-                        point = kml.newpoint()
-                        point.name = crime['category']
-                        point.description = crime['month']
-                        point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
-                        point.style.iconstyle.icon.href = icon_style[0]
+        #Create the plot data
+        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    burglary_count[i] +=1
+                    #create the KML data
+                    point = kml.newpoint()
+                    point.name = crime['category']
+                    point.description = crime['month']
+                    point.coords = [(crime['location']['longitude'],crime['location']['latitude'])]
+                    point.style.iconstyle.icon.href = icon_style[0]
 
 #Save and zip the KML/KMZ
 kml.save(district + "_crime_burglary_percentage" + ".kml")
