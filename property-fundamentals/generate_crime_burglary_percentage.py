@@ -103,10 +103,10 @@ for i in range (0,len(wards[0])):
 #plot the crime data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, burglary_percentage, color = 'red', edgecolor='black')
+plt.barh(y_pos, burglary_percentage, color = (0.7578125,0.09375,0.35546875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Percentage (%)")
-plt.title(district + " % of properties burgled in the last 3 Months",weight='bold')
+plt.title(district + " % of Properties Burgled in the Last 3 Months",weight='bold')
 plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()

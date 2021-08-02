@@ -105,7 +105,7 @@ zf.close()
 #plot the further education data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, further_education_count, color = 'blue', edgecolor='black')
+plt.barh(y_pos, further_education_count, color = (0.1015625,0.13671875,0.4921875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Further Education Institutions")
@@ -117,10 +117,10 @@ plt.clf()
 #plot the school data
 plt.rcParams["font.weight"] = "bold"
 plt.rcParams["axes.labelweight"] = "bold"
-p1 = plt.barh(y_pos, school_count_poor, color = 'red', edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding)
-p2 = plt.barh(y_pos, school_count_requires_improvement, color = 'yellow', edgecolor='black', left=school_count_good+school_count_outstanding)
-p3 = plt.barh(y_pos, school_count_good, color = 'springgreen', edgecolor='black', left=school_count_outstanding)
-p4 = plt.barh(y_pos, school_count_outstanding, color = 'green', edgecolor='black')
+p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding) #color = (R,G,B)
+p2 = plt.barh(y_pos, school_count_requires_improvement, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good+school_count_outstanding) #color = (R,G,B)
+p3 = plt.barh(y_pos, school_count_good, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding) #color = (R,G,B)
+p4 = plt.barh(y_pos, school_count_outstanding, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Number of Schools")

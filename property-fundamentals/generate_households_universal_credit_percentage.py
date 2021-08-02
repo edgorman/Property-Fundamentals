@@ -77,7 +77,7 @@ plt.barh(y_pos, universal_credit_percentage, color= price_plot, edgecolor='black
 plt.yticks(y_pos,wards[0])
 plt.gca().invert_yaxis()
 plt.xlabel("Percentage (%)")
-plt.title(district + " Percentage of Households on Universal Credit ", weight='bold')
+plt.title(district + " % of Households on Universal Credit ", weight='bold')
 plt.savefig(district + "_Households_on_universal_credit_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
