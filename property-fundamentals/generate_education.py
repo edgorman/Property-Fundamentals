@@ -92,7 +92,7 @@ for name, postcode, rating, ward, school_coordinates in school_data:
                     school_count_poor[j] +=1
 
 #Save and zip the KML/KMZ  
-kml.save(district + "_education" + ".kml")      
+kml.save(district + "_education" + ".kml")
 zf = zipfile.ZipFile(district + "_education" + ".kmz", "w")
 zf.write("images/icon-1.png")
 zf.write("images/icon-2.png")
