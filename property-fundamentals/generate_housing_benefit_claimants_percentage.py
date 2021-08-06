@@ -24,6 +24,9 @@ price_plot = []
 y_pos = np.arange(len(wards[0]))
 housing_benefit_percentage_scale = []
 statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
+yaxis = []
+xaxis = []
+colouraxis = []
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -62,14 +65,25 @@ for j in range(0,len(coordinates)):
 #Save the polygons to a KML file
 kml.save(district + "_housing_benefit_percentage" + ".kml")
 
+#Arrange the data for the plot
+yaxis_order = sorted(range(len(housing_benefit_percentage)), key=lambda k: housing_benefit_percentage[k])
+print(yaxis_order)
+yaxis.clear()
+xaxis.clear()
+colouraxis.clear()
+for j in range(0,len(wards[0])):
+    a = yaxis_order[j]
+    yaxis.insert(j,wards[0][a])
+    xaxis.insert(j,housing_benefit_percentage[a])
+    colouraxis.insert(j,price_plot[a])
+
 #plot the data
-plt.rcParams["font.weight"] = "bold"
-plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, housing_benefit_percentage, color= price_plot, edgecolor='black')
-plt.yticks(y_pos,wards[0])
-plt.gca().invert_yaxis()
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.rcParams["figure.dpi"] = 200
+plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
+plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " % of people who claim Housing Benefits", weight='bold')
+plt.title(district + ": % of people who claim Housing Benefits")
 plt.savefig(district + "_housing_benefit_claimants_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

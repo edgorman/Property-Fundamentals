@@ -24,6 +24,9 @@ price_plot = []
 y_pos = np.arange(len(wards[0]))
 universal_credit_percentage_scale = []
 statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_api/key.txt")
+yaxis = []
+xaxis = []
+colouraxis = []
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -70,14 +73,25 @@ for j in range(0,len(coordinates)):
 #Save the polygons to a KML file
 kml.save(district + "_universal_credit_percentage" + ".kml")
 
+#Arrange the data for the plot
+yaxis_order = sorted(range(len(universal_credit_percentage)), key=lambda k: universal_credit_percentage[k])
+print(yaxis_order)
+yaxis.clear()
+xaxis.clear()
+colouraxis.clear()
+for j in range(0,len(wards[0])):
+    a = yaxis_order[j]
+    yaxis.insert(j,wards[0][a])
+    xaxis.insert(j,universal_credit_percentage[a])
+    colouraxis.insert(j,price_plot[a])
+
 #plot the data
-plt.rcParams["font.weight"] = "bold"
-plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, universal_credit_percentage, color= price_plot, edgecolor='black')
-plt.yticks(y_pos,wards[0])
-plt.gca().invert_yaxis()
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.rcParams["figure.dpi"] = 200
+plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
+plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " % of Households on Universal Credit ", weight='bold')
+plt.title(district + ": % of Households on Universal Credit")
 plt.savefig(district + "_Households_on_universal_credit_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

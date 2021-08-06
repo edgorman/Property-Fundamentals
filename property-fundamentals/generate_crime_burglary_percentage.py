@@ -28,6 +28,8 @@ point = []
 icon_style = ['images/icon-14.png']
 burglary_count = np.array([0]*len(wards[0]))
 burglary_percentage = []
+yaxis = []
+xaxis = []
 
 month1 = (today.month - 5) % 12
 year1 = today.year + ((today.month - 5) // 12)
@@ -99,14 +101,24 @@ zf.close()
 #Calculate the burglaies per 1000 households per ward
 for i in range (0,len(wards[0])):
     burglary_percentage.append((int(burglary_count[i])*100) / int(households[i]))
+    
+    
+#Arrange the data for the plot
+yaxis_order = sorted(range(len(burglary_percentage)), key=lambda k: burglary_percentage[k])
+print(yaxis_order)
+yaxis.clear()
+xaxis.clear()
+for j in range(0,len(wards[0])):
+    a = yaxis_order[j]
+    yaxis.insert(j,wards[0][a])
+    xaxis.insert(j,burglary_percentage[a])
 
 #plot the crime data
-plt.rcParams["font.weight"] = "bold"
-plt.rcParams["axes.labelweight"] = "bold"
-plt.barh(y_pos, burglary_percentage, color = (0.7578125,0.09375,0.35546875), edgecolor='black') #color = (R,G,B)
-plt.yticks(y_pos,wards[0])
-plt.gca().invert_yaxis()
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.rcParams["figure.dpi"] = 200
+plt.barh(y_pos, xaxis, color = (0.7578125,0.09375,0.35546875), edgecolor='black') #color = (R,G,B)
+plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " % of Properties Burgled in the Last 3 Months",weight='bold')
+plt.title(district + ": % of Properties Burgled in the Last 3 Months")
 plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()

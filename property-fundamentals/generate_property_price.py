@@ -83,5 +83,4 @@ for n in range (0,len(house_types[0])):
     plt.title(district + ": Mean Sold Price (" + house_types[0][n] + ")") #weight='bold'
     plt.tight_layout()
     plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
-    #plt.savefig(district + "_mean_" + house_types[0][n] + ".png", transparent=True)
     plt.clf()
