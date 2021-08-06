@@ -77,6 +77,7 @@ for n in range (0,len(house_types[0])):
     plt.rcParams["figure.figsize"] = (4.5,5)
     plt.rcParams["figure.dpi"] = 200
     plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
+    plt.gca().set_xlim(left=xaxis[0]-10000)
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
     plt.title(district + ": Mean Sold Price (" + house_types[0][n] + ")") #weight='bold'
