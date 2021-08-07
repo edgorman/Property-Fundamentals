@@ -42,7 +42,6 @@ class Population:
         webpage = requests.get(self.webpage_url)
         dataset1 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
         dataset2 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(2)
-        print(self.zippage_url + "/" + dataset1 + "/" + dataset2 + '.zip')
 
         # Check if parent folder exists
         if not os.path.exists(self.dataset_dest):

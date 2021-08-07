@@ -1,8 +1,10 @@
 from govuk_api.ofns.api import API as OFNS_API
 from doogal_api.api import API as DOOGAL_API
+from govuk_ws.ofns.population import Population
 from math import sin, cos, sqrt, atan2, radians
 ofns_api = OFNS_API()
 doogal_api = DOOGAL_API()
+population_api = Population()
 import geopy.distance
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,10 +39,10 @@ for j in range (0,len(wards[0])):
     
 print(households)
 
-#Get the population within a district
+#Get the population within a ward
 #population = np.empty(len(wards[0]), dtype = int)
 for j in range (0,len(wards[0])):
-    population.append(ofns_api.get_population_from_district(district, wards[0][j]))
+    population.append(population_api.get_population(ward_codes[j]))
 
 print(population)
 
