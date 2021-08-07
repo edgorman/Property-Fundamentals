@@ -12,6 +12,8 @@
 data/interim/google_requests/data.json
 *pcd11_par11_wd11_lad11_ew_lu.csv
 *postcodes.csv
+data/external/population/*
+!data/external/population/README.md
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
