@@ -25,26 +25,18 @@ class Population:
         self.webpage_url = 'https://www.ons.gov.uk/' + self.dataset_path
 
         self.dataset_fold = self._update_dataset()
-        self.district_ward_values = {}
+        self.ward_code_values = {}
 
         # Load data.csv file
         with open(os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'population', self.dataset_fold, 'data.csv'))) as csv_file:
             csv_results = list(csv.reader(csv_file, delimiter=','))[1:]
 
-            For each row in the csv file
-            # for _, district, _, ward, a, d, s, t, f in csv_results:
-                # if district not in self.district_ward_values.keys():
-                    # self.district_ward_values[district] = {}
+            # For each row in the csv file
+            for ward_code, ward_name, population in csv_results:
+                if ward_code not in self.ward_code_values.keys():
+                    self.ward_code_values[ward_code] = {}
 
-                # if ward not in self.district_ward_values[district].keys():
-                    # self.district_ward_values[district][ward] = {}
-
-                # self.district_ward_values[district][ward]["all"] = a
-                # self.district_ward_values[district][ward]["detached"] = d
-                # self.district_ward_values[district][ward]["semi-detached"] = s
-                # self.district_ward_values[district][ward]["terraced"] = t
-                # self.district_ward_values[district][ward]["flats"] = f
-
+                self.ward_code_values[ward_code] = population
 
     def _update_dataset(self):
         webpage = requests.get(self.webpage_url)
@@ -91,72 +83,20 @@ class Population:
         return dataset1
 
 
-    # def get_districts(self):
-        # '''
-        # Returns the districts that are present in data.csv.
+    def get_population(self, ward_code):
+        '''
+        Returns the population that are present within a given ward.
 
-                # Parameters:
-                    # None
+                Parameters:
+                    ward_code (str): The ward code to get the population for.
                 
-                # Returns:
-                    # districts (list): List of districts in alphabetical order.
-        # '''
-        # return sorted(list(self.district_ward_values.keys()))
-    
-
-    # def get_wards(self, district):
-        # '''
-        # Returns the wards that are present within a given district.
-
-                # Parameters:
-                    # disctrict (str): The district to get wards for.
-                
-                # Returns:
-                    # wards (list): List of wards in alphabetical order.
-        # '''
-        # if district == None:
-            # raise Exception("Error: Need to specify a district.")
-        # elif district not in self.district_ward_values.keys():
-            # raise Exception("Error: Could not find district '" + district + "' in the csv.")
+                Returns:
+                    population (list): Population for the ward.
+        '''
+        if ward_code == None:
+            raise Exception("Error: Need to specify a ward code.")
+        elif ward_code not in self.ward_code_values.keys():
+            raise Exception("Error: Could not find ward code '" + ward_code + "' in the csv.")
         
-        # return sorted(list(self.district_ward_values[district].keys()))
+        return self.ward_code_values[ward_code]
     
-
-    # def get_house_types(self):
-        # '''
-        # Returns the types of housing that is present within data.csv.
-
-                # Parameters:
-                    # None
-                
-                # Returns:
-                    # types (list): List of house types.
-        # '''
-        # return ['all', 'detached', 'semi-detached', 'terraced', 'flats']
-
-
-    # def get_ward_data(self, district, ward, col):
-        # '''
-        # Returns the houses column for the district and ward passed.
-
-                # Parameters:
-                    # disctrict (str): The district to get data for.
-                    # ward (str): The ward to get data for.
-                    # col (str): The type of housing data.
-                
-                # Returns:
-                    # value (float): Value of the house type.
-        # '''
-        # if district == None:
-            # raise Exception("Error: Need to specify a district.")
-        # elif district not in self.district_ward_values.keys():
-            # raise Exception("Error: Could not find district '" + district + "' in the csv.")
-        # elif ward == None:
-            # raise Exception("Error: Need to specify a ward.")
-        # elif ward not in self.district_ward_values[district].keys():
-            # raise Exception("Error: Could not find ward '" + ward + "' in district + '" + district + "' in the csv.")
-        
-        # value = self.district_ward_values[district][ward][col]
-        # if value == ":":
-            # return None
-        # return value
