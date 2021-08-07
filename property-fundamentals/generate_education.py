@@ -39,10 +39,10 @@ school_count_requires_improvement = np.array([0]*len(wards[0]))
 school_count_poor = np.array([0]*len(wards[0]))
 yaxis = []
 xaxis = []
-xaxis_outstanding = np.array([0]*len(wards[0]))
-xaxis_good = np.array([0]*len(wards[0]))
-xaxis_requires_improvement = np.array([0]*len(wards[0]))
-xaxis_poor = np.array([0]*len(wards[0]))
+#xaxis_outstanding = np.array([0]*len(wards[0]))
+#xaxis_good = np.array([0]*len(wards[0]))
+#xaxis_requires_improvement = np.array([0]*len(wards[0]))
+#xaxis_poor = np.array([0]*len(wards[0]))
 
 school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_api, district)
 
@@ -128,26 +128,27 @@ plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', trans
 plt.clf()
 
 #Arrange the data for the plot
-yaxis_order = sorted(range(len(school_count_outstanding)), key=lambda k: school_count_outstanding[k])
-print(yaxis_order)
-yaxis.clear()
-for j in range(0,len(wards[0])):
-    a = yaxis_order[j]
-    yaxis.insert(j,wards[0][a])
-xaxis_outstanding = school_count_outstanding[yaxis_order]
-xaxis_good = school_count_good[yaxis_order]
-xaxis_requires_improvement = school_count_requires_improvement[yaxis_order]
-xaxis_poor = school_count_poor[yaxis_order]
+# yaxis_order = sorted(range(len(school_count_good)), key=lambda k: school_count_good[k])
+# print(yaxis_order)
+# yaxis.clear()
+# for j in range(0,len(wards[0])):
+    # a = yaxis_order[j]
+    # yaxis.insert(j,wards[0][a])
+# xaxis_outstanding = school_count_outstanding[yaxis_order]
+# xaxis_good = school_count_good[yaxis_order]
+# xaxis_requires_improvement = school_count_requires_improvement[yaxis_order]
+# xaxis_poor = school_count_poor[yaxis_order]
 
 #plot the school data
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
-p1 = plt.barh(y_pos, xaxis_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=xaxis_requires_improvement+xaxis_good+xaxis_outstanding) #color = (R,G,B)
-p2 = plt.barh(y_pos, xaxis_requires_improvement, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=xaxis_good+xaxis_outstanding) #color = (R,G,B)
-p3 = plt.barh(y_pos, xaxis_good, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=xaxis_outstanding) #color = (R,G,B)
-p4 = plt.barh(y_pos, xaxis_outstanding, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
-plt.yticks(y_pos,yaxis)
+p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding) #color = (R,G,B)
+p2 = plt.barh(y_pos, school_count_requires_improvement, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good+school_count_outstanding) #color = (R,G,B)
+p3 = plt.barh(y_pos, school_count_good, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding) #color = (R,G,B)
+p4 = plt.barh(y_pos, school_count_outstanding, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
+plt.yticks(y_pos,wards[0])
 plt.xlabel("Number of Schools")
+plt.gca().invert_yaxis()
 plt.title(district + ": Primary and Secondary School Ofsted Rating")
 plt.legend([p4,p3,p2,p1],["Outstanding", "Good", "Requires Improvement", "Poor"], loc="lower center", bbox_to_anchor=(0.5,-0.4), framealpha=0)
 plt.savefig(district + "_ofsted_rating" + ".png", bbox_inches='tight', transparent=True)
