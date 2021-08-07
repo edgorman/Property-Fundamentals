@@ -83,7 +83,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + ": % of people who claim Housing Benefits")
+plt.title(district + " " + statxplore_api.get_housing_benefit_date('table', ward_codes[h])[7:] + ": % of people who claim Housing Benefits")
 plt.savefig(district + "_housing_benefit_claimants_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

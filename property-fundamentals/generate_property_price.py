@@ -6,16 +6,18 @@ from development_district import coordinates
 from development_district import district
 from missing_data import price_mean
 from property_price import house_types
+from govuk_ws.ofns.meanprice import MeanPrice
+mean_price = MeanPrice()
 
 #Define variables / lists
 kml = simplekml.Kml()
 colour = ['19F07814', '1EF07814', '23F07814', '28F07814', '2DF07814', '32F07814', '37F07814', '3CF07814', '41F07814', '46F07814', '4BF07814', '50F07814', '55F07814' ,'5AF07814', '5FF07814', '64F07814', '69F07814', '6EF07814', '73F07814', '78F07814', '7DF07814', '82F07814', '87F07814', '8CF07814', '91F07814', '96F07814', '9BF07814', 'A0F07814', 'A5F07814', 'AAF07814']
 colour_plot = ['#1478F019', '#1478F01E', '#1478F023', '#1478F028', '#1478F02D', '#1478F032', '#1478F037', '#1478F03C', '#1478F041', '#1478F046', '#1478F04B', '#1478F050', '#1478F055' ,'#1478F05A', '#1478F05F', '#1478F064', '#1478F069', '#1478F06E', '#1478F073', '#1478F078', '#1478F07D', '#1478F082', '#1478F087', '#1478F08C', '#1478F091', '#1478F096', '#1478F09B', '#1478F0A0', '#1478F0A5', '#1478F0AA']
 
-font = {'family' : 'Arial',
-    'weight' : 'normal',
-    'size'   : 12}
-plt.rc('font', **font)
+# font = {'family' : 'Arial',
+    # 'weight' : 'normal',
+    # 'size'   : 12}
+# plt.rc('font', **font)
 
 pol = []
 colour_scale = []
@@ -25,6 +27,11 @@ y_pos = np.arange(len(wards[0]))
 yaxis = []
 xaxis = []
 colouraxis = []
+
+#Get date for plot title
+year = mean_price._update_dataset()[-2:]
+month = mean_price._update_dataset()[10:-4]
+month_cap = month.capitalize()[0:3]
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -76,11 +83,12 @@ for n in range (0,len(house_types[0])):
     #plot the data
     plt.rcParams["figure.figsize"] = (4.5,5)
     plt.rcParams["figure.dpi"] = 200
+    plt.locator_params(axis='x', nbins=4)
     plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
     plt.gca().set_xlim(left=xaxis[0]-10000)
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
-    plt.title(district + ": Mean Sold Price (" + house_types[0][n] + ")") #weight='bold'
+    plt.title(district + " (" + month_cap + "-" + year + "): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.tight_layout()
     plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
     plt.clf()
