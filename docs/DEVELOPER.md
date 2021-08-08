@@ -30,14 +30,30 @@ conda activate property-fundamentals
 * * * * *
 
 ## How to install modules and update the environment
-1. Once the environment is activated, install the module:
+1. Activate the environment
+```
+conda activate property-fundamentals
+```
+
+2. Install the module by inserting the name in the text below:
 ```
 conda install <module_name>
 ```
 
-2. Update the environment.yml file in the base directory:
+3. Update the environment.yml file in the base directory:
 ```
 conda env export --name property-fundamentals > environment.yml
 ```
 
 * * * * *
+
+## How to install an updated environment
+1. Activate the conda environment
+```
+conda activate property-fundamentals
+```
+
+2. Run the following command:
+```
+conda env update --file environment.yml --prune
+```

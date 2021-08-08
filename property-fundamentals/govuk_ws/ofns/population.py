@@ -7,6 +7,7 @@ import zipfile
 import requests
 from glob import glob
 import openpyxl
+import pandas as pd
 
 
 class Population:
@@ -58,25 +59,11 @@ class Population:
             zip_file = zipfile.ZipFile(io.BytesIO(response.content))
             zip_file.extractall(os.path.join(self.dataset_dest, dataset1))
             print("[DONE]", "Extracted zip folder to:\t\t", os.path.join(self.dataset_dest, dataset1))
+            
             path = glob(os.path.join(self.dataset_dest, dataset1) + "/*.xlsx")[0]
-
-            wb_obj = openpyxl.load_workbook(filename=path, read_only=True)
-
-            # Write data to csv in folder
-            with open(os.path.join(self.dataset_dest, dataset1, "data.csv"), mode='w', newline='') as csv_file:
-                csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                csv_writer.writerow(['Ward code', 'Ward Name', 'Population'])
-                sheet_name = wb_obj.get_sheet_names()[3]
-                sheet_data = wb_obj.get_sheet_by_name(sheet_name)
-                
-                cell_data = []
-                for row in range(6,sheet_data.max_row+1):
-                    a = row-6
-                    cell_data.append([])
-                    for column in "ABG":
-                        cell_name = "{}{}".format(column, row)
-                        cell_data[a].append(sheet_data[cell_name].value)
-                    csv_writer.writerow(cell_data[a])
+            data = pd.read_excel(path, engine='openpyxl', sheet_name=3, header=4)
+            data = data[['Ward Code 1', 'Ward Name 1', 'All Ages']]
+            data.to_csv(os.path.join(self.dataset_dest, dataset1, "data.csv"), index=False, index_label=False)
             print("[DONE]", "Finished creating csv at:\t", os.path.join(self.dataset_dest, dataset1))
 
         return dataset1
