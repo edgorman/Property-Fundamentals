@@ -63,6 +63,7 @@ for j in range (0,len(wards[0])):
             print("Using Doogal API")
             coordinates.append(doogal_api.get_ward_polygon(district, wards[0][j]))
 
+print(coordinates)
 
 #Seperate the Latitude and Longitude coordinates
 for j in range (0,len(wards[0])):
