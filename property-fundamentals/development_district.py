@@ -8,6 +8,11 @@ population_api = Population()
 import geopy.distance
 import matplotlib.pyplot as plt
 import numpy as np
+from govuk_api.ofns.api import NoDistrictError
+from govuk_api.ofns.api import MissingDistrictError
+from govuk_api.ofns.api import NoWardError
+from govuk_api.ofns.api import MissingWardError
+from govuk_api.ofns.api import NoOFNSDataError
 
 coordinates = []
 wards = []
@@ -50,16 +55,15 @@ print(population)
 for j in range (0,len(wards[0])):
     try:
         coordinates.append(ofns_api.get_ward_polygon(district, wards[0][j]))
-    except ValueError as e:
-        if str(e) == "Error: Need to specify a district.":
+    except NoDistrictError as e:
             print("Error: Need to specify a district.")
-        elif str(e) == "Error: Could not find district '" + district + "' in the csv.":
+    except MissingDistrictError as e:
             print("Error: Could not find district '" + district + "' in the csv.")
-        elif str(e) == "Error: Need to specify a ward.":
+    except NoWardError as e:
             print("Error: Need to specify a ward.")
-        elif str(e) == "Error: Could not find ward '" + wards[0][j] + "' from district '" + district + "'.":
+    except MissingWardError as e:
             print("Error: Could not find ward '" + wards[0][j] + "' from district '" + district + "'.")
-        elif str(e) == "Error: The OFNS server has no coordinate data for ward '" + wards[0][j] + "' from district '" + district + "'.":
+    except NoOFNSDataError as e:
             print("Using Doogal API")
             coordinates.append(doogal_api.get_ward_polygon(district, wards[0][j]))
 

@@ -4,6 +4,22 @@ import json
 from collections import defaultdict
 import urllib, urllib.parse, urllib.request
 
+class NoDistrictError(Exception):
+    pass
+
+class MissingDistrictError(Exception):
+    pass
+
+class NoWardError(Exception):
+    pass
+    
+class MissingWardError(Exception):
+    pass
+
+class NoOFNSDataError(Exception):
+    pass
+      
+
 class API:
     '''
     The class for managing OFNS API endpoints. 
@@ -200,14 +216,14 @@ class API:
 
         '''
         if district == None:
-            raise Exception("Error: Need to specify a district.")
+            raise NoDistrictError("Error: Need to specify a district.")
         elif district not in self.district_ward_dict.keys():
-            raise Exception("Error: Could not find district '" + district + "' in the csv.")
+            raise MissingDistrictError("Error: Could not find district '" + district + "' in the csv.")
 
         if ward == None:
-            raise Exception("Error: Need to specify a ward.")
+            raise NoWardError("Error: Need to specify a ward.")
         elif ward not in self.district_ward_dict[district].keys():
-            raise Exception("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
+            raise MissingWardError("Error: Could not find ward '" + ward + "' from district '" + district + "'.")
 
         ward_id = self.district_ward_dict[district][ward]
 
@@ -220,9 +236,9 @@ class API:
         response = self.request('query', parameters)
 
         if len(response['features']) == 0:
-            raise Exception("Error: The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
-            print("The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
-            return None
+            raise NoOFNSDataError("Error: The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+            #print("The OFNS server has no coordinate data for ward '" + ward + "' from district '" + district + "'.")
+            #return None
 
         polygon = response['features'][0]['geometry']['rings'][0]
         return polygon
