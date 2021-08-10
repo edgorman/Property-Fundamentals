@@ -38,6 +38,8 @@ year2 = today.year + ((today.month - 4) // 12)
 month3 = (today.month - 3) % 12
 year3 = today.year + ((today.month - 3) // 12)
 
+date_range = datetime.date(year1,month1,1).strftime("%b") + " " + str(year1) + " - " + datetime.date(year1,month3,1).strftime("%b") + " " + str(year3)
+
 print((str(year1) + "-" + (f"{month1:02}")))
 print((str(year2) + "-" + (f"{month2:02}")))
 print((str(year3) + "-" + (f"{month3:02}")))
@@ -119,6 +121,6 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color = (0.7578125,0.09375,0.35546875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + ": % of Properties Burgled in the Last 3 Months")
+plt.title(district + " (" + date_range + ") " + ": % of Properties Burgled")
 plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()

@@ -36,7 +36,7 @@ for h in range(0,len(coordinates)):
     pol[h].outerboundaryis.coords = coordinates[h]
     
     housing_benefit.append(statxplore_api.get_housing_benefit('table', ward_codes[h]))
-    housing_benefit_percentage.append((int(housing_benefit[h])*100) / int(population[h]))
+    housing_benefit_percentage.append((int(housing_benefit[h])*100) / int(float(population[h])))
     
 print(housing_benefit_percentage)
 
@@ -83,7 +83,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " " + statxplore_api.get_housing_benefit_date('table', ward_codes[h])[7:] + ": % of people who claim Housing Benefits")
+plt.title(district + " " + statxplore_api.get_housing_benefit_date('table', ward_codes[h])[7:] + ": % of people on Housing Benefits")
 plt.savefig(district + "_housing_benefit_claimants_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
