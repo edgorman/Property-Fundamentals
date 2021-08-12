@@ -16,6 +16,7 @@ from development_district import min_lng
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+import datetime
 
 school_ratings = SchoolRatings()
 doogal_api = DOOGAL_API()
@@ -39,10 +40,14 @@ school_count_requires_improvement = np.array([0]*len(wards[0]))
 school_count_poor = np.array([0]*len(wards[0]))
 yaxis = []
 xaxis = []
+
 #xaxis_outstanding = np.array([0]*len(wards[0]))
 #xaxis_good = np.array([0]*len(wards[0]))
 #xaxis_requires_improvement = np.array([0]*len(wards[0]))
 #xaxis_poor = np.array([0]*len(wards[0]))
+
+today_month = datetime.date.today().strftime("%b")
+today_year = datetime.date.today().strftime("%Y")
 
 school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_api, district)
 
@@ -123,7 +128,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color = (0.1015625,0.13671875,0.4921875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Number of Further Education Institutions")
-plt.title(district + ": Further Education Institutions")
+plt.title(district + "(" + today_month + " " + today_year + "): Further Education Institutions")
 plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
