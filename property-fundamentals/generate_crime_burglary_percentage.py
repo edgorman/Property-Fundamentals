@@ -38,7 +38,7 @@ year2 = today.year + ((today.month - 4) // 12)
 month3 = (today.month - 3) % 12
 year3 = today.year + ((today.month - 3) // 12)
 
-date_range = datetime.date(year1,month1,1).strftime("%b") + " " + str(year1) + " - " + datetime.date(year1,month3,1).strftime("%b") + " " + str(year3)
+date_range = datetime.date(year1,month1,1).strftime("%b") + "-" + str(year1) + " to " + datetime.date(year1,month3,1).strftime("%b") + "-" + str(year3)
 
 print((str(year1) + "-" + (f"{month1:02}")))
 print((str(year2) + "-" + (f"{month2:02}")))

@@ -88,7 +88,7 @@ for n in range (0,len(house_types[0])):
     plt.gca().set_xlim(left=xaxis[0]-10000)
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
-    plt.title(district + " (" + month_cap + "-" + year + "): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
+    plt.title(district + " (" + month_cap + "-" + year + "20): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.tight_layout()
     plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
     plt.clf()
