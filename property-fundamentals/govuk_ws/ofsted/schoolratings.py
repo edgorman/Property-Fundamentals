@@ -50,10 +50,11 @@ class SchoolRatings:
                     (
                         row[18],
                         row[17],
-                        row[14]
+                        row[14],
+                        row[2]
                     )
                 )
-
+                
 
     def get_districts(self):
         '''
@@ -104,6 +105,6 @@ class SchoolRatings:
             i = doogal_api.get_postcode_info(s[1])
             c = i[6]
             k = [float(i[2]), float(i[1])]
-            schools_with_coords.append((s[0], s[1], s[2], c, k))
+            schools_with_coords.append((s[0], s[1], s[2], c, k, s[3]))
         
         return schools_with_coords

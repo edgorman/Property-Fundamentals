@@ -27,6 +27,8 @@ statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_ap
 yaxis = []
 xaxis = []
 colouraxis = []
+month = statxplore_api.get_universal_credit_date('table', ward_codes[0])[:3]
+year = statxplore_api.get_universal_credit_date('table', ward_codes[0])[-4:]
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -91,7 +93,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " " + statxplore_api.get_universal_credit_date('table', ward_codes[h])[7:0] + ": % of Households on Universal Credit")
+plt.title(district + " (" + month + "-" + year + "): % of Households on Universal Credit")
 plt.savefig(district + "_Households_on_universal_credit_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

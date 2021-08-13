@@ -74,9 +74,11 @@ for j in range (0,len(further_education_result)):
             point.style.iconstyle.icon.href = icon_style[4]
 
     
-for name, postcode, rating, ward, school_coordinates in school_data:
+for name, postcode, rating, ward, school_coordinates, date in school_data:
     lng , lat = map(float, str(school_coordinates).strip('[]').split(','))
     if (lat <= max_lat) and (lat >= min_lat) and (lng <= max_lng) and (lng >= min_lng):
+        ofsted_month = date[3:-2]
+        ofsted_year = "20" + date[7:]
         #create the KML
         point = kml.newpoint()
         point.name = name
@@ -128,7 +130,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color = (0.1015625,0.13671875,0.4921875), edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Number of Further Education Institutions")
-plt.title(district + "(" + today_month + " " + today_year + "): Further Education Institutions")
+plt.title(district + " (" + today_month + "-" + today_year + "): Further Education Institutions")
 plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
@@ -154,7 +156,7 @@ p4 = plt.barh(y_pos, school_count_outstanding, color = (0.03515625,0.44140625,0.
 plt.yticks(y_pos,wards[0])
 plt.xlabel("Number of Schools")
 plt.gca().invert_yaxis()
-plt.title(district + ": Primary and Secondary School Ofsted Rating")
+plt.title(district + " (" + ofsted_month + ofsted_year + "): Schools and Nurseries Ofsted Rating")
 plt.legend([p4,p3,p2,p1],["Outstanding", "Good", "Requires Improvement", "Poor"], loc="lower center", bbox_to_anchor=(0.5,-0.4), framealpha=0)
 plt.savefig(district + "_ofsted_rating" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
