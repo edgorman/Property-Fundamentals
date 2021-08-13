@@ -27,6 +27,8 @@ statxplore_api = STATXPLORE_API(key_path="../property-fundamentals/statxplore_ap
 yaxis = []
 xaxis = []
 colouraxis = []
+month = statxplore_api.get_universal_credit_date('table', ward_codes[0])[:3]
+year = statxplore_api.get_universal_credit_date('table', ward_codes[0])[-4:]
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -83,7 +85,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " " + statxplore_api.get_housing_benefit_date('table', ward_codes[h])[7:] + ": % of people on Housing Benefits")
+plt.title(district + " (" + month + "-" + year + "): % of people on Housing Benefits")
 plt.savefig(district + "_housing_benefit_claimants_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
