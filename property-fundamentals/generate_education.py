@@ -133,12 +133,13 @@ zf.close()
 yaxis_order = sorted(range(len(further_education_count)), key=lambda k: further_education_count[k])
 print(yaxis_order)
 yaxis.clear()
-i=len(wards[0])
+#i=len(wards[0])
 for j in range(0,len(wards[0])):
     a = yaxis_order[j]
-    yaxis.insert(j, (str(i) + ". " + wards[0][a]))
+    #yaxis.insert(j, (str(i) + ". " + wards[0][a]))
+    yaxis.insert(j, wards[0][a])
     xaxis.insert(j,further_education_count[a])
-    i-=1
+    #i-=1
 
 #plot the further education data
 plt.rcParams["figure.figsize"] = (4.5,5)
@@ -166,8 +167,8 @@ print(ofsted_month)
 print(ofsted_year)
 
 #plot the school data
-for j in range(0,len(wards[0])):
-    yaxis_school.insert(j, (str(j+1) + ". " + wards[0][j]))
+#for j in range(0,len(wards[0])):
+    #yaxis_school.insert(j, (str(j+1) + ". " + wards[0][j]))
 
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
@@ -175,7 +176,7 @@ p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), 
 p2 = plt.barh(y_pos, school_count_requires_improvement, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good+school_count_outstanding) #color = (R,G,B)
 p3 = plt.barh(y_pos, school_count_good, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding) #color = (R,G,B)
 p4 = plt.barh(y_pos, school_count_outstanding, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
-plt.yticks(y_pos,yaxis_school)
+plt.yticks(y_pos,wards[0])
 plt.xlabel("Number of Schools")
 plt.gca().invert_yaxis()
 plt.title(district + " (" + ofsted_month + "-" + ofsted_year + ") \n Schools and Nurseries Ofsted Rating")
