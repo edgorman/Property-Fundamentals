@@ -6,6 +6,7 @@ from doogal_api.api import API as DOOGAL_API
 from postcodes_api.postcode_api import API as POSTCODE_API
 from development_district import district
 from development_district import wards
+from development_district import coordinates
 from development_district import centre_lat
 from development_district import centre_lng
 from development_district import distance
@@ -40,7 +41,17 @@ school_count_requires_improvement = np.array([0]*len(wards[0]))
 school_count_poor = np.array([0]*len(wards[0]))
 yaxis = []
 xaxis = []
+colour = ['19F07814', '1EF07814', '23F07814', '28F07814', '2DF07814', '32F07814', '37F07814', '3CF07814', '41F07814', '46F07814', '4BF07814', '50F07814', '55F07814' ,'5AF07814', '5FF07814', '64F07814', '69F07814', '6EF07814', '73F07814', '78F07814', '7DF07814', '82F07814', '87F07814', '8CF07814', '91F07814', '96F07814', '9BF07814', 'A0F07814', 'A5F07814', 'AAF07814']
+pol = []
 
+#Generate / Draw polygons
+for h in range(0,len(coordinates)):
+    pol.insert(h,kml.newpolygon())
+    pol[h].name = wards[0][h]
+    pol[h].style.linestyle.width = "0"
+    pol[h].outerboundaryis.coords = coordinates[h]
+    pol[h].style.polystyle.color = '19F07814'
+    
 #xaxis_outstanding = np.array([0]*len(wards[0]))
 #xaxis_good = np.array([0]*len(wards[0]))
 #xaxis_requires_improvement = np.array([0]*len(wards[0]))

@@ -3,6 +3,7 @@ from doogal_api.api import API as DOOGAL_API
 from google_api.api import API as GOOGLE_API
 from development_district import district
 from development_district import coordinates
+from development_district import wards
 from development_district import transport_max_lat
 from development_district import transport_min_lat
 from development_district import transport_max_lng
@@ -21,6 +22,17 @@ kml = simplekml.Kml()
 
 point = []
 icon_style = ['images/icon-5.png','images/icon-6.png','images/icon-7.png','images/icon-8.png','images/icon-9.png','images/icon-11.png']
+
+colour = ['19F07814', '1EF07814', '23F07814', '28F07814', '2DF07814', '32F07814', '37F07814', '3CF07814', '41F07814', '46F07814', '4BF07814', '50F07814', '55F07814' ,'5AF07814', '5FF07814', '64F07814', '69F07814', '6EF07814', '73F07814', '78F07814', '7DF07814', '82F07814', '87F07814', '8CF07814', '91F07814', '96F07814', '9BF07814', 'A0F07814', 'A5F07814', 'AAF07814']
+pol = []
+
+#Generate / Draw polygons
+for h in range(0,len(coordinates)):
+    pol.insert(h,kml.newpolygon())
+    pol[h].name = wards[0][h]
+    pol[h].style.linestyle.width = "0"
+    pol[h].outerboundaryis.coords = coordinates[h]
+    pol[h].style.polystyle.color = '19F07814'
 
 parameters = {
     'minLat': transport_min_lat,

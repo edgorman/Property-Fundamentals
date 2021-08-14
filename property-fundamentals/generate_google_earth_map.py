@@ -2,8 +2,7 @@ import simplekml
 from development_district import wards
 from development_district import coordinates
 from development_district import district
-from missing_data import price_mean
-from property_price import house_types
+
 
 #Define variables / lists
 kml = simplekml.Kml()
