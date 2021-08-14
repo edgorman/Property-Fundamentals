@@ -93,7 +93,7 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " (" + month + "-" + year + "): % of Households on Universal Credit")
+plt.title(district + " (" + month + "-" + year + ") \n % of Households on Universal Credit")
 plt.savefig(district + "_Households_on_universal_credit_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 

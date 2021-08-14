@@ -140,6 +140,6 @@ plt.rcParams["figure.dpi"] = 200
 plt.barh(y_pos, xaxis, color = colouraxis, edgecolor='black') #color = (R,G,B)
 plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
-plt.title(district + " (" + date_range + ")" + ": % of Properties Burgled")
+plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
 plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
