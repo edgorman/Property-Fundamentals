@@ -38,7 +38,7 @@ for h in range(0,len(coordinates)):
     pol[h].outerboundaryis.coords = coordinates[h]
     
     universal_credit.append(statxplore_api.get_universal_credit('table', ward_codes[h]))
-    universal_credit_percentage.append((int(universal_credit[h])*100) / int(households[h]))
+    universal_credit_percentage.append((float(universal_credit[h])*100) / float(households[h]))
     
 print(universal_credit_percentage)
 
@@ -55,7 +55,7 @@ print(step)
 
 #Normalise the colours in the universal credit range
 for i in range(0,len(colour)):
-    colour_scale.insert(i,int(min_universal_credit_percentage + (i*step)))
+    colour_scale.insert(i,(min_universal_credit_percentage + (i*step)))
     
     
 print(colour_scale)
@@ -64,12 +64,12 @@ print(colour_scale)
 for j in range(0,len(coordinates)):
     universal_credit_percentage_scale.append([])
     for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= int(universal_credit_percentage[j])):
+        if (colour_scale[k] >= (universal_credit_percentage[j])):
             universal_credit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
     #Add universal credit and colour to the polygons
-    pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(int(universal_credit_percentage[j])) + " % of Households on Universal Credit"
+    pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
     pol[j].style.polystyle.color = universal_credit_percentage_scale[j]
     
 #Save the polygons to a KML file

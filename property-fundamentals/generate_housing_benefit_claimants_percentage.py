@@ -38,7 +38,7 @@ for h in range(0,len(coordinates)):
     pol[h].outerboundaryis.coords = coordinates[h]
     
     housing_benefit.append(statxplore_api.get_housing_benefit('table', ward_codes[h]))
-    housing_benefit_percentage.append((int(housing_benefit[h])*100) / int(float(population[h])))
+    housing_benefit_percentage.append((float(housing_benefit[h])*100) / (float(population[h])))
     
 print(housing_benefit_percentage)
 
@@ -50,18 +50,18 @@ step = delta / (len(colour)-1)
 
 #Normalise the colours in the price range
 for i in range(0,len(colour)):
-    colour_scale.insert(i,int(min_housing_benefit_percentage + (i*step)))
+    colour_scale.insert(i,(min_housing_benefit_percentage + (i*step)))
 
 #Assign a colour to the normalised house prices
 for j in range(0,len(coordinates)):
     housing_benefit_percentage_scale.append([])
     for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= int(housing_benefit_percentage[j])):
+        if (colour_scale[k] >= (housing_benefit_percentage[j])):
             housing_benefit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
     #Add price and colour to the polygons
-    pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(int(housing_benefit_percentage[j])) + "% of people claim Housing Benefits"
+    pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(housing_benefit_percentage[j])[0:4] + "% of people claim Housing Benefits"
     pol[j].style.polystyle.color = housing_benefit_percentage_scale[j]
     
 #Save the polygons to a KML file
