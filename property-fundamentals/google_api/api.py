@@ -191,6 +191,21 @@ class API:
                 break
 
             for place in response['results']:
+                # try:
+                    # places.append((
+                        # place['name'],
+                        # place['business_status'],
+                        # place['geometry']['location'],
+                        # place['rating']
+                    # ))
+                # except:
+                    # places.append((
+                        # place['name'],
+                        # place['business_status'],
+                        # place['geometry']['location'],
+                        # None
+                    # ))
+                    
                 try:
                     places.append((
                         place['name'],
@@ -199,13 +214,20 @@ class API:
                         place['rating']
                     ))
                 except:
-                    places.append((
-                        place['name'],
-                        place['business_status'],
-                        place['geometry']['location'],
-                        None
-                    ))
-            
+                    try:
+                        places.append((
+                            place['name'],
+                            place['business_status'],
+                            place['geometry']['location'],
+                            None
+                        ))
+                    except:
+                        places.append((
+                            place['name'],
+                            None,
+                            place['geometry']['location'],
+                            None
+                        ))
             if 'next_page_token' in response:
                 parameters['pagetoken'] = response['next_page_token']
             else:
