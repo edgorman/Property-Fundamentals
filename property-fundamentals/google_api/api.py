@@ -191,43 +191,26 @@ class API:
                 break
 
             for place in response['results']:
-                # try:
-                    # places.append((
-                        # place['name'],
-                        # place['business_status'],
-                        # place['geometry']['location'],
-                        # place['rating']
-                    # ))
-                # except:
-                    # places.append((
-                        # place['name'],
-                        # place['business_status'],
-                        # place['geometry']['location'],
-                        # None
-                    # ))
-                    
                 try:
-                    places.append((
-                        place['name'],
-                        place['business_status'],
-                        place['geometry']['location'],
-                        place['rating']
-                    ))
+                    a = place['name']
                 except:
-                    try:
-                        places.append((
-                            place['name'],
-                            place['business_status'],
-                            place['geometry']['location'],
-                            None
-                        ))
-                    except:
-                        places.append((
-                            place['name'],
-                            None,
-                            place['geometry']['location'],
-                            None
-                        ))
+                        a = None
+                try:
+                    b = place['business_status']
+                except:
+                        b = None
+                try:
+                    c = place['rating']
+                except:
+                        c = None
+
+                places.append((
+                        a,
+                        b,
+                        place['geometry']['location'],
+                        c
+                    ))
+
             if 'next_page_token' in response:
                 parameters['pagetoken'] = response['next_page_token']
             else:
