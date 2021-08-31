@@ -60,6 +60,10 @@ for j in range(0,len(coordinates)):
             housing_benefit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
+        elif (k == len(colour_scale)-1):
+            housing_benefit_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+        
     #Add price and colour to the polygons
     pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(housing_benefit_percentage[j])[0:4] + "% of people claim Housing Benefits"
     pol[j].style.polystyle.color = housing_benefit_percentage_scale[j]

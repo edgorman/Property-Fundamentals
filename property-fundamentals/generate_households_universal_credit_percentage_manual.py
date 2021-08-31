@@ -16,8 +16,8 @@ colour_plot = ['#F0780019', '#F078001E', '#F0780023', '#F0780028', '#F078002D', 
 
 print(ward_codes)
 
-#-------------------------------------Update (Currently Manchester)
-universal_credit = ["1561", "2518", "2097", "1696", "2211", "2282", "2595", "791", "1666", "3306", "2166", "467", "680", "687", "1414", "3600", "3603", "2081", "2295", "2835", "3109", "3229", "3547", "2523", "1815", "1739", "711", "1949", "2363", "2208", "1322", "2406"]
+#-------------------------------------Update (Currently Nottingham)
+universal_credit = ["2743", "1855", "2284", "2217", "1839", "2350", "1164", "531", "1813", "578", "2132", "2970", "718", "940", "1667", "1219", "1257", "1374", "2456", "534"]
 month = "May"
 year = "2021"
 #--------------------------------------
@@ -71,6 +71,10 @@ for j in range(0,len(coordinates)):
             universal_credit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
+        elif (k == len(colour_scale)-1):
+            universal_credit_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            
     #Add universal credit and colour to the polygons
     #pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
     pol[j].style.polystyle.color = universal_credit_percentage_scale[j]
@@ -84,6 +88,8 @@ print(yaxis_order)
 yaxis.clear()
 xaxis.clear()
 colouraxis.clear()
+print(colouraxis)
+
 for j in range(0,len(wards[0])):
     a = yaxis_order[j]
     yaxis.insert(j,wards[0][a])

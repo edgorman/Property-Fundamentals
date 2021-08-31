@@ -68,6 +68,10 @@ for j in range(0,len(coordinates)):
             universal_credit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
+        elif (k == len(colour_scale)-1):
+            universal_credit_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            
     #Add universal credit and colour to the polygons
     pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
     pol[j].style.polystyle.color = universal_credit_percentage_scale[j]

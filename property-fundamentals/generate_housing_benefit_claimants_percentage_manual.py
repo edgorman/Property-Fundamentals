@@ -16,8 +16,8 @@ colour_plot = ['#B478FF19', '#B478FF1E', '#B478FF23', '#B478FF28', '#B478FF2D', 
 
 print(ward_codes)
 
-#-------------------------------------Update (Currently Manchester)
-housing_benefit = ["957", "1515", "1320", "1018", "1158", "1374", "1273", "392", "904", "1772", "1082", "80", "261", "368", "788", "1733", "2196", "1341", "1119", "1136", "1425", "1974", "1608", "1198", "1091", "855", "219", "852", "1442", "1013", "605", "1452"]
+#-------------------------------------Update (Currently Nottingham)
+housing_benefit = ["1597", "1201", "919", "1621", "1897", "1723", "662", "180", "1224", "471", "1160", "1591", "342", "702", "935", "743", "922", "871", "1977", "302"]
 month = "May"
 year = "2021"
 #--------------------------------------
@@ -64,6 +64,10 @@ for j in range(0,len(coordinates)):
             housing_benefit_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
+        elif (k == len(colour_scale)-1):
+            housing_benefit_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            
     #Add price and colour to the polygons
     #pol[j].description = statxplore_api.get_housing_benefit_date('table', ward_codes[h]) + ": " + str(housing_benefit_percentage[j])[0:4] + "% of people claim Housing Benefits"
     pol[j].style.polystyle.color = housing_benefit_percentage_scale[j]
