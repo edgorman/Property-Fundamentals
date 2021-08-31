@@ -76,8 +76,8 @@ for n in range (0,len(house_types[0])):
         colouraxis.insert(j,price_plot[a])
     
     #plot the data
-    plt.rcParams["figure.figsize"] = (4.5,5.5) # if there are many wards
-    #plt.rcParams["figure.figsize"] = (4.5,5)
+    #plt.rcParams["figure.figsize"] = (4.5,5.5) # if there are many wards
+    plt.rcParams["figure.figsize"] = (4.5,5)
     plt.rcParams["figure.dpi"] = 200
     plt.locator_params(axis='x', nbins=4)
     plt.ticklabel_format(useOffset=False, style='plain')
