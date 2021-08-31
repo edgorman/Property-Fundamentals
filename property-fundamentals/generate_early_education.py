@@ -118,6 +118,7 @@ print(ofsted_year)
 #for j in range(0,len(wards[0])):
     #yaxis_school.insert(j, (str(j+1) + ". " + wards[0][j]))
 
+#plt.rcParams["figure.figsize"] = (4.5,5.5) # if there are many wards
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
 p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding) #color = (R,G,B)
