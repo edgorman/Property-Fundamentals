@@ -200,15 +200,20 @@ class API:
                 except:
                         b = None
                 try:
-                    c = place['rating']
+                    c = place['geometry']['location']
                 except:
                         c = None
+                        continue
+                try:
+                    d = place['rating']
+                except:
+                        d = None
 
                 places.append((
                         a,
                         b,
-                        place['geometry']['location'],
-                        c
+                        c,
+                        d
                     ))
 
             if 'next_page_token' in response:
