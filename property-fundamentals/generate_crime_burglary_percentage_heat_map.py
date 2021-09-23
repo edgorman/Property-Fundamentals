@@ -116,6 +116,10 @@ for j in range(0,len(coordinates)):
             burglary_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
+        elif (k == len(colour_scale)-1):
+            burglary_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            
     #Add universal credit and colour to the polygons
     pol[j].description = date_range + ": " + str(burglary_percentage[j])[0:4] + "% of Households burgled per Ward"
     pol[j].style.polystyle.color = burglary_percentage_scale[j]
