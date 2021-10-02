@@ -3,6 +3,8 @@ import json
 from json.decoder import JSONDecodeError
 import urllib
 import time
+import certifi
+import ssl
 
 class API:
     '''
@@ -16,7 +18,7 @@ class API:
     '''
 
     def __init__(self, key=None, key_path=None):
-        self.url = 'https://maps.googleapis.com/maps/api'
+        self.url = 'http://maps.googleapis.com/maps/api'
         self.output = 'json'
         self.valid_types = ['accounting', 'airport', 'amusement_park', 'aquarium', 'art_gallery', 'atm', 'bakery', 'bank', 
         'bar', 'beauty_salon', 'bicycle_store', 'book_store', 'bowling_alley', 'bus_station', 'cafe', 'campground', 'car_dealer', 
@@ -116,7 +118,7 @@ class API:
             return self.check_cache(request)
 
         time.sleep(2)
-        result = json.load(urllib.request.urlopen(request))
+        result = json.load(urllib.request.urlopen(request, context=ssl.create_default_context(cafile=certifi.where())))
 
         if result["status"] in ["OK"]:
             self.store_cache(request, result)

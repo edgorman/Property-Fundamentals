@@ -4,6 +4,8 @@ import json
 import urllib, urllib.parse, urllib.request
 from collections import defaultdict
 from xml.etree.ElementTree import fromstring
+import certifi
+import ssl
 
 class API:
     '''
@@ -13,7 +15,7 @@ class API:
     '''
 
     def __init__(self):
-        self.url = 'https://www.doogal.co.uk'
+        self.url = 'http://www.doogal.co.uk'
         self.district_ward_dict = {}
         self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'data', 'external', 'admin_areas', 'data.csv'))
 
@@ -73,7 +75,7 @@ class API:
         '''
         params = urllib.parse.urlencode(parameters)
         request = f"{self.url}/{endpoint}?{params}"
-        result = urllib.request.urlopen(request)
+        result = urllib.request.urlopen(request, context=ssl.create_default_context(cafile=certifi.where()))
         
         return result
 
