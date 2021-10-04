@@ -18,7 +18,7 @@ class API:
     '''
 
     def __init__(self, key=None, key_path=None):
-        self.url = 'http://maps.googleapis.com/maps/api'
+        self.url = 'https://maps.googleapis.com/maps/api'
         self.output = 'json'
         self.valid_types = ['accounting', 'airport', 'amusement_park', 'aquarium', 'art_gallery', 'atm', 'bakery', 'bank', 
         'bar', 'beauty_salon', 'bicycle_store', 'book_store', 'bowling_alley', 'bus_station', 'cafe', 'campground', 'car_dealer', 
@@ -191,7 +191,7 @@ class API:
 
             if response == []:
                 break
-
+            
             for place in response['results']:
                 try:
                     a = place['name']
