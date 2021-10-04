@@ -3,8 +3,8 @@ import json
 from json.decoder import JSONDecodeError
 import urllib
 import time
-import certifi
-import ssl
+#import certifi
+#import ssl
 
 class API:
     '''
@@ -118,7 +118,7 @@ class API:
             return self.check_cache(request)
 
         time.sleep(2)
-        result = json.load(urllib.request.urlopen(request, context=ssl.create_default_context(cafile=certifi.where())))
+        result = json.load(urllib.request.urlopen(request))#, context=ssl.create_default_context(cafile=certifi.where())))
 
         if result["status"] in ["OK"]:
             self.store_cache(request, result)
