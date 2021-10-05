@@ -15,7 +15,7 @@ class API:
     '''
 
     def __init__(self):
-        self.url = 'http://www.doogal.co.uk'
+        self.url = 'https://www.doogal.co.uk'
         self.district_ward_dict = {}
         self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'data', 'external', 'admin_areas', 'data.csv'))
 
