@@ -4,8 +4,8 @@ import json
 import urllib, urllib.parse, urllib.request
 from collections import defaultdict
 from xml.etree.ElementTree import fromstring
-import certifi
-import ssl
+#import certifi
+#import ssl
 
 class API:
     '''
@@ -75,7 +75,7 @@ class API:
         '''
         params = urllib.parse.urlencode(parameters)
         request = f"{self.url}/{endpoint}?{params}"
-        result = urllib.request.urlopen(request, context=ssl.create_default_context(cafile=certifi.where()))
+        result = urllib.request.urlopen(request)#, context=ssl.create_default_context(cafile=certifi.where()))
         
         return result
 
