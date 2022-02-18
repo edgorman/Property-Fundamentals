@@ -13,4 +13,20 @@ TODO: rest of instructions
 
 ## Usage
 
-TODO: open localhost
+Run the following commands:
+```
+cd vagrant
+vagrant up
+vagrant ssh
+```
+Note: The default password is 'vagrant'.
+
+You can access Kibana via localhost:
+```
+http://localhost:5601
+```
+
+When finished, run the following command:
+```
+vagrant halt
+```

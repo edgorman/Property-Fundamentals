@@ -1,6 +1,12 @@
+### Vagrant ###
+# General
+.vagrant/
 
-# Created by https://www.toptal.com/developers/gitignore/api/python,vscode,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,vscode,windows
+# Log files (if you are creating logs in debug mode, uncomment this)
+# *.log
+
+### Vagrant Patch ###
+*.box
 
 # Visual studio code
 .vscode
