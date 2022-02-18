@@ -32,3 +32,6 @@ The 'notebooks' folder stores any development scripts.
 > To run the notebooks, activate your environment using conda and then type 'jupyter notebook' into the same CLI.
 
 The 'property-fundamentals' folder stores any code written for the project.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
