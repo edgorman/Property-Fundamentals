@@ -17,3 +17,7 @@
 7. Place the text file in 'property-fundamentals/statxplore_api'
 
 8. Go to https://stat-xplore.dwp.gov.uk/webapi/online-help/Open-Data-API.html to learn about the API
+
+9. Periodically, check to the stat-xplore website to see what month the latest data is available from.
+
+10. Update the stat-xplore API code so the date matches the latest. See Image 1. Update date in all 4 instances in the API code.
