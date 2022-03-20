@@ -1,5 +1,7 @@
+import os
 import requests
 import json
+from json.decoder import JSONDecodeError
 
 class API:
     '''
@@ -11,7 +13,7 @@ class API:
     '''
 
     def __init__(self):
-        self.url = 'http://environment.data.gov.uk/flood-monitoring/id/floodAreas'
+        self.url = 'https://environment.data.gov.uk/flood-monitoring/id/floodAreas'
     
     
     def get_flood_data(self, lat, lon, distance) -> dict:
@@ -30,7 +32,7 @@ class API:
 
         '''
        
-        r = requests.get(self.url + '?lat=' + lat + '&lon=' + lon + '&dist=' + distance)
+        r = requests.get(self.url + '?lat=' + str(lat) + '&long=' + str(lon) + '&dist=' + str(distance))
         json_object = json.loads(r.content)
         
         for a in range(0,len(json_object["items"])):

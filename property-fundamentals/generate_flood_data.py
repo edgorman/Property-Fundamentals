@@ -31,14 +31,23 @@ pol = []
 flood_data_result = flood_api.get_flood_data(
     centre_lat,
     centre_lng,
-    distance
+    0.1
+    #int(distance/1000)
 )
 
+print(len(flood_data_result))
+print(centre_lat)
+print(centre_lng)
+#print(int(distance/1000))
+print(flood_data_result[0][0][0])
+
 for j in range (0,len(flood_data_result)):
-    pol.insert(h,kml.newpolygon())
-    pol[h].style.linestyle.width = "0"
-    pol[h].outerboundaryis.coords = coordinates[j]
-    pol[h].style.polystyle.color = '19F07814'
+    for k in range (0,len(flood_data_result[j])):
+        for l in range (0,len(flood_data_result[k])):
+            pol.insert(l,kml.newpolygon())
+            pol[l].style.linestyle.width = "0"
+            pol[l].outerboundaryis.coords = flood_data_result[j][k][l]
+            pol[l].style.polystyle.color = '19F07814'
 
 #Save the polygons to a KML file
 kml.save(district + "_flood_data" + ".kml")
