@@ -34,8 +34,14 @@ class API:
        
         r = requests.get(self.url + '?lat=' + str(lat) + '&long=' + str(lon) + '&dist=' + str(distance))
         json_object = json.loads(r.content)
-        
+        flood_HTTP = []
         for a in range(0,len(json_object["items"])):
-            r2 = requests.get(json_object["items"][a]["polygon"])
+            flood_HTTP.insert(a,json_object["items"][a]["polygon"])
+        
+        coordinates = []
+        for b in range(0,len(json_object["items"])):
+            r2 = requests.get(flood_HTTP[b])
             json_object2 = json.loads(r2.content)
-        return json_object2["features"][0]["geometry"]["coordinates"]
+            json_formatted_str2 = json.dumps(json_object2, indent=2)
+            coordinates.insert(b,json_object2["features"][0]["geometry"]["coordinates"])
+        return coordinates

@@ -25,6 +25,7 @@ pol = []
     # pol.insert(h,kml.newpolygon())
     # pol[h].name = wards[0][h]
     # pol[h].style.linestyle.width = "0"
+    # print(coordinates[h])
     # pol[h].outerboundaryis.coords = coordinates[h]
     # pol[h].style.polystyle.color = '19F07814'
 
@@ -41,13 +42,22 @@ print(centre_lng)
 #print(int(distance/1000))
 print(flood_data_result[0][0][0])
 
-for j in range (0,len(flood_data_result)):
-    for k in range (0,len(flood_data_result[j])):
-        for l in range (0,len(flood_data_result[k])):
-            pol.insert(l,kml.newpolygon())
-            pol[l].style.linestyle.width = "0"
-            pol[l].outerboundaryis.coords = flood_data_result[j][k][l]
-            pol[l].style.polystyle.color = '19F07814'
+count=0
+#print(flood_data_result[0][0][0])
+
+# for j in range (0,len(flood_data_result)):
+    # for k in range (0,len(flood_data_result[j])):
+        # for l in range (0,len(flood_data_result[j][k])):
+            # pol.insert(count,kml.newpolygon())
+            # pol[count].style.linestyle.width = "0"
+            # pol[count].outerboundaryis.coords = str(flood_data_result[j][k][l])
+            # pol[count].style.polystyle.color = '19F07814'
+        # count +=1
+        
+pol.insert(0,kml.newpolygon())
+pol[0].style.linestyle.width = "0"
+pol[0].outerboundaryis.coords = str(flood_data_result[0][0][0])
+pol[0].style.polystyle.color = '19F07814'
 
 #Save the polygons to a KML file
 kml.save(district + "_flood_data" + ".kml")
