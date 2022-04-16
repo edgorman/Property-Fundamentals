@@ -59,7 +59,7 @@ class MeanPrice:
             print("[INFO]", "Starting collecting the most recent mean price ward dataset")
             print("[INFO]", "This will take about half a minute to complete...")
             
-            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward1.zip")
+            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward.zip")
             print("[DONE]", "Downloaded most recent zip:\t", dataset)
 
             zip_file = zipfile.ZipFile(io.BytesIO(response.content))
