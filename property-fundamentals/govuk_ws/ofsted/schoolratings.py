@@ -13,7 +13,7 @@ class SchoolRatings:
     '''
 
     def __init__(self):
-        self.dataset_file = "Data_View_Download__Full_Data_data.csv"
+        self.dataset_file = "Data View Download _Full Data_data.csv"
         self.dataset_helper = "constituency_to_local_authority_mapping.csv"
         self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'school_ratings'))
         self.dataset_file_path = os.path.join(self.dataset_dest, self.dataset_file)
@@ -41,16 +41,16 @@ class SchoolRatings:
             # For each row in the csv file
             for row in csv_results:
                 # Ignore redacted rows
-                if row[18] == 'REDACTED':
+                if row[20] == 'REDACTED':
                     continue
                 
                 self.district_school_values[
-                    self.constituency_local_authority_dict[row[9]]
+                    self.constituency_local_authority_dict[row[10]]
                 ].append(
                     (
-                        row[18],
-                        row[17],
-                        row[14],
+                        row[20],
+                        row[19],
+                        row[16],
                         row[2]
                     )
                 )

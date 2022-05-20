@@ -1,6 +1,6 @@
 # Ofsted School Ratings
 
-This readme is used for updating the Ofsted school ratings csv that is updated annually on the 30th of June and the 31st of August each year.
+This readme is used for updating the Ofsted school ratings csv that is updated annually on the 30th of June and the 31st of August each year. However, sometimes this changes so check for it periodically.
 
 ## Download Instructions
 
@@ -20,11 +20,11 @@ This readme is used for updating the Ofsted school ratings csv that is updated a
 
 ![Step 6](page2.png)
 
-7. Click the "Full Data" tab at the top.
+7. Click the "Full Data" tab at the top left.
 
-8. Enable the "Show all columns" checkbox.
+8. Click the "Show Fields" button at the top right and select "All"
 
-9. Click the "Download all rows as text file.
+9. Click the "Download" button.
 
 ![Steps 7 to 9](page3.png)
 
