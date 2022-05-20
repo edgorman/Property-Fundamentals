@@ -9,24 +9,36 @@ Install the following applications onto your system:
 * VirtualBox ([version 6.1.32](https://www.virtualbox.org/wiki/Downloads))
 * Vagrant ([version 2.2.19](https://www.vagrantup.com/downloads))
 
-TODO: rest of instructions
+Verify this has installed correctly by running:
+```
+vagrant -v
+```
 
-## Usage
-
-Run the following commands:
+Run the following commands to set up the box (this may take ~10 minutes):
 ```
 cd vagrant
 vagrant up
+```
+
+Once complete, test you can SSH into the box by running (default password is 'vagrant'):
+```
 vagrant ssh
 ```
-Note: The default password is 'vagrant'.
 
-You can access Kibana via localhost:
+## Usage
+
+Run the following commands to bring the box up:
+```
+cd vagrant
+vagrant up
+```
+
+You can access the Kibana dashboard via the webpage:
 ```
 http://localhost:5601
 ```
 
-When finished, run the following command:
+When finished, run the following command to close the box:
 ```
 vagrant halt
 ```

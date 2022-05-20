@@ -31,6 +31,10 @@ then
   apt -y install openjdk-8-jdk &> /dev/null
 fi
 
+# Install nginx
+echo "[$(DATE)] [Info] [Nginx] Installing Nginx..."
+apt -y install nginx &> /dev/null
+
 # Install Elastic Repository
 if ! grep -q "^deb .*8.x" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
     echo "[$(DATE)] [Info] [System] Installing Elastic Repository..."

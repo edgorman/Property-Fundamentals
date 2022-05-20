@@ -19,7 +19,7 @@ bootstrap.memory_lock: true
 #
 # ---------------------------------- Network -----------------------------------
 #
-network.host: 0.0.0.0
+network.host: localhost
 http.port: 9200
 #
 # --------------------------------- Discovery ----------------------------------

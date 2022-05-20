@@ -2,10 +2,10 @@
 server.port: 5601
 
 # Specifies the address to which the Kibana server will bind
-server.host: "0.0.0.0"
+server.host: "localhost"
 
 # Elasticsearch Nodes
-elasticsearch.hosts: "http://localhost:9200"
+elasticsearch.hosts: ["http://localhost:9200"]
 
 # Encryption Keys
 xpack.security.encryptionKey: "ovswhfannlajtgvvjewqwgulywdbpudq"
