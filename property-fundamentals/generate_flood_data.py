@@ -11,6 +11,7 @@ from development_district import min_lng
 from environment_data_api.api import API as FLOOD_API
 import numpy as np
 import json
+import csv
 
 flood_api = FLOOD_API()
 import simplekml
@@ -37,14 +38,20 @@ flood_data_result = flood_api.get_flood_data(
     #int(distance/1000)
 )
 
-for j in range (0,len(flood_data_result)):
-    for k in range (0,len(flood_data_result[j])):
-        for l in range (0,len(flood_data_result[j][k])):
-            pol.insert(count,kml.newpolygon())
-            pol[count].style.linestyle.width = "0"
-            pol[count].outerboundaryis.coords = flood_data_result[j][k][l]
-            pol[count].style.polystyle.color = 'FFF07814'
-        count +=1
+python_file = open("example.txt", "w")
+python_file.write(str(flood_data_result))
+python_file.close()
+
+#Read string into a list
+
+# for j in range (0,len(flood_data_result)):
+    # for k in range (0,len(flood_data_result[j])):
+        # for l in range (0,len(flood_data_result[j][k])):
+            # pol.insert(count,kml.newpolygon())
+            # pol[count].style.linestyle.width = "0"
+            # pol[count].outerboundaryis.coords = flood_data_result[j][k][l]
+            # pol[count].style.polystyle.color = 'FFF07814'
+        # count +=1
         
-#Save the polygons to a KML file
-kml.save(district + "_flood_data" + ".kml")
+# #Save the polygons to a KML file
+# kml.save(district + "_flood_data" + ".kml")
