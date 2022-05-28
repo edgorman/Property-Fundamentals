@@ -82,11 +82,11 @@ for n in range (0,len(house_types[0])):
     #plt.rc('ytick', labelsize=4)
     plt.locator_params(axis='x', nbins=4)
     plt.ticklabel_format(useOffset=False, style='plain')
-    plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
+    hbars = plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
     plt.gca().set_xlim(left=0)#xaxis[0]-(2*xaxis[0]))
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
-    #plt.labelsize(
+    plt.bar_label(hbars, label_type="center")
     #plt.title(district + " (" + month_cap + "-" + year + "20): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.title(district + " (" + month_cap + "-" + "20" + year + ") \n Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.tight_layout()
