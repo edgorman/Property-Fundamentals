@@ -79,6 +79,7 @@ for n in range (0,len(house_types[0])):
     #plt.rcParams["figure.figsize"] = (4.5,5.5) # if there are many wards
     plt.rcParams["figure.figsize"] = (5.5,5)
     plt.rcParams["figure.dpi"] = 200
+    plt.rcParams.update({'font.size': 7})
     #plt.rc('ytick', labelsize=4)
     plt.locator_params(axis='x', nbins=4)
     plt.ticklabel_format(useOffset=False, style='plain')
@@ -87,7 +88,7 @@ for n in range (0,len(house_types[0])):
     plt.gca().set_xlim(left=0)#xaxis[0]-(2*xaxis[0]))
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
-    plt.annotate('(Prices \n displayed \n to the \n nearest \n £1,000 are \n estimated \n due to lack \n of data)', xy=(0.75, 0.05), xycoords='axes fraction')
+    plt.annotate('(Prices \n displayed \n to the \n nearest \n £1,000 are \n estimated \n due to lack \n of data)', xy=(0.7, 0.05), xycoords='axes fraction')
     plt.bar_label(hbars, label_type="center", fmt='%d', labels=[f'{x:,.0f}' for x in hbars.datavalues])
     #plt.title(district + " (" + month_cap + "-" + year + "20): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.title(district + " (" + month_cap + "-" + "20" + year + ") \n Mean Sold Price (" + house_types[0][n].capitalize() + ")")

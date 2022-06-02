@@ -37,16 +37,22 @@ flood_data_result = flood_api.get_flood_data(
     #int(distance/1000)
 )
 
+
+
 for j in range (0,len(flood_data_result)):
+    print (len(flood_data_result[j]))
+    print (flood_data_result[j])
     for k in range (0,len(flood_data_result[j])):
-        if len(flood_data_result[j]) != 1:
+        if str(flood_data_result[j])[0:4] == "[[[[":
+        #if len(flood_data_result[j]) != 1:
             for l in range (0,len(flood_data_result[j][k])):
                 pol.insert(count,kml.newpolygon())
                 pol[count].style.linestyle.width = "0"
                 pol[count].outerboundaryis.coords = flood_data_result[j][k][l]
                 pol[count].style.polystyle.color = 'FFF07814'
             count +=1
-        elif len(flood_data_result[j]) == 1:
+        elif str(flood_data_result[j])[0:4] != "[[[[":
+        #elif len(flood_data_result[j]) == 1:
             pol.insert(count,kml.newpolygon())
             pol[count].style.linestyle.width = "0"
             pol[count].outerboundaryis.coords = flood_data_result[j][k]
