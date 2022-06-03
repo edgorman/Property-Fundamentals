@@ -56,7 +56,26 @@ further_education_result = google_api.nearby_search(
 for j in range (0,len(further_education_result)):
     if (further_education_result[j][2]['lat'] <= max_lat) and (further_education_result[j][2]['lat'] >= min_lat) and (further_education_result[j][2]['lng'] <= max_lng) and (further_education_result[j][2]['lng'] >= min_lng):
         #Create the plot
-        further_education_ward = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
+        further_education_ward = postcodes_api.get_ward(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
+        further_education_postcode = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
+        
+        #Check ward is present in list
+        ward_found = False
+        for i in range (0,len(wards[0])):
+            if further_education_ward == wards[0][i]:
+                ward_found = True
+        if ward_found == True:
+            print("ward found")
+        elif ward_found == False:
+            print("ward not found.\n wards available are:\n")
+            print(wards[0])
+            print("Postcode is: ")
+            print(further_education_postcode)
+            print("further education ward is currently: ")
+            print(further_education_ward)
+            further_education_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
+        
         if further_education_ward is not None:
             for i in range (0,len(wards[0])):
                 if further_education_ward == wards[0][i]:

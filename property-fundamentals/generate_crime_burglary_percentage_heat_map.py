@@ -83,7 +83,25 @@ results3 = police_api.get_burglary_street_level_crimes(centre_lat, centre_lng, d
 for crime in results1:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         #Create the plot data
-        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_ward = postcodes_api.get_ward(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        
+        #Check ward is present in list
+        ward_found = False
+        for i in range (0,len(wards[0])):
+            if burglary_ward == wards[0][i]:
+                ward_found = True
+        if ward_found == True:
+            print("ward found")
+        elif ward_found == False:
+            print("ward not found.\n wards available are:\n")
+            print(wards[0])
+            print("Postcode is: ")
+            print(burglary_postcode)
+            print("burglary ward is currently: ")
+            print(burglary_ward)
+            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
@@ -92,7 +110,25 @@ for crime in results1:
 for crime in results2:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         #Create the plot data
-        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_ward = postcodes_api.get_ward(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        
+        #Check ward is present in list
+        ward_found = False
+        for i in range (0,len(wards[0])):
+            if burglary_ward == wards[0][i]:
+                ward_found = True
+        if ward_found == True:
+            print("ward found")
+        elif ward_found == False:
+            print("ward not found.\n wards available are:\n")
+            print(wards[0])
+            print("Postcode is: ")
+            print(burglary_postcode)
+            print("burglary ward is currently: ")
+            print(burglary_ward)
+            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
@@ -101,7 +137,25 @@ for crime in results2:
 for crime in results3:
     if (float(crime['location']['latitude']) <= max_lat) and (float(crime['location']['latitude']) >= min_lat) and (float(crime['location']['longitude']) <= max_lng) and (float(crime['location']['longitude']) >= min_lng):
         #Create the plot data
-        burglary_ward = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_ward = postcodes_api.get_ward(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
+        
+        #Check ward is present in list
+        ward_found = False
+        for i in range (0,len(wards[0])):
+            if burglary_ward == wards[0][i]:
+                ward_found = True
+        if ward_found == True:
+            print("ward found")
+        elif ward_found == False:
+            print("ward not found.\n wards available are:\n")
+            print(wards[0])
+            print("Postcode is: ")
+            print(burglary_postcode)
+            print("burglary ward is currently: ")
+            print(burglary_ward)
+            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
