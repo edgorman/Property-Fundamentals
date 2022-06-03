@@ -66,9 +66,27 @@ for name, postcode, rating, ward, school_coordinates, date in school_data:
         point.name = name
         point.description = ofsted_rating[int(rating)-1]
         point.coords = [school_coordinates]
-        point.style.iconstyle.icon.href = icon_style[int(rating)-1] 
+        point.style.iconstyle.icon.href = icon_style[int(rating)-1]
         #Create the plot
         school_ward.insert(0,doogal_api.get_postcode_info(postcode))
+        
+        #Check ward is present in list
+        ward_found = False
+        for j in range (0,len(wards[0])):
+            if school_ward[0][6] == wards[0][j]:
+                ward_found = True
+        if ward_found == True:
+            print("ward found")
+        elif ward_found == False:
+            print("ward not found.\n wards available are:\n")
+            print(wards[0])
+            print("postcode is: ")
+            print(postcode)
+            print("school ward is currently: ")
+            print(school_ward[0][6])
+            school_ward[0][6] = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
+        #Calculate the school ward rating count
         if int(rating) == 1:
             for j in range (0,len(wards[0])):
                 if school_ward[0][6] == wards[0][j]:

@@ -36,6 +36,7 @@ for j in range (0,len(wards[0])):
     ward_codes.append(ofns_api.get_ward_codes_from_district(district, wards[0][j]))
     
 print(ward_codes)
+print(wards)
     
 #Get the households within a district
 #households = np.empty(len(wards[0]), dtype = int)
