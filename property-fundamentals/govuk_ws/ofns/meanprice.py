@@ -48,7 +48,8 @@ class MeanPrice:
     def _update_dataset(self):
         webpage = requests.get(self.webpage_url)
         #dataset = re.search('(\w*)\/(\w*)\.zip', webpage.text).group(2)
-        dataset = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
+        #dataset = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
+        dataset = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[:]
 
         # Check if parent folder exists
         if not os.path.exists(self.dataset_dest):

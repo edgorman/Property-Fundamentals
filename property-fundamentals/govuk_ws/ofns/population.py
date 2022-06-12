@@ -41,27 +41,57 @@ class Population:
 
     def _update_dataset(self):
         webpage = requests.get(self.webpage_url)
-        dataset1 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
-        dataset2 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(2)
+        
+        #For zip files (comment out if its a xlsx file)
+        # dataset1 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(1)[2:]
+        # dataset2 = re.search('(\w*)\/(\w*)\.zip" class', webpage.text).group(2)
+
+        #For xlsx files (comment out if its a zip file)
+        dataset1 = re.search('(\w*)\/(\w*)\.xlsx" class', webpage.text).group(1)[:]
+        dataset2 = re.search('(\w*)\/(\w*)\.xlsx" class', webpage.text).group(2)         
 
         # Check if parent folder exists
         if not os.path.exists(self.dataset_dest):
             os.mkdir(self.dataset_dest)
+            
+            
+        # If this dataset hasn't been seen before (comment out if its a xlsx file)
+        # if dataset1 not in os.listdir(self.dataset_dest):
+            # print("[INFO]", "Starting collecting the most recent population dataset")
+            # print("[INFO]", "This will take about half a minute to complete...")
+            
+            # response = requests.get(self.zippage_url + "/" + dataset1 + "/" + dataset2 + '.zip')
+            # print("[DONE]", "Downloaded most recent zip:\t", dataset1)
 
-        # If this dataset hasn't been seen before
+            # zip_file = zipfile.ZipFile(io.BytesIO(response.content))
+            # zip_file.extractall(os.path.join(self.dataset_dest, dataset1))
+            # print("[DONE]", "Extracted zip folder to:\t\t", os.path.join(self.dataset_dest, dataset1))
+            
+            # path = glob(os.path.join(self.dataset_dest, dataset1) + "/*.xlsx")[0]
+            # data = pd.read_excel(path, engine='openpyxl', sheet_name=3, header=4)
+            # data = data[['Ward Code 1', 'Ward Name 1', 'All Ages']]
+            # data.to_csv(os.path.join(self.dataset_dest, dataset1, "data.csv"), index=False, index_label=False)
+            # print("[DONE]", "Finished creating csv at:\t", os.path.join(self.dataset_dest, dataset1))            
+            
+            
+            
+
+        # If this dataset hasn't been seen before (comment out if its a zip file)
         if dataset1 not in os.listdir(self.dataset_dest):
             print("[INFO]", "Starting collecting the most recent population dataset")
             print("[INFO]", "This will take about half a minute to complete...")
             
-            response = requests.get(self.zippage_url + "/" + dataset1 + "/" + dataset2 + '.zip')
-            print("[DONE]", "Downloaded most recent zip:\t", dataset1)
-
-            zip_file = zipfile.ZipFile(io.BytesIO(response.content))
-            zip_file.extractall(os.path.join(self.dataset_dest, dataset1))
-            print("[DONE]", "Extracted zip folder to:\t\t", os.path.join(self.dataset_dest, dataset1))
+            response = requests.get(self.zippage_url + "/" + dataset1 + "/" + dataset2 + '.xlsx')
+            print("[DONE]", "Downloaded most recent xlsx file:\t", dataset1)
             
-            path = glob(os.path.join(self.dataset_dest, dataset1) + "/*.xlsx")[0]
-            data = pd.read_excel(path, engine='openpyxl', sheet_name=3, header=4)
+            path = os.path.join(self.dataset_dest, dataset1)
+            os.mkdir(path)
+            xlsx_file = open(path + "\\" + dataset1 + ".xlsx", 'wb')
+            xlsx_file.write(response.content)
+            xlsx_file.close
+            
+            path2 = glob(os.path.join(self.dataset_dest, dataset1) + "/*.xlsx")[0]
+            data = pd.read_excel(path2, engine='openpyxl', sheet_name=4, header=4)
             data = data[['Ward Code 1', 'Ward Name 1', 'All Ages']]
             data.to_csv(os.path.join(self.dataset_dest, dataset1, "data.csv"), index=False, index_label=False)
             print("[DONE]", "Finished creating csv at:\t", os.path.join(self.dataset_dest, dataset1))
