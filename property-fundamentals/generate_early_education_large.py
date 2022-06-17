@@ -46,7 +46,7 @@ for h in range(0,len(coordinates)):
     pol[h].name = wards[0][h]
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
-    pol[h].style.polystyle.color = '19F07814'
+    pol[h].style.polystyle.color = '32F07814' #= '19F07814'
     
 #xaxis_outstanding = np.array([0]*len(wards[0]))
 #xaxis_good = np.array([0]*len(wards[0]))

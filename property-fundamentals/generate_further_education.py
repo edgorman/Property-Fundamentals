@@ -41,7 +41,7 @@ for h in range(0,len(coordinates)):
     pol[h].name = wards[0][h]
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
-    pol[h].style.polystyle.color = '19F07814'
+    pol[h].style.polystyle.color = '32F07814' #= '19F07814'
 
 today_month = datetime.date.today().strftime("%b")
 today_year = datetime.date.today().strftime("%Y")

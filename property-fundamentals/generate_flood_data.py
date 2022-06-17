@@ -28,7 +28,7 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     print(coordinates[h])
     pol[h].outerboundaryis.coords = coordinates[h]
-    pol[h].style.polystyle.color = '19F07814'
+    pol[h].style.polystyle.color = '32F07814' #= '19F07814'
 
 flood_data_result = flood_api.get_flood_data(
     centre_lat,
