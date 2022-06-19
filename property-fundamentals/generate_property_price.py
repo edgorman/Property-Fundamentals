@@ -75,7 +75,7 @@ for n in range (0,len(house_types[0])):
     for j in range(0,len(wards[0])):
         a = yaxis_order[j]
         yaxis.insert(j,wards[0][a])
-        xaxis.insert(j,price_mean[n][a])
+        xaxis.insert(j,round(price_mean[n][a],-3))
         colouraxis.insert(j,price_plot[a])
     
     #plot the data
@@ -91,7 +91,7 @@ for n in range (0,len(house_types[0])):
     plt.gca().set_xlim(left=0)#xaxis[0]-(2*xaxis[0]))
     plt.yticks(y_pos,yaxis)
     plt.xlabel("(£)")
-    plt.annotate('(Prices \n displayed \n to the \n nearest \n £1,000 are \n estimated \n due to lack \n of data)', xy=(0.7, 0.05), xycoords='axes fraction')
+    #plt.annotate('(Prices \n displayed \n to the \n nearest \n £1,000 are \n estimated \n due to lack \n of data)', xy=(0.7, 0.05), xycoords='axes fraction')  
     plt.bar_label(hbars, label_type="center", fmt='%d', labels=[f'{x:,.0f}' for x in hbars.datavalues])
     #plt.title(district + " (" + month_cap + "-" + year + "20): Mean Sold Price (" + house_types[0][n].capitalize() + ")")
     plt.title(district + " (" + month_cap + "-" + "20" + year + ") \n Mean Sold Price (" + house_types[0][n].capitalize() + ")")
