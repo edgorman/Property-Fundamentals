@@ -213,8 +213,8 @@ for j in range(0,len(wards[0])):
     colouraxis.insert(j,price_plot[a])
 
 #plot the crime data
-#plt.rcParams["figure.figsize"] = (4.5,5.5) # if there are many wards
-plt.rcParams["figure.figsize"] = (4.5,5)
+plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
+#plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams.update({'font.size': 7})
 plt.barh(y_pos, xaxis, color = colouraxis, edgecolor='black') #color = (R,G,B)
