@@ -82,7 +82,7 @@ for n in range (0,len(house_types[0])):
     plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
     #plt.rcParams["figure.figsize"] = (5.5,5)
     plt.rcParams["figure.dpi"] = 200
-    plt.rcParams.update({'font.size': 7})
+    #plt.rcParams.update({'font.size': 7})
     #plt.rc('ytick', labelsize=4)
     plt.locator_params(axis='x', nbins=4)
     plt.ticklabel_format(useOffset=False, style='plain')
@@ -98,3 +98,40 @@ for n in range (0,len(house_types[0])):
     plt.tight_layout()
     plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
     plt.clf()
+
+    
+    #Add code when there are many wards
+    
+    #plot the data
+    # plt.rcParams["figure.figsize"] = (2.5,5) # if there are many wards
+    # plt.rcParams["figure.dpi"] = 200
+    # plt.rcParams.update({'font.size': 5})
+    # plt.locator_params(axis='x', nbins=2)
+    # plt.ticklabel_format(useOffset=False, style='plain')
+    # plt.gca().xaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+    # hbars2 = plt.barh(y_pos[0:34], xaxis[0:34], color= colouraxis[0:34], edgecolor='black')
+    # plt.gca().set_xlim(left=0)
+    # plt.yticks(y_pos[0:34],yaxis[0:34])
+    # plt.xlabel("(£)")
+    # plt.bar_label(hbars2, label_type="center", fmt='%d', labels=[f'{x:,.0f}' for x in hbars2.datavalues])
+    # plt.title(district + " (" + month_cap + "-" + "20" + year + ") \n Mean Sold Price (" + house_types[0][n].capitalize() + ")")
+    # plt.tight_layout()
+    # plt.savefig(district + "_mean_" + house_types[0][n] + ".png", bbox_inches='tight', transparent=True)
+    # plt.clf()
+    
+    #plot the data
+    # plt.rcParams["figure.figsize"] = (3.5,5) # if there are many wards
+    # plt.rcParams["figure.dpi"] = 200
+    # plt.rcParams.update({'font.size': 5})
+    # plt.locator_params(axis='x', nbins=2)
+    # plt.ticklabel_format(useOffset=False, style='plain')
+    # plt.gca().xaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+    # hbars3 = plt.barh(y_pos[35:69], xaxis[35:69], color= colouraxis[35:69], edgecolor='black')
+    # plt.gca().set_xlim(left=0)
+    # plt.yticks(y_pos[35:69],yaxis[35:69])
+    # plt.xlabel("(£)")
+    # plt.bar_label(hbars3, label_type="center", fmt='%d', labels=[f'{x:,.0f}' for x in hbars3.datavalues])
+    # plt.title(district + " (" + month_cap + "-" + "20" + year + ") \n Mean Sold Price (" + house_types[0][n].capitalize() + ")")
+    # plt.tight_layout()
+    # plt.savefig(district + "_mean_" + house_types[0][n] + "2.png", bbox_inches='tight', transparent=True)
+    # plt.clf()
