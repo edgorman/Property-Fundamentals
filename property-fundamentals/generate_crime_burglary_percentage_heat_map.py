@@ -89,20 +89,20 @@ for crime in results1:
         burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
         
         #Check ward is present in list
-        ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        # ward_found = False
+        # for i in range (0,len(wards[0])):
+            # if burglary_ward == wards[0][i]:
+                # ward_found = True
+        # if ward_found == True:
+            # print("ward found")
+        # elif ward_found == False:
+            # print("ward not found.\n wards available are:\n")
+            # print(wards[0])
+            # print("Postcode is: ")
+            # print(burglary_postcode)
+            # print("burglary ward is currently: ")
+            # print(burglary_ward)
+            # burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
         
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
@@ -116,20 +116,20 @@ for crime in results2:
         burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
         
         #Check ward is present in list
-        ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        # ward_found = False
+        # for i in range (0,len(wards[0])):
+            # if burglary_ward == wards[0][i]:
+                # ward_found = True
+        # if ward_found == True:
+            # print("ward found")
+        # elif ward_found == False:
+            # print("ward not found.\n wards available are:\n")
+            # print(wards[0])
+            # print("Postcode is: ")
+            # print(burglary_postcode)
+            # print("burglary ward is currently: ")
+            # print(burglary_ward)
+            # burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
         
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
@@ -143,20 +143,20 @@ for crime in results3:
         burglary_postcode = postcodes_api.get_postcode(str(crime['location']['longitude']),str(crime['location']['latitude']))
         
         #Check ward is present in list
-        ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        # ward_found = False
+        # for i in range (0,len(wards[0])):
+            # if burglary_ward == wards[0][i]:
+                # ward_found = True
+        # if ward_found == True:
+            # print("ward found")
+        # elif ward_found == False:
+            # print("ward not found.\n wards available are:\n")
+            # print(wards[0])
+            # print("Postcode is: ")
+            # print(burglary_postcode)
+            # print("burglary ward is currently: ")
+            # print(burglary_ward)
+            # burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
         
         if burglary_ward is not None:
             for i in range (0,len(wards[0])):
@@ -214,7 +214,6 @@ for j in range(0,len(wards[0])):
 
 #plot the crime data
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
-#plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams.update({'font.size': 7})
 plt.barh(y_pos, xaxis, color = colouraxis, edgecolor='black') #color = (R,G,B)
@@ -222,4 +221,28 @@ plt.yticks(y_pos,yaxis)
 plt.xlabel("Percentage (%)")
 plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
 plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
-plt.clf()
+plt.clf
+
+
+#Add code when there are many wards
+
+
+# plt.rcParams["figure.figsize"] = (2.5,5) # if there are many wards
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# plt.barh(y_pos[0:34], xaxis[0:34], color = colouraxis, edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[0:34],yaxis[0:34])
+# plt.xlabel("Percentage (%)")
+# plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
+# plt.savefig(district + "_burglary_percentage" + ".png", bbox_inches='tight', transparent=True)
+# plt.clf()
+
+# plt.rcParams["figure.figsize"] = (3.5,5) # if there are many wards
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# plt.barh(y_pos[35:69], xaxis[35:69], color = colouraxis, edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[35:69],yaxis[35:69])
+# plt.xlabel("Percentage (%)")
+# plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
+# plt.savefig(district + "_burglary_percentage" + "2.png", bbox_inches='tight', transparent=True)
+# plt.clf()
