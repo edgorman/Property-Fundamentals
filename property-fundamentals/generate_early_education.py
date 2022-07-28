@@ -71,20 +71,20 @@ for name, postcode, rating, ward, school_coordinates, date in school_data:
         school_ward.insert(0,doogal_api.get_postcode_info(postcode))
         
         #Check ward is present in list
-        ward_found = False
-        for j in range (0,len(wards[0])):
-            if school_ward[0][6] == wards[0][j]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("postcode is: ")
-            print(postcode)
-            print("school ward is currently: ")
-            print(school_ward[0][6])
-            school_ward[0][6] = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        # ward_found = False
+        # for j in range (0,len(wards[0])):
+            # if school_ward[0][6] == wards[0][j]:
+                # ward_found = True
+        # if ward_found == True:
+            # print("ward found")
+        # elif ward_found == False:
+            # print("ward not found.\n wards available are:\n")
+            # print(wards[0])
+            # print("postcode is: ")
+            # print(postcode)
+            # print("school ward is currently: ")
+            # print(school_ward[0][6])
+            # school_ward[0][6] = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
         
         #Calculate the school ward rating count
         if int(rating) == 1:
@@ -137,7 +137,6 @@ print(ofsted_year)
     #yaxis_school.insert(j, (str(j+1) + ". " + wards[0][j]))
 
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
-#plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams.update({'font.size': 7})
 p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding) #color = (R,G,B)
@@ -151,3 +150,36 @@ plt.title(district + " (" + ofsted_month + "-" + ofsted_year + ") \n Schools and
 plt.legend([p4,p3,p2,p1],["Outstanding", "Good", "Requires Improvement", "Poor"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 4)
 plt.savefig(district + "_ofsted_rating" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
+
+
+#Add code when there are many wards
+
+
+# plt.rcParams["figure.figsize"] = (2,5) # if there are many wards
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# p1 = plt.barh(y_pos[0:34], school_count_poor[0:34], color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement[0:34]+school_count_good[0:34]+school_count_outstanding[0:34]) #color = (R,G,B)
+# p2 = plt.barh(y_pos[0:34], school_count_requires_improvement[0:34], color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good[0:34]+school_count_outstanding[0:34]) #color = (R,G,B)
+# p3 = plt.barh(y_pos[0:34], school_count_good[0:34], color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding[0:34]) #color = (R,G,B)
+# p4 = plt.barh(y_pos[0:34], school_count_outstanding[0:34], color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[0:34],wards[0][0:34])
+# plt.xlabel("Number of Schools")
+# plt.gca().invert_yaxis()
+# plt.title(district + " (" + ofsted_month + "-" + ofsted_year + ") \n Schools and Nurseries Ofsted Rating")
+# plt.legend([p4,p3,p2,p1],["Outstanding", "Good", "Requires Improvement", "Poor"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 4)
+# plt.savefig(district + "_ofsted_rating" + ".png", bbox_inches='tight', transparent=True)
+# plt.clf()
+
+# plt.rcParams["figure.figsize"] = (2,5) # if there are many wards
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# p1 = plt.barh(y_pos[35:69], school_count_poor[35:69], color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement[35:69]+school_count_good[35:69]+school_count_outstanding[35:69]) #color = (R,G,B)
+# p2 = plt.barh(y_pos[35:69], school_count_requires_improvement[35:69], color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good[35:69]+school_count_outstanding[35:69]) #color = (R,G,B)
+# p3 = plt.barh(y_pos[35:69], school_count_good[35:69], color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding[35:69]) #color = (R,G,B)
+# p4 = plt.barh(y_pos[35:69], school_count_outstanding[35:69], color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[35:69],wards[0][35:69])
+# plt.xlabel("Number of Schools")
+# plt.gca().invert_yaxis()
+# plt.title(district + " (" + ofsted_month + "-" + ofsted_year + ") \n Schools and Nurseries Ofsted Rating")
+# plt.savefig(district + "_ofsted_rating" + "2.png", bbox_inches='tight', transparent=True)
+# plt.clf()

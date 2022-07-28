@@ -60,20 +60,20 @@ for j in range (0,len(further_education_result)):
         further_education_postcode = postcodes_api.get_postcode(str(further_education_result[j][2]['lng']),str(further_education_result[j][2]['lat']))
         
         #Check ward is present in list
-        ward_found = False
-        for i in range (0,len(wards[0])):
-            if further_education_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(further_education_postcode)
-            print("further education ward is currently: ")
-            print(further_education_ward)
-            further_education_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        # ward_found = False
+        # for i in range (0,len(wards[0])):
+            # if further_education_ward == wards[0][i]:
+                # ward_found = True
+        # if ward_found == True:
+            # print("ward found")
+        # elif ward_found == False:
+            # print("ward not found.\n wards available are:\n")
+            # print(wards[0])
+            # print("Postcode is: ")
+            # print(further_education_postcode)
+            # print("further education ward is currently: ")
+            # print(further_education_ward)
+            # further_education_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
         
         
         if further_education_ward is not None:
@@ -107,7 +107,6 @@ for j in range(0,len(wards[0])):
     #i-=1
 
 #plot the further education data
-#plt.rcParams["figure.figsize"] = (5,5.5) # if there are many wards
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams.update({'font.size': 7})
@@ -117,3 +116,26 @@ plt.xlabel("Number of Further Education Institutions")
 plt.title(district + " (" + today_month + "-" + today_year + ") \n Further Education Institutions")
 plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
+
+
+#Add code when there are many wards
+
+# plt.rcParams["figure.figsize"] = (2.5,5)
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# plt.barh(y_pos[0:34], xaxis[0:34], color = (0.1015625,0.13671875,0.4921875), edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[0:34],yaxis[0:34])
+# plt.xlabel("Number of Further Education Institutions")
+# plt.title(district + " (" + today_month + "-" + today_year + ") \n Further Education Institutions")
+# plt.savefig(district + "_further_education" + ".png", bbox_inches='tight', transparent=True)
+# plt.clf()
+
+# plt.rcParams["figure.figsize"] = (3.5,5)
+# plt.rcParams["figure.dpi"] = 200
+# plt.rcParams.update({'font.size': 5})
+# plt.barh(y_pos[35:69], xaxis[35:69], color = (0.1015625,0.13671875,0.4921875), edgecolor='black') #color = (R,G,B)
+# plt.yticks(y_pos[35:69],yaxis[35:69])
+# plt.xlabel("Number of Further Education Institutions")
+# plt.title(district + " (" + today_month + "-" + today_year + ") \n Further Education Institutions")
+# plt.savefig(district + "_further_education" + "2.png", bbox_inches='tight', transparent=True)
+# plt.clf()
