@@ -230,7 +230,7 @@ plt.clf
 # plt.rcParams["figure.figsize"] = (2,5) # if there are many wards
 # plt.rcParams["figure.dpi"] = 200
 # plt.rcParams.update({'font.size': 5})
-# plt.barh(y_pos[0:34], xaxis[0:34], color = colouraxis, edgecolor='black') #color = (R,G,B)
+# plt.barh(y_pos[0:34], xaxis[0:34], color = colouraxis[0:34], edgecolor='black') #color = (R,G,B)
 # plt.yticks(y_pos[0:34],yaxis[0:34])
 # plt.xlabel("Percentage (%)")
 # plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
@@ -240,7 +240,7 @@ plt.clf
 # plt.rcParams["figure.figsize"] = (3,5) # if there are many wards
 # plt.rcParams["figure.dpi"] = 200
 # plt.rcParams.update({'font.size': 5})
-# plt.barh(y_pos[35:69], xaxis[35:69], color = colouraxis, edgecolor='black') #color = (R,G,B)
+# plt.barh(y_pos[35:69], xaxis[35:69], color = colouraxis[35:69], edgecolor='black') #color = (R,G,B)
 # plt.yticks(y_pos[35:69],yaxis[35:69])
 # plt.xlabel("Percentage (%)")
 # plt.title(district + " (" + date_range + ")" + " \n % of Properties Burgled")
