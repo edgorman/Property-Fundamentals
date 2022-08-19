@@ -55,10 +55,10 @@ class API:
             ],
             "total": True
           },
-          "str:field:UC_Households:F_UC_DATE:DATE_NAME": {
+          "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME": {
             "map": [
               [
-                "str:value:UC_Households:F_UC_DATE:DATE_NAME:C_UC_DATE:202202"
+                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202205"
               ]
             ],
             "total": False
@@ -66,7 +66,7 @@ class API:
         },
         "dimensions": [
           [
-            "str:field:UC_Households:F_UC_DATE:DATE_NAME"
+            "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME"
           ],
           [
             "str:field:UC_Households:V_F_UC_HOUSEHOLDS:WARD_CODE"
@@ -105,10 +105,10 @@ class API:
             ],
             "total": True
           },
-          "str:field:UC_Households:F_UC_DATE:DATE_NAME": {
+          "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME": {
             "map": [
               [
-                "str:value:UC_Households:F_UC_DATE:DATE_NAME:C_UC_DATE:202202"
+                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202205"
               ]
             ],
             "total": False
@@ -116,7 +116,7 @@ class API:
         },
         "dimensions": [
           [
-            "str:field:UC_Households:F_UC_DATE:DATE_NAME"
+            "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME"
           ],
           [
             "str:field:UC_Households:V_F_UC_HOUSEHOLDS:WARD_CODE"
@@ -160,7 +160,7 @@ class API:
               "str:field:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME": {
                 "map": [
                   [
-                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202202"
+                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202205"
                   ]
                 ],
                 "total": False
@@ -211,7 +211,7 @@ class API:
               "str:field:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME": {
                 "map": [
                   [
-                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202202"
+                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202205"
                   ]
                 ],
                 "total": False
