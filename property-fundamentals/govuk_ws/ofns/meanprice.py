@@ -85,6 +85,7 @@ class MeanPrice:
                         sheet_data[0].cell_value(row_idx, 3)
                     ]
                     for data in sheet_data:
+                        #row.append(data.cell_value(row_idx, data.ncols - 4))
                         row.append(data.cell_value(row_idx, data.ncols - 2))
                     
                     csv_writer.writerow(row)
