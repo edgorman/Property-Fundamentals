@@ -12,15 +12,21 @@ from environment_data_api.api import API as FLOOD_API
 from shapely.geometry import Polygon
 import numpy as np
 import json
+import matplotlib.pyplot as plt
 
 flood_api = FLOOD_API()
 import simplekml
 kml = simplekml.Kml()
 
 point = []
+flood_percentage = []
 flood_area_count = [0]*len(wards[0])
+y_pos = np.arange(len(wards[0]))
 pol = []
+yaxis = []
+xaxis = []
 count=0
+colouraxis = ['#1478F0FF']*len(wards[0])
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -68,10 +74,10 @@ for j in range (0,len(flood_data_result)):
             for h in range(0,len(coordinates)):
                 p = Polygon(coordinates[h])
                 if (p.is_valid == False):
-                    p = p.buffer(0.02)
+                    p = p.buffer(0.0007)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 q = Polygon(flood_data_result[j][k][l])
                 if (q.is_valid == False):
-                    q = q.buffer(0.02)
+                    q = q.buffer(0.0007)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 print(p.is_valid)
                 print(q.is_valid)
                 print(p.intersects(q))
@@ -91,10 +97,10 @@ for j in range (0,len(flood_data_result)):
             for h in range(0,len(coordinates)):
                 p = Polygon(coordinates[h])
                 if (p.is_valid == False):
-                    p = p.buffer(0.02)
+                    p = p.buffer(0.0007)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 q = Polygon(flood_data_result[j][k])
                 if (q.is_valid == False):
-                    q = q.buffer(0.02)
+                    q = q.buffer(0.0007)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 print(p.is_valid)
                 print(q.is_valid)
                 print(p.intersects(q))
@@ -109,11 +115,35 @@ for h in range(0,len(coordinates)):
     a = (flood_area_count[h])
     b = Polygon(coordinates[h]).area
     if (a == 0):
-        c = 0
+        flood_percentage.insert(h,0)
     else:
-        c = (float(a)/float(b))*100
-    print(c)
+        flood_percentage_calculate = ((float(a)/float(b))*100)
+        flood_percentage.insert(h,flood_percentage_calculate)
+    print(flood_percentage)
     
         
 #Save the polygons to a KML file
 kml.save(district + "_flood_data" + ".kml")
+
+#Arrange the data for the plot
+yaxis_order = sorted(range(len(flood_percentage)), key=lambda k: flood_percentage[k])
+print(yaxis_order)
+yaxis.clear()
+xaxis.clear()
+#colouraxis.clear()
+for j in range(0,len(wards[0])):
+    a = yaxis_order[j]
+    yaxis.insert(j,wards[0][a])
+    xaxis.insert(j,flood_percentage[a])
+    #colouraxis.insert(j,price_plot[a])
+
+#plot the data
+plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
+plt.rcParams["figure.dpi"] = 200
+plt.rcParams.update({'font.size': 7})
+plt.barh(y_pos, xaxis, color= colouraxis, edgecolor='black')
+plt.yticks(y_pos,yaxis)
+plt.xlabel("Percentage (%)")
+plt.title(district +  " - % of a ward at flooding risk")
+plt.savefig(district + "_Flooding_risk_percentage" + ".png", bbox_inches='tight', transparent=True)
+plt.clf()
