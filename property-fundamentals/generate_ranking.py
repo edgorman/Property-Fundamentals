@@ -6,12 +6,38 @@ import numpy as np
 import json
 import matplotlib.pyplot as plt
 
+burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
-# based on whether there is burglary data, may want toask user if data is available first.
+
+if burglary_data =='Y':
+    # need to load the CSV files. Suggest call api file here for this.
+    # after reading the csv files, need to assign them to temp variables
+    # for weighting,
+    # property price ranking * 0.5
+    # burglary ranking * 0.1
+    # school ranking * 0.1
+    # flooding ranking * 0.1
+    # universal credit ranking * 0.1
+    # housing benefit ranking * 0.1
+    
+    
+elif burglary_data =='N':
+    # need to load the CSV files. Suggest call api file here for this.
+    # after reading the csv files, need to assign them to temp variables
+    # for weighting,
+    # property price ranking * 0.5
+    # school ranking * 0.125
+    # flooding ranking * 0.125
+    # universal credit ranking * 0.125
+    # housing benefit ranking * 0.125
+
+else
+    print("input error")
 
 
-#may want to do this in the api. Code originally fromfile schoolratings.py. Needs to be adapted.
-#need to load 
+
+#may want to do this in the api. Code originally from file schoolratings.py. Needs to be adapted.
+
 
     def __init__(self):
         self.dataset_file = "Data View Download _Full Data_data.csv"
