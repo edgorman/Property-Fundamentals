@@ -31,12 +31,14 @@ if burglary_data =='Y':
         ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
     
     #Use tabulate to plot the data
+    #https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
     
 elif burglary_data =='N':
     for h in range(0,len(coordinates)):
         ranking_count.insert(h,(flood_ranking[h] * 0.125) + (property_ranking[h] * 0.5) + (universal_credit_ranking[h] * 0.125) + (housing_benefit_ranking[h] * 0.125)+ (school_ranking[h] * 0.125))
     
     #Use tabulate to plot the data
+    #https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
     
 else
     print("input error")
