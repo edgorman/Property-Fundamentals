@@ -13,6 +13,7 @@ from govuk_api.ofns.api import MissingDistrictError
 from govuk_api.ofns.api import NoWardError
 from govuk_api.ofns.api import MissingWardError
 from govuk_api.ofns.api import NoOFNSDataError
+import os
 
 coordinates = []
 wards = []
@@ -55,7 +56,8 @@ print(population)
 #Get the coordinates of the wards
 for j in range (0,len(wards[0])):
     try:
-        coordinates.append(ofns_api.get_ward_polygon(district, wards[0][j]))
+        #coordinates.append(ofns_api.get_ward_polygon(district, wards[0][j]))
+        coordinates.append(doogal_api.get_ward_polygon(district, wards[0][j]))
     except NoDistrictError as e:
             print("Error: Need to specify a district.")
     except MissingDistrictError as e:
@@ -76,6 +78,30 @@ for j in range (0,len(wards[0])):
         lng , lat = map(float, str(coordinates[j][k]).strip('[]').split(','))
         lat_list.append(lat)
         lng_list.append(lng)
+
+#Get the coordinates of the wards
+
+# dataset_file = district + ".txt"
+# dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'Github Repository', 'Property Fundamentals', 'property-fundamentals', 'Coordinates'))
+# dataset_file_path = os.path.join(dataset_dest, dataset_file)
+  
+# with open(file=dataset_file_path, mode='r', encoding='utf-8') as mf:
+    # x = mf.readlines()
+    # coordinates = [cordinate for cordinate in list(map(lambda i: eval(str(i).strip()) if str(i).strip() else None, x)) if cordinate]
+    # #print(coordinates)
+    # print(coordinates[0][0])
+    # print(coordinates[0][0][0])
+    # print(coordinates[0][0][1])
+    
+    # print(len(wards[0]))
+    # print(len(coordinates[0]))
+
+#Seperate the Latitude and Longitude coordinates
+# for j in range (0,len(wards[0])):
+    # for k in range (0,len(coordinates[j])):
+        # lng , lat = map(float, str(coordinates[j][k]).strip('[]').split(','))
+        # lat_list.append(lat)
+        # lng_list.append(lng)
 
 #Doogal API Coordinates
 transport_max_lat = max(lat_list) + 0.1
