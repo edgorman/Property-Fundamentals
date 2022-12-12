@@ -138,7 +138,7 @@ print(ofsted_year)
 
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
 plt.rcParams["figure.dpi"] = 200
-plt.rcParams.update({'font.size': 6})
+plt.rcParams.update({'font.size': 7})
 p1 = plt.barh(y_pos, school_count_poor, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=school_count_requires_improvement+school_count_good+school_count_outstanding) #color = (R,G,B)
 p2 = plt.barh(y_pos, school_count_requires_improvement, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=school_count_good+school_count_outstanding) #color = (R,G,B)
 p3 = plt.barh(y_pos, school_count_good, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=school_count_outstanding) #color = (R,G,B)
