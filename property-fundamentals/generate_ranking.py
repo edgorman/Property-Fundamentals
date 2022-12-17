@@ -30,22 +30,27 @@ ax.axis('off')
 ax.axis('tight')
 
 data = {
-  "Property Price": [420, 380, 390],
-  "Universal Credit": [50, 40, 45],
-  "Housing Benefit": [50, 40, 45],
-  "Burglary": [50, 40, 45],
-  "Flooding Risk": [50, 40, 45],
-  "Schools": [50, 40, 45],
+  "Mean Sold Price (All Property Types) (£)": [420, 380, 390],
+  "% of Households on Universal Credit": [50, 40, 45],
+  "% of Households on Housing Benefit": [50, 40, 45],
+  "% of Properties Burgled": [50, 40, 45],
+  "% of Wards at Flooding Risk": [50, 40, 45],
+  "Schools and Nurseries Ofsted Rating": [50, 40, 45],
 }
 
-df = pd.DataFrame(data, index = ["ward1", "ward2", "ward3"])
+df = pd.DataFrame(data, index = ["ward1", "ward2", "ward3"]) #change index to wards[0]
 
-ax.table(cellText=df.values, colLabels=df.columns, rowLabels=df.index, loc='center')
+the_table = ax.table(cellText=df.values, colLabels=df.columns, rowLabels=df.index, loc='center')
+the_table.auto_set_font_size(False)
+the_table.set_fontsize(10)
 
-fig.tight_layout()
+#fig.tight_layout()
 
-#plt.show()
 
+
+plt.rcParams["figure.dpi"] = 200
+#plt.rcParams.update({'font.size': 7})
+plt.rcParams["figure.figsize"] = (4.5,5)
 plt.title(district +  " Ward Ranking")
 plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
 
