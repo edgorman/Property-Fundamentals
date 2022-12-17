@@ -1,6 +1,6 @@
-# from development_district import district
-# from development_district import wards
-# from development_district import coordinates
+from development_district import district
+from development_district import wards
+from development_district import coordinates
 
 # use these for the weighting calculation
 # from generate_flood_data import flood_ranking
@@ -29,24 +29,26 @@ fig.patch.set_visible(False)
 ax.axis('off')
 ax.axis('tight')
 
-df = pd.DataFrame(np.random.randn(10, 4), columns=list('ABCD'))
+data = {
+  "Property Price": [420, 380, 390],
+  "Universal Credit": [50, 40, 45],
+  "Housing Benefit": [50, 40, 45],
+  "Burglary": [50, 40, 45],
+  "Flooding Risk": [50, 40, 45],
+  "Schools": [50, 40, 45],
+}
 
-ax.table(cellText=df.values, colLabels=df.columns, loc='center')
+df = pd.DataFrame(data, index = ["ward1", "ward2", "ward3"])
+
+ax.table(cellText=df.values, colLabels=df.columns, rowLabels=df.index, loc='center')
 
 fig.tight_layout()
 
-plt.show()
+#plt.show()
 
+plt.title(district +  " Ward Ranking")
+plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
 
-#ranking_count = [0]*len(wards[0])
-
-#table related code
-# table = [['First Name', 'Last Name', 'Age'], 
-         # ['John', 'Smith', 39], 
-         # ['Mary', 'Jane', 25], 
-         # ['Jennifer', 'Doe', 28]]
-         
-# print(tabulate(table, headers='firstrow', tablefmt='fancy_grid'))
 
 #burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
