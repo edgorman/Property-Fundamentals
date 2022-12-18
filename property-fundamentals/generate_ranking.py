@@ -30,19 +30,24 @@ ax.axis('off')
 ax.axis('tight')
 
 data = {
-  "Mean Sold Price (All Property Types) (£)": [420, 380, 390],
-  "% of Households on Universal Credit": [50, 40, 45],
-  "% of Households on Housing Benefit": [50, 40, 45],
-  "% of Properties Burgled": [50, 40, 45],
-  "% of Wards at Flooding Risk": [50, 40, 45],
-  "Schools and Nurseries Ofsted Rating": [50, 40, 45],
+  "Mean Sold Price \n (All Property Types) (£)": [420, 380, 390],
+  "(%) of Households \n on Universal Credit": [50, 40, 45],
+  "(%) of Households \n on Housing Benefit": [50, 40, 45],
+  "(%) of Properties \n Burgled": [50, 40, 45],
+  "(%) of Wards at \n Flooding Risk": [50, 40, 45],
+  "Schools and Nurseries \n Ofsted Rating": [50, 40, 45],
 }
 
 df = pd.DataFrame(data, index = ["ward1", "ward2", "ward3"]) #change index to wards[0]
-
-the_table = ax.table(cellText=df.values, colLabels=df.columns, rowLabels=df.index, loc='center')
+Labels=df.columns
+the_table = ax.table(cellText=df.values, colLabels=Labels, rowLabels=df.index, loc='center')
 the_table.auto_set_font_size(False)
 the_table.set_fontsize(10)
+the_table.auto_set_column_width(col=list(range(len(df.columns))))
+
+for r in range(0, len(Labels)):
+    cell = the_table[0, r]
+    cell.set_height(0.1)
 
 #fig.tight_layout()
 
