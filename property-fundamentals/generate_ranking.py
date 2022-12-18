@@ -1,6 +1,9 @@
 from development_district import district
 from development_district import wards
 from development_district import coordinates
+from generate_households_universal_credit_percentage import universal_credit_percentage
+from generate_housing_benefit_claimants_percentage import housing_benefit_percentage
+from generate_crime_burglary_percentage_heat_map import burglary_percentage
 
 # use these for the weighting calculation
 # from generate_flood_data import flood_ranking
@@ -30,15 +33,17 @@ ax.axis('off')
 ax.axis('tight')
 
 data = {
-  "Mean Sold Price \n (All Property Types) (£)": [420, 380, 390],
-  "(%) of Households \n on Universal Credit": [50, 40, 45],
-  "(%) of Households \n on Housing Benefit": [50, 40, 45],
-  "(%) of Properties \n Burgled": [50, 40, 45],
-  "(%) of Wards at \n Flooding Risk": [50, 40, 45],
-  "Schools and Nurseries \n Ofsted Rating": [50, 40, 45],
+  "Mean Sold Price \n (All Property Types) (£)": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390],
+  "(%) of Households \n on Universal Credit": universal_credit_percentage,
+  "(%) of Households \n on Housing Benefit": housing_benefit_percentage,
+  "(%) of Properties \n Burgled": burglary_percentage,
+  "(%) of Wards at \n Flooding Risk": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390],
+  "Schools and Nurseries \n Ofsted Rating": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390]
 }
 
-df = pd.DataFrame(data, index = ["ward1", "ward2", "ward3"]) #change index to wards[0]
+df = pd.DataFrame(data, index = wards[0])
+df = df.round(decimals = 1)
+#df.style.set_properties(**{'text-align': 'left'})
 Labels=df.columns
 the_table = ax.table(cellText=df.values, colLabels=Labels, rowLabels=df.index, loc='center')
 the_table.auto_set_font_size(False)
