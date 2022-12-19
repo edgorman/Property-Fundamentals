@@ -8,7 +8,6 @@ from generate_flood_data import flood_percentage
 from generate_property_price import price_mean
 
 # use these for the weighting calculation
-# from generate_property_price import property_ranking
 # from generate_early_education import school_ranking
 
 # use these in the chart
@@ -40,7 +39,12 @@ data = {
 }
 
 df = pd.DataFrame(data, index = wards[0])
-df = df.round(decimals = 1)
+#df.style.format(na_rep='Mean Sold Price \n (All Property Types) (£)', formatter=int, thousands=',')
+#df = df.round(decimals = 1)
+df = df.round({'(%) of Households \n on Universal Credit': 1})
+df = df.round({'(%) of Households \n on Housing Benefit': 1})
+df = df.round({'(%) of Properties \n Burgled': 2})
+df = df.round({'(%) of Wards at \n Flooding Risk': 1})
 #df.style.set_properties(**{'text-align': 'left'})
 Labels=df.columns
 the_table = ax.table(cellText=df.values, colLabels=Labels, rowLabels=df.index, loc='center')
@@ -53,7 +57,6 @@ for r in range(0, len(Labels)):
     cell.set_height(0.1)
 
 #fig.tight_layout()
-
 
 
 plt.rcParams["figure.dpi"] = 200
