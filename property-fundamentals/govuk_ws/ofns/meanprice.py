@@ -16,6 +16,7 @@ class MeanPrice:
 
     https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/meanpricepaidbywardhpssadataset38
     '''
+    
 
     def __init__(self):
         self.dataset_dest = os.path.abspath(os.path.join(__file__, '..', '..', '..', '..', 'data', 'external', 'mean_price_per_ward'))
@@ -60,7 +61,7 @@ class MeanPrice:
             print("[INFO]", "Starting collecting the most recent mean price ward dataset")
             print("[INFO]", "This will take about half a minute to complete...")
             
-            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward.zip")
+            response = requests.get(self.zippage_url + "/" + dataset + "/hpssadataset38meanpricepaidbyward1.zip")
             print("[DONE]", "Downloaded most recent zip:\t", dataset)
 
             zip_file = zipfile.ZipFile(io.BytesIO(response.content))
@@ -85,8 +86,8 @@ class MeanPrice:
                         sheet_data[0].cell_value(row_idx, 3)
                     ]
                     for data in sheet_data:
-                        #row.append(data.cell_value(row_idx, data.ncols - 4))
-                        row.append(data.cell_value(row_idx, data.ncols - 2))
+                        row.append(data.cell_value(row_idx, data.ncols - 4))
+                        #row.append(data.cell_value(row_idx, data.ncols - 2))
                     
                     csv_writer.writerow(row)
             print("[DONE]", "Finished creating csv at:\t", os.path.join(self.dataset_dest, dataset))

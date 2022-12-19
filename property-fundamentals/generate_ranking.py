@@ -4,13 +4,11 @@ from development_district import coordinates
 from generate_households_universal_credit_percentage import universal_credit_percentage
 from generate_housing_benefit_claimants_percentage import housing_benefit_percentage
 from generate_crime_burglary_percentage_heat_map import burglary_percentage
+from generate_flood_data import flood_percentage
+from generate_property_price import price_mean
 
 # use these for the weighting calculation
-# from generate_flood_data import flood_ranking
 # from generate_property_price import property_ranking
-# from generate_households_universal_credit_percentage import universal_credit_ranking
-# from generate_crime_burglary_percentage_heat_map import burglary_ranking
-# from generate_housing_benefit_claimants_percentage import housing_benefit_ranking
 # from generate_early_education import school_ranking
 
 # use these in the chart
@@ -33,11 +31,11 @@ ax.axis('off')
 ax.axis('tight')
 
 data = {
-  "Mean Sold Price \n (All Property Types) (£)": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390],
+  "Mean Sold Price \n (All Property Types) (£)": price_mean[0],
   "(%) of Households \n on Universal Credit": universal_credit_percentage,
   "(%) of Households \n on Housing Benefit": housing_benefit_percentage,
   "(%) of Properties \n Burgled": burglary_percentage,
-  "(%) of Wards at \n Flooding Risk": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390],
+  "(%) of Wards at \n Flooding Risk": flood_percentage,
   "Schools and Nurseries \n Ofsted Rating": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390]
 }
 
