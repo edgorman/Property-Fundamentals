@@ -7,16 +7,19 @@ from generate_crime_burglary_percentage_heat_map import burglary_percentage
 from generate_flood_data import flood_percentage
 from generate_property_price import price_mean
 
-# use these for the weighting calculation
-# from generate_early_education import school_ranking
+from generate_early_education import xaxis_outstanding
+from generate_early_education import xaxis_good
+from generate_early_education import xaxis_requires_improvement
+from generate_early_education import xaxis_poor
 
-# use these in the chart
-# from generate_flood_data import flood_percentage
-# from generate_property_price import property_price
-# from generate_households_universal_credit_percentage import universal_credit_percentage
-# from generate_crime_burglary_percentage_heat_map import burglary_percentage
-# from generate_housing_benefit_claimants_percentage import housing_benefit_percentage
-# from generate_early_education import school_score
+# use these for the weighting calculation
+from generate_flood_data import yaxis_order as flood_ranking
+from generate_property_price import yaxis_order as property_ranking
+from generate_households_universal_credit_percentage import yaxis_order as universal_credit_ranking
+from generate_crime_burglary_percentage_heat_map import yaxis_order as burglary_ranking
+from generate_housing_benefit_claimants_percentage import yaxis_order as housing_benefit_ranking
+from generate_early_education import yaxis_order as school_ranking
+
 
 import numpy as np
 import pandas as pd
@@ -66,19 +69,27 @@ plt.title(district +  " Ward Ranking")
 plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
 
 
+# for h in range(0,len(coordinates)):
+    # ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
+    # ranking_count[h] = ((flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
+# print(ranking_count)
+# ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
+# print(ranking_order)
+
+
 #burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
 
 # if burglary_data =='Y':
     # for h in range(0,len(coordinates)):
-        # ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
+        # ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
     
     #Use tabulate to plot the data
     #https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
     
 # elif burglary_data =='N':
     # for h in range(0,len(coordinates)):
-        # ranking_count.insert(h,(flood_ranking[h] * 0.125) + (property_ranking[h] * 0.5) + (universal_credit_ranking[h] * 0.125) + (housing_benefit_ranking[h] * 0.125)+ (school_ranking[h] * 0.125))
+        # ranking_count.insert(h,(flood_ranking[h] * 0.125) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.125) + (housing_benefit_ranking[h] * 0.125)+ (school_ranking[h] * 0.125))
     
     #Use tabulate to plot the data
     #https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd
