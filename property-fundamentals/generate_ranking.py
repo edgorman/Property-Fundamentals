@@ -26,6 +26,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
+ranking_count = []
 
 # hide axes
 fig.patch.set_visible(False)
@@ -68,13 +69,21 @@ plt.rcParams["figure.figsize"] = (4.5,5)
 plt.title(district +  " Ward Ranking")
 plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
 
+print(type(flood_ranking[0]))
+print(type(property_ranking[0]))
+print(type(universal_credit_ranking[0]))
+print(type(burglary_ranking[0]))
+print(type(housing_benefit_ranking[0]))
+print(type(school_ranking[0]))
 
-# for h in range(0,len(coordinates)):
-    # ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
-    # ranking_count[h] = ((flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
-# print(ranking_count)
-# ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
-# print(ranking_order)
+
+for h in range(0,len(coordinates)):
+    #ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
+    #ranking_count.append((int(flood_ranking[h]) * 0.1) + (int(property_ranking[0][h]) * 0.5) + (int(universal_credit_ranking[h]) * 0.1) + (int(burglary_ranking[h]) * 0.1) + (int(housing_benefit_ranking[h]) * 0.1)+ (int(school_ranking[h]) * 0.1))
+    ranking_count.append(int(flood_ranking[h]) * 0.1) + (int(property_ranking[0][h]) * 0.5))
+print(ranking_count)
+ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
+print(ranking_order)
 
 
 #burglary_data = input("Is there a full set of burglary data available (Y/N)?")
