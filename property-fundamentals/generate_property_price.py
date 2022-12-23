@@ -25,6 +25,7 @@ y_pos = np.arange(len(wards[0]))
 yaxis = []
 xaxis = []
 colouraxis = []
+yaxis_order = []
 
 #Get date for plot title
 year = mean_price._update_dataset()[-2:]
@@ -67,13 +68,15 @@ for n in range (0,len(house_types[0])):
     kml.save(district + "_mean_" + house_types[0][n] + ".kml")
     
     #Arrange the data for the plot
-    yaxis_order = sorted(range(len(price_mean[n])), key=lambda k: price_mean[n][k])
+    #yaxis_order = sorted(range(len(price_mean[n])), key=lambda k: price_mean[n][k])
+    yaxis_order.insert(n,sorted(range(len(price_mean[n])), key=lambda k: price_mean[n][k]))
     print(yaxis_order)
     yaxis.clear()
     xaxis.clear()
     colouraxis.clear()
     for j in range(0,len(wards[0])):
-        a = yaxis_order[j]
+        #a = yaxis_order[j]
+        a = yaxis_order[n][j]
         yaxis.insert(j,wards[0][a])
         xaxis.insert(j,round(price_mean[n][a],-3))
         colouraxis.insert(j,price_plot[a])
@@ -134,3 +137,5 @@ for n in range (0,len(house_types[0])):
     # plt.tight_layout()
     # plt.savefig(district + "_mean_" + house_types[0][n] + "2.png", bbox_inches='tight', transparent=True)
     # plt.clf()
+    
+

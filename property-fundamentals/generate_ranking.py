@@ -27,22 +27,64 @@ import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 ranking_count = []
+property_ranking_all = property_ranking[0]
+ward_order = []
+price_order = []
+universal_credit_order = []
+housing_benefit_order = []
+burglary_order = []
+flood_order = []
 
 # hide axes
 fig.patch.set_visible(False)
 ax.axis('off')
 ax.axis('tight')
 
+for h in range(0,len(coordinates)):
+    print(h)
+    # print(wards[0][h], "flooding = ", (int(flood_ranking.index(h)) + 1), " ", flood_percentage[h])
+    print(wards[0][h], "price = ", (int(property_ranking_all.index(h)) + 1), " ", price_mean[0][h])
+    # print(wards[0][h], "UC = ", (int(universal_credit_ranking.index(h)) + 1), " ", universal_credit_percentage[h])
+    # print(wards[0][h], "burglary = ", (int(burglary_ranking.index(h)) + 1), " ", burglary_percentage[h])
+    # print(wards[0][h], "HB = ", (int(housing_benefit_ranking.index(h)) + 1), " ", housing_benefit_percentage[h])
+    # print(wards[0][h], "school = ", (int(school_ranking.index(h)) + 1))
+
+# print("flooding = ", flood_ranking)
+# print("price = ", property_ranking_all)
+# print("UC = ", universal_credit_ranking)
+# print("burglary = ", burglary_ranking)
+# print("HB = ", housing_benefit_ranking)
+# print("school = ", school_ranking)
+
+# Rank the wards
+for h in range(0,len(coordinates)):
+    ranking_count_temp = ((int(flood_ranking[h]) + 1) * 0.1) + ((int(universal_credit_ranking[h]) + 1) * 0.1) + ((int(burglary_ranking[h]) + 1) * 0.1) + ((int(housing_benefit_ranking[h]) + 1) * 0.1)+ ((int(school_ranking[h]) + 1) * 0.1) + ((int(property_ranking_all[h]) + 1) * 0.5)
+    ranking_count.insert(h,ranking_count_temp)
+print(ranking_count)
+ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
+print(ranking_order)
+
+# Change the order of the table data based on the ranking
+for j in range(0,len(wards[0])):
+    a = ranking_order[j]
+    ward_order.insert(j,wards[0][a])
+    price_order.insert(j,price_mean[0][a])
+    universal_credit_order.insert(j,universal_credit_percentage[a])
+    housing_benefit_order.insert(j,housing_benefit_percentage[a])
+    burglary_order.insert(j,burglary_percentage[a])
+    flood_order.insert(j,flood_percentage[a])
+
+#Create the data
 data = {
-  "Mean Sold Price \n (All Property Types) (£)": price_mean[0],
-  "(%) of Households \n on Universal Credit": universal_credit_percentage,
-  "(%) of Households \n on Housing Benefit": housing_benefit_percentage,
-  "(%) of Properties \n Burgled": burglary_percentage,
-  "(%) of Wards at \n Flooding Risk": flood_percentage,
+  "Mean Sold Price \n (All Property Types) (£)": price_order,
+  "(%) of Households \n on Universal Credit": universal_credit_order,
+  "(%) of Households \n on Housing Benefit": housing_benefit_order,
+  "(%) of Properties \n Burgled": burglary_order,
+  "(%) of Wards at \n Flooding Risk": flood_order,
   "Schools and Nurseries \n Ofsted Rating": [420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390,420, 380, 390]
 }
 
-df = pd.DataFrame(data, index = wards[0])
+df = pd.DataFrame(data, index = ward_order)
 #df.style.format(na_rep='Mean Sold Price \n (All Property Types) (£)', formatter=int, thousands=',')
 #df = df.round(decimals = 1)
 df = df.round({'(%) of Households \n on Universal Credit': 1})
@@ -69,21 +111,6 @@ plt.rcParams["figure.figsize"] = (4.5,5)
 plt.title(district +  " Ward Ranking")
 plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
 
-print(type(flood_ranking[0]))
-print(type(property_ranking[0]))
-print(type(universal_credit_ranking[0]))
-print(type(burglary_ranking[0]))
-print(type(housing_benefit_ranking[0]))
-print(type(school_ranking[0]))
-
-
-for h in range(0,len(coordinates)):
-    #ranking_count.insert(h,(flood_ranking[h] * 0.1) + (property_ranking[0][h] * 0.5) + (universal_credit_ranking[h] * 0.1) + (burglary_ranking[h] * 0.1) + (housing_benefit_ranking[h] * 0.1)+ (school_ranking[h] * 0.1))
-    #ranking_count.append((int(flood_ranking[h]) * 0.1) + (int(property_ranking[0][h]) * 0.5) + (int(universal_credit_ranking[h]) * 0.1) + (int(burglary_ranking[h]) * 0.1) + (int(housing_benefit_ranking[h]) * 0.1)+ (int(school_ranking[h]) * 0.1))
-    ranking_count.append(int(flood_ranking[h]) * 0.1) + (int(property_ranking[0][h]) * 0.5))
-print(ranking_count)
-ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
-print(ranking_order)
 
 
 #burglary_data = input("Is there a full set of burglary data available (Y/N)?")

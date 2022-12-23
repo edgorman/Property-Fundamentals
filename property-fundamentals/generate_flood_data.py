@@ -136,6 +136,8 @@ for j in range(0,len(wards[0])):
     yaxis.insert(j,wards[0][a])
     xaxis.insert(j,flood_percentage[a])
     #colouraxis.insert(j,price_plot[a])
+print(yaxis)
+print(xaxis)
 
 #plot the data
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
