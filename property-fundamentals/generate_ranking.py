@@ -105,12 +105,14 @@ data = {
 
 df = pd.DataFrame(data, index = ward_order)
 #df.style.format(na_rep='Mean Sold Price \n (All Property Types) (£)', formatter=int, thousands=',')
+#df['Mean Sold Price \n (All Property Types) (£)'].map('{:,d}'.format)
+df['Mean Sold Price \n (All Property Types) (£)'] = df['Mean Sold Price \n (All Property Types) (£)'].apply(lambda x : "{:,d}".format(x))
 #df = df.round(decimals = 1)
 df = df.round({'(%) of Households \n on Universal Credit': 1})
 df = df.round({'(%) of Households \n on Housing Benefit': 1})
 df = df.round({'(%) of Properties \n Burgled': 2})
 df = df.round({'(%) of Wards at \n Flooding Risk': 1})
-#df.style.set_properties(**{'text-align': 'left'})
+df.style.set_properties(**{'text-align': 'center'})
 Labels=df.columns
 the_table = ax.table(cellText=df.values, colLabels=Labels, loc='center')
 the_table.auto_set_font_size(False)
