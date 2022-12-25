@@ -39,7 +39,7 @@ poor_order = []
 scaled_price = []
 scaled_burglary = []
 scaled_schools = []
-scaled_flooding = []
+scaled_flood = []
 scaled_universal_credit = []
 scaled_housing_benefit = []
 
@@ -54,8 +54,8 @@ max_burglary = max(burglary_percentage)
 min_burglary = min(burglary_percentage)
 max_schools = max(school_count_overall)
 min_schools = min(school_count_overall)
-max_flooding = max(flood_percentage)
-min_flooding = min(flood_percentage)
+max_flood = max(flood_percentage)
+min_flood = min(flood_percentage)
 max_universal_credit = max(universal_credit_percentage)
 min_universal_credit = min(universal_credit_percentage)
 max_housing_benefit = max(housing_benefit_percentage)
@@ -67,8 +67,8 @@ print(max_burglary)
 print(min_burglary)
 print(max_schools)
 print(min_schools)
-print(max_flooding)
-print(min_flooding)
+print(max_flood)
+print(min_flood)
 print(max_universal_credit)
 print(min_universal_credit)
 print(max_housing_benefit)
@@ -81,25 +81,25 @@ for h in range(0,len(coordinates)):
     scaled_price.insert(h,scaled_price_calculate)
     #scale burglary
     scaled_burglary_calculate = ((float(burglary_percentage[h]) - float(min_burglary)) / (float(max_burglary) - float(min_burglary)))
-    scaled_burglary.insert(h,scaled_price_calculate)
+    scaled_burglary.insert(h,scaled_burglary_calculate)
     #scale schools
-    
-    
+    scaled_schools_calculate = (1 - ((int(school_count_overall[h]) - int(min_schools)) / (int(max_schools) - int(min_schools))))
+    scaled_schools.insert(h,scaled_schools_calculate)    
     #scale flooding
-    
-    
+    scaled_flood_calculate = ((float(flood_percentage[h]) - float(min_flood)) / (float(max_flood) - float(min_flood)))
+    scaled_flood.insert(h,scaled_flood_calculate)    
     #scale universal_credit
-    
+    scaled_universal_credit_calculate = ((float(universal_credit_percentage[h]) - float(min_universal_credit)) / (float(max_universal_credit) - float(min_universal_credit)))
+    scaled_universal_credit.insert(h,scaled_universal_credit_calculate)     
     
     #scale housing_benefit
     
     
-    
-#print(scaled_price)
+print(scaled_price)
 print(scaled_burglary)
-#print(scaled_schools)
-#print(scaled_flooding)
-#print(scaled_universal_credit)
+print(scaled_schools)
+print(scaled_flood)
+print(scaled_universal_credit)
 #print(scaled_housing_benefit)    
     
 #Check if Burglary data is avaialble
