@@ -5,6 +5,7 @@ from generate_households_universal_credit_percentage import universal_credit_per
 from generate_housing_benefit_claimants_percentage import housing_benefit_percentage
 from generate_crime_burglary_percentage_heat_map import burglary_percentage
 from generate_flood_data import flood_percentage
+from generate_early_education import school_count_overall
 from generate_property_price import price_mean
 from generate_early_education import school_count_outstanding
 from generate_early_education import school_count_good
@@ -35,12 +36,72 @@ outstanding_order = []
 good_order = []
 require_improvement_order = []
 poor_order = []
+scaled_price = []
+scaled_burglary = []
+scaled_schools = []
+scaled_flooding = []
+scaled_universal_credit = []
+scaled_housing_benefit = []
 
 # hide axes
 fig.patch.set_visible(False)
 ax.axis('off')
 ax.axis('tight')
 
+max_price = max(price_mean[0])
+min_price = min(price_mean[0])
+max_burglary = max(burglary_percentage)
+min_burglary = min(burglary_percentage)
+max_schools = max(school_count_overall)
+min_schools = min(school_count_overall)
+max_flooding = max(flood_percentage)
+min_flooding = min(flood_percentage)
+max_universal_credit = max(universal_credit_percentage)
+min_universal_credit = min(universal_credit_percentage)
+max_housing_benefit = max(housing_benefit_percentage)
+min_housing_benefit = min(housing_benefit_percentage)
+
+print(max_price)
+print(min_price)
+print(max_burglary)
+print(min_burglary)
+print(max_schools)
+print(min_schools)
+print(max_flooding)
+print(min_flooding)
+print(max_universal_credit)
+print(min_universal_credit)
+print(max_housing_benefit)
+print(min_housing_benefit)
+
+#scale results
+for h in range(0,len(coordinates)):
+    #scale price
+    scaled_price_calculate = ((int(price_mean[0][h]) - int(min_price)) / (int(max_price) - int(min_price)))
+    scaled_price.insert(h,scaled_price_calculate)
+    #scale burglary
+    scaled_burglary_calculate = ((float(burglary_percentage[h]) - float(min_burglary)) / (float(max_burglary) - float(min_burglary)))
+    scaled_burglary.insert(h,scaled_price_calculate)
+    #scale schools
+    
+    
+    #scale flooding
+    
+    
+    #scale universal_credit
+    
+    
+    #scale housing_benefit
+    
+    
+    
+#print(scaled_price)
+print(scaled_burglary)
+#print(scaled_schools)
+#print(scaled_flooding)
+#print(scaled_universal_credit)
+#print(scaled_housing_benefit)    
+    
 #Check if Burglary data is avaialble
 burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
