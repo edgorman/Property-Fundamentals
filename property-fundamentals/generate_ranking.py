@@ -74,7 +74,7 @@ print(min_universal_credit)
 print(max_housing_benefit)
 print(min_housing_benefit)
 
-#scale results
+#normalise results
 for h in range(0,len(coordinates)):
     #scale price
     scaled_price_calculate = ((int(price_mean[0][h]) - int(min_price)) / (int(max_price) - int(min_price)))
@@ -91,16 +91,16 @@ for h in range(0,len(coordinates)):
     #scale universal_credit
     scaled_universal_credit_calculate = ((float(universal_credit_percentage[h]) - float(min_universal_credit)) / (float(max_universal_credit) - float(min_universal_credit)))
     scaled_universal_credit.insert(h,scaled_universal_credit_calculate)     
-    
     #scale housing_benefit
-    
+    scaled_housing_benefit_calculate = ((float(housing_benefit_percentage[h]) - float(min_housing_benefit)) / (float(max_housing_benefit) - float(min_housing_benefit)))
+    scaled_housing_benefit.insert(h,scaled_housing_benefit_calculate)     
     
 print(scaled_price)
 print(scaled_burglary)
 print(scaled_schools)
 print(scaled_flood)
 print(scaled_universal_credit)
-#print(scaled_housing_benefit)    
+print(scaled_housing_benefit)    
     
 #Check if Burglary data is avaialble
 burglary_data = input("Is there a full set of burglary data available (Y/N)?")
@@ -108,10 +108,11 @@ burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
 if burglary_data =='Y':
     
-    # Rank the wards
+    # Weight the scaled results and normalise
     for h in range(0,len(coordinates)):
-        ranking_count_temp = ((int(flood_ranking.index(h)) + 1) * 0.05) + ((int(universal_credit_ranking.index(h)) + 1) * 0.15) + ((int(burglary_ranking.index(h)) + 1) * 0.05) + ((int(housing_benefit_ranking.index(h)) + 1) * 0.15)+ ((int(school_ranking.index(h)) + 1) * 0.1) + ((int(property_ranking_all.index(h)) + 1) * 0.5)
-        ranking_count.insert(h,ranking_count_temp)
+        desirability_temp = (float(scaled_burglary)*0.2) + (int(scaled_schools)*0.2) + (float(scaled_flood)*0.2) + (float(scaled_universal_credit)*0.2) + (float(scaled_housing_benefit)*0.2)
+        #ranking_count_temp = ((int(flood_ranking.index(h)) + 1) * 0.05) + ((int(universal_credit_ranking.index(h)) + 1) * 0.15) + ((int(burglary_ranking.index(h)) + 1) * 0.05) + ((int(housing_benefit_ranking.index(h)) + 1) * 0.15)+ ((int(school_ranking.index(h)) + 1) * 0.1) + ((int(property_ranking_all.index(h)) + 1) * 0.5)
+        ranking_count.insert(h,desirability_temp)
     print(ranking_count)
     ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
     print(ranking_order)
