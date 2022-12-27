@@ -22,11 +22,16 @@ from generate_early_education import yaxis_order as school_ranking
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt2
 
 fig, ax = plt.subplots()
-ranking_count = []
+desirability_with_burglary_count = []
+desirability_without_burglary_count = []
+affordability_count = []
 property_ranking_all = property_ranking[0]
-ward_order = []
+desirability_with_burglary_ward_order = []
+desirability_without_burglary_ward_order = []
+affordability_ward_order = []
 price_order = []
 universal_credit_order = []
 housing_benefit_order = []
@@ -100,42 +105,85 @@ print(scaled_burglary)
 print(scaled_schools)
 print(scaled_flood)
 print(scaled_universal_credit)
-print(scaled_housing_benefit)    
+print(scaled_housing_benefit)
+
+# Weight the scaled affordability results and normalise
+for h in range(0,len(coordinates)):
+    affordability_temp = float(scaled_price[h])
+    affordability_count.insert(h,affordability_temp)
+print(affordability_count)
+affordability_order = sorted(range(len(affordability_count)), key=lambda k: affordability_count[k])
+print(affordability_order)
+
+# Change the order of the affordability table data based on the ranking
+for j in range(0,len(wards[0])):
+    b = affordability_order[j]
+    affordability_ward_order.insert(j,wards[0][b])
+    price_order.insert(j,price_mean[0][b])
+       
+#Create the affordability data
+affordability_data = {
+    "Ward": affordability_ward_order,
+    "Mean Sold Price \n (All Property Types) (£)": price_order
+}
+
+#Arrange the affordability data
+affordability_df = pd.DataFrame(affordability_data, index = affordability_ward_order)
+affordability_df['Mean Sold Price \n (All Property Types) (£)'] = affordability_df['Mean Sold Price \n (All Property Types) (£)'].apply(lambda x : "{:,d}".format(x))
+Labels=affordability_df.columns
+affordability_table = ax.table(cellText=affordability_df.values, colLabels=Labels, loc='center', cellLoc='center')
+affordability_table.auto_set_font_size(False)
+affordability_table.set_fontsize(10)
+affordability_table.auto_set_column_width(col=list(range(len(affordability_df.columns))))
+
+for r in range(0, len(Labels)):
+    cell = affordability_table[0, r]
+    cell.set_height(0.1)
+
+#plot the affordability data
+plt.rcParams["figure.dpi"] = 200
+#plt.rcParams.update({'font.size': 12})
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.title(district +  " Affordability Ranking")
+plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', transparent=True)
+
     
+# Weight the scaled desirability results and normalise
+for h in range(0,len(coordinates)):
+    desirability_with_burglary_temp = (float(scaled_burglary[h])*0.2) + (int(scaled_schools[h])*0.2) + (float(scaled_flood[h])*0.2) + (float(scaled_universal_credit[h])*0.2) + (float(scaled_housing_benefit[h])*0.2)
+    desirability_with_burglary_count.insert(h,desirability_with_burglary_temp)
+    desirability_without_burglary_temp = (int(scaled_schools[h])*0.25) + (float(scaled_flood[h])*0.25) + (float(scaled_universal_credit[h])*0.25) + (float(scaled_housing_benefit[h])*0.25)
+    desirability_without_burglary_count.insert(h,desirability_without_burglary_temp)
+print(desirability_with_burglary_count)
+print(desirability_without_burglary_count)
+desirability_with_burglary_order = sorted(range(len(desirability_with_burglary_count)), key=lambda k: desirability_with_burglary_count[k])
+desirability_without_burglary_order = sorted(range(len(desirability_without_burglary_count)), key=lambda k: desirability_without_burglary_count[k])
+print(desirability_with_burglary_order)
+print(desirability_without_burglary_order)
+
+
 #Check if Burglary data is avaialble
 burglary_data = input("Is there a full set of burglary data available (Y/N)?")
 
-
 if burglary_data =='Y':
     
-    # Weight the scaled results and normalise
-    for h in range(0,len(coordinates)):
-        desirability_temp = (float(scaled_burglary)*0.2) + (int(scaled_schools)*0.2) + (float(scaled_flood)*0.2) + (float(scaled_universal_credit)*0.2) + (float(scaled_housing_benefit)*0.2)
-        #ranking_count_temp = ((int(flood_ranking.index(h)) + 1) * 0.05) + ((int(universal_credit_ranking.index(h)) + 1) * 0.15) + ((int(burglary_ranking.index(h)) + 1) * 0.05) + ((int(housing_benefit_ranking.index(h)) + 1) * 0.15)+ ((int(school_ranking.index(h)) + 1) * 0.1) + ((int(property_ranking_all.index(h)) + 1) * 0.5)
-        ranking_count.insert(h,desirability_temp)
-    print(ranking_count)
-    ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
-    print(ranking_order)
-
-    # Change the order of the table data based on the ranking
+    #arrange the data
     for j in range(0,len(wards[0])):
-        a = ranking_order[j]
-        ward_order.insert(j,wards[0][a])
-        price_order.insert(j,price_mean[0][a])
+        a = desirability_with_burglary_order[j]
+        desirability_with_burglary_ward_order.insert(j,wards[0][a])
         universal_credit_order.insert(j,universal_credit_percentage[a])
         housing_benefit_order.insert(j,housing_benefit_percentage[a])
         burglary_order.insert(j,burglary_percentage[a])
         flood_order.insert(j,flood_percentage[a])
-       
-    outstanding_order = school_count_outstanding[ranking_order]
-    good_order = school_count_good[ranking_order]
-    require_improvement_order = school_count_requires_improvement[ranking_order]
-    poor_order = school_count_poor[ranking_order]
-       
+    
+    outstanding_order = school_count_outstanding[desirability_with_burglary_order]
+    good_order = school_count_good[desirability_with_burglary_order]
+    require_improvement_order = school_count_requires_improvement[desirability_with_burglary_order]
+    poor_order = school_count_poor[desirability_with_burglary_order]
+
     #Create the data
-    data = {
-      "Ward": ward_order,
-      "Mean Sold Price \n (All Property Types) (£)": price_order,
+    desirability_data = {
+      "Ward": desirability_with_burglary_order,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
       "(%) of Properties \n Burgled": burglary_order,
@@ -145,62 +193,29 @@ if burglary_data =='Y':
       "No. Requires \n Improvement Schools": require_improvement_order,
       "No. Poor Schools": poor_order
     }
-
-    #Arrange the data
-    df = pd.DataFrame(data, index = ward_order)
-    df['Mean Sold Price \n (All Property Types) (£)'] = df['Mean Sold Price \n (All Property Types) (£)'].apply(lambda x : "{:,d}".format(x))
-    df = df.round({'(%) of Households \n on Universal Credit': 1})
-    df = df.round({'(%) of Households \n on Housing Benefit': 1})
-    df = df.round({'(%) of Properties \n Burgled': 2})
-    df = df.round({'(%) of Wards at \n Flooding Risk': 1})
-    Labels=df.columns
-    the_table = ax.table(cellText=df.values, colLabels=Labels, loc='center', cellLoc='center')
-    the_table.auto_set_font_size(False)
-    the_table.set_fontsize(10)
-    the_table.auto_set_column_width(col=list(range(len(df.columns))))
-
-    for r in range(0, len(Labels)):
-        cell = the_table[0, r]
-        cell.set_height(0.1)
-
-    #fig.tight_layout()
-
-    #plot the data
-    plt.rcParams["figure.dpi"] = 200
-    plt.rcParams.update({'font.size': 12})
-    plt.rcParams["figure.figsize"] = (4.5,5)
-    plt.title(district +  " Ward Ranking")
-    plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
-
     
+    desirability_count = desirability_with_burglary_count
+    desirability_ward_order = desirability_with_burglary_order
+
 elif burglary_data =='N':
 
-    # Rank the wards
-    for h in range(0,len(coordinates)):
-        ranking_count_temp = ((int(flood_ranking.index(h)) + 1) * 0.05) + ((int(universal_credit_ranking.index(h)) + 1) * 0.15) + ((int(housing_benefit_ranking.index(h)) + 1) * 0.15)+ ((int(school_ranking.index(h)) + 1) * 0.15) + ((int(property_ranking_all.index(h)) + 1) * 0.5)
-        ranking_count.insert(h,ranking_count_temp)
-    print(ranking_count)
-    ranking_order = sorted(range(len(ranking_count)), key=lambda k: ranking_count[k])
-    print(ranking_order)
-
-    # Change the order of the table data based on the ranking
+    #arrange the data
     for j in range(0,len(wards[0])):
-        a = ranking_order[j]
-        ward_order.insert(j,wards[0][a])
-        price_order.insert(j,price_mean[0][a])
+        a = desirability_without_burglary_order[j]
+        desirability_without_burglary_ward_order.insert(j,wards[0][a])
         universal_credit_order.insert(j,universal_credit_percentage[a])
         housing_benefit_order.insert(j,housing_benefit_percentage[a])
+        burglary_order.insert(j,burglary_percentage[a])
         flood_order.insert(j,flood_percentage[a])
-       
-    outstanding_order = school_count_outstanding[ranking_order]
-    good_order = school_count_good[ranking_order]
-    require_improvement_order = school_count_requires_improvement[ranking_order]
-    poor_order = school_count_poor[ranking_order]
-       
+        
+    outstanding_order = school_count_outstanding[desirability_without_burglary_order]
+    good_order = school_count_good[desirability_without_burglary_order]
+    require_improvement_order = school_count_requires_improvement[desirability_without_burglary_order]
+    poor_order = school_count_poor[desirability_without_burglary_order]   
+    
     #Create the data
-    data = {
-      "Ward": ward_order,
-      "Mean Sold Price \n (All Property Types) (£)": price_order,
+    desirability_data = {
+      "Ward": desirability_without_burglary_order,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
       "(%) of Wards at \n Flooding Risk": flood_order,
@@ -209,35 +224,58 @@ elif burglary_data =='N':
       "No. Requires \n Improvement Schools": require_improvement_order,
       "No. Poor Schools": poor_order
     }
-
-    #Arrange the data
-    df = pd.DataFrame(data, index = ward_order)
-    df['Mean Sold Price \n (All Property Types) (£)'] = df['Mean Sold Price \n (All Property Types) (£)'].apply(lambda x : "{:,d}".format(x))
-    df = df.round({'(%) of Households \n on Universal Credit': 1})
-    df = df.round({'(%) of Households \n on Housing Benefit': 1})
-    df = df.round({'(%) of Wards at \n Flooding Risk': 1})
-    Labels=df.columns
-    the_table = ax.table(cellText=df.values, colLabels=Labels, loc='center', cellLoc='center')
-    the_table.auto_set_font_size(False)
-    the_table.set_fontsize(10)
-    the_table.auto_set_column_width(col=list(range(len(df.columns))))
-
-    for r in range(0, len(Labels)):
-        cell = the_table[0, r]
-        cell.set_height(0.1)
-
-    #fig.tight_layout()
-
-    #plot the data
-    plt.rcParams["figure.dpi"] = 200
-    plt.rcParams.update({'font.size': 12})
-    plt.rcParams["figure.figsize"] = (4.5,5)
-    plt.title(district +  " Ward Ranking")
-    plt.savefig(district + "_ward_rankings" + ".png", bbox_inches='tight', transparent=True)
-
+    
+    desirability_count = desirability_without_burglary_count
+    desirability_ward_order = desirability_without_burglary_order
     
 else:
-    print("input error")
+    print("input error")    
+
+#Arrange the data
+desirability_df = pd.DataFrame(desirability_data, index = desirability_ward_order)
+desirability_df = desirability_df.round({'(%) of Households \n on Universal Credit': 1})
+desirability_df = desirability_df.round({'(%) of Households \n on Housing Benefit': 1})
+desirability_df = desirability_df.round({'(%) of Properties \n Burgled': 2})
+desirability_df = desirability_df.round({'(%) of Wards at \n Flooding Risk': 1})
+Labels=desirability_df.columns
+desirability_table = ax.table(cellText=desirability_df.values, colLabels=Labels, loc='center', cellLoc='center')
+desirability_table.auto_set_font_size(False)
+desirability_table.set_fontsize(10)
+desirability_table.auto_set_column_width(col=list(range(len(desirability_df.columns))))
+
+for r in range(0, len(Labels)):
+    cell = desirability_table[0, r]
+    cell.set_height(0.1)
+
+#plot the data
+plt.rcParams["figure.dpi"] = 200
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.title(district +  " Desirability Ranking")
+plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
+plt.close()
+    
+#plot the scatter
+colors = ['b','c','g','k','m','r','y','b','c','g','k','m','r','y','k','m','r','y']
+scatter = plt.scatter(desirability_count,price_mean[0], s=20, cmap=colors)
+for h, wards[0] in enumerate(wards[0]):
+    plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
+plt.rcParams["figure.figsize"] = (5.5,5)
+plt.title(district + " Affordability vs. Desirability", fontsize=10)
+plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
+plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.xlabel("0 = Desirable           Desirability            Undesirable = " +  str("{:.2f}".format(max(desirability_count))), fontsize=7)
+plt.xticks(fontsize=7)
+plt.yticks(fontsize=7)
+
+plt.legend(handles=scatter.legend_elements()[0],
+            labels = wards[0],
+            loc="lower center",
+            bbox_to_anchor=(0.2,-0.2),
+            framealpha=0,
+            ncol = 4)
+
+plt.savefig(district + "_scatter" + ".png", bbox_inches='tight', transparent=True)
+    
 
 
 
