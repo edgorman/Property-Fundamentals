@@ -255,24 +255,55 @@ plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', trans
 plt.close()
     
 #plot the scatter
-colors = ['b','c','g','k','m','r','y','b','c','g','k','m','r','y','k','m','r','y']
-scatter = plt.scatter(desirability_count,price_mean[0], s=20, cmap=colors)
-for h, wards[0] in enumerate(wards[0]):
-    plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
+text_labels = wards[0]
+unique_markers = ["d", "v", "s", "*", "^", "d", "v", "s", "*", "^"]
+unique_colours = ['r','b','g','k','c','m','y']
+col = []
+markers = []
+r=0
+q=0
+
+for s in range(0, len(wards[0])):
+    print(r)
+    print(q)
+    col.insert(s,unique_colours[r])
+    markers.insert(s,unique_markers[q])
+    r+=1
+    if r==7:
+        r=0
+        q+=1
+
+print(col)
+print(markers)
+#scatter = plt.scatter(desirability_count,price_mean[0], s=20, c=colormap[color_categories], marker='o')
+
+
+for xp, yp, m, c in zip(desirability_count, price_mean[0], markers, col):
+   plt.scatter(xp, yp, marker=m, s=20, c=c)
+
+# for h, wards[0] in enumerate(wards[0]):
+    # plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
-plt.title(district + " Affordability vs. Desirability", fontsize=10)
+plt.title(district + ": Affordability vs. Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
 plt.xlabel("0 = Desirable           Desirability            Undesirable = " +  str("{:.2f}".format(max(desirability_count))), fontsize=7)
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 
-plt.legend(handles=scatter.legend_elements()[0],
-            labels = wards[0],
-            loc="lower center",
-            bbox_to_anchor=(0.2,-0.2),
+handles, labels = plt.gca().get_legend_handles_labels()
+by_label = dict(zip(labels, handles))
+plt.legend(by_label.values(), by_label.keys())
+
+plt.legend( labels = text_labels,
+            title='Wards',
+            title_fontsize=7,
+            loc="upper right",
+            bbox_to_anchor=(1.5,1),
             framealpha=0,
-            ncol = 4)
+            ncol = 1,
+            fontsize=6)
+
 
 plt.savefig(district + "_scatter" + ".png", bbox_inches='tight', transparent=True)
     
