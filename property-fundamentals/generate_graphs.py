@@ -13,7 +13,7 @@ ax.axis('tight')
 y = np.array([20, 20, 20, 20, 20])
 mylabels = ["Burglary", "Flooding", "Universal Credit", "Housing benefit", "Schools"]
 myexplode = [0, 0, 0, 0, 0]
-mycolors = ["black", "hotpink", "b", "#1478F0", "red"]
+mycolors = ["#FF0014", "#1478F0", "#F07800", "#B478FF", "green"]
 
 plt.pie(y, labels = mylabels, explode = myexplode, shadow = True, colors = mycolors)
 
