@@ -22,7 +22,6 @@ from generate_early_education import yaxis_order as school_ranking
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#import matplotlib.pyplot as plt2
 
 fig, ax = plt.subplots()
 desirability_with_burglary_count = []
@@ -183,11 +182,11 @@ if burglary_data =='Y':
 
     #Create the data
     desirability_data = {
-      "Ward": desirability_with_burglary_order,
+      "Ward": desirability_with_burglary_ward_order,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
       "(%) of Properties \n Burgled": burglary_order,
-      "(%) of Wards at \n Flooding Risk": flood_order,
+      "(%) of Ward area \n at Flooding Risk": flood_order,
       "No. Outstanding \n Schools": outstanding_order,
       "No. Good Schools": good_order,
       "No. Requires \n Improvement Schools": require_improvement_order,
@@ -215,10 +214,10 @@ elif burglary_data =='N':
     
     #Create the data
     desirability_data = {
-      "Ward": desirability_without_burglary_order,
+      "Ward": desirability_without_burglary_ward_order,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
-      "(%) of Wards at \n Flooding Risk": flood_order,
+      "(%) of Ward area \n at Flooding Risk": flood_order,
       "No. Outstanding \n Schools": outstanding_order,
       "No. Good Schools": good_order,
       "No. Requires \n Improvement Schools": require_improvement_order,
@@ -236,7 +235,7 @@ desirability_df = pd.DataFrame(desirability_data, index = desirability_ward_orde
 desirability_df = desirability_df.round({'(%) of Households \n on Universal Credit': 1})
 desirability_df = desirability_df.round({'(%) of Households \n on Housing Benefit': 1})
 desirability_df = desirability_df.round({'(%) of Properties \n Burgled': 2})
-desirability_df = desirability_df.round({'(%) of Wards at \n Flooding Risk': 1})
+desirability_df = desirability_df.round({'(%) of Ward area \n at Flooding Risk': 1})
 Labels=desirability_df.columns
 desirability_table = ax.table(cellText=desirability_df.values, colLabels=Labels, loc='center', cellLoc='center')
 desirability_table.auto_set_font_size(False)
@@ -250,7 +249,8 @@ for r in range(0, len(Labels)):
 #plot the data
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  " Desirability Ranking")
+plt.title(district +  ": Desirability Ranking", loc="center",
+)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
     
@@ -284,10 +284,10 @@ for xp, yp, m, c in zip(desirability_count, price_mean[0], markers, col):
 # for h, wards[0] in enumerate(wards[0]):
     # plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
-plt.title(district + ": Affordability vs. Desirability", fontsize=10)
+plt.title(district + ": Property Price vs. Relative Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
-plt.xlabel("0 = Desirable           Desirability            Undesirable = " +  str("{:.2f}".format(max(desirability_count))), fontsize=7)
+plt.xlabel("0 = Desirable         Relative Desirability           Undesirable = " +  str("{:.2f}".format(max(desirability_count))), fontsize=7)
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 
@@ -306,6 +306,8 @@ plt.legend( labels = text_labels,
 
 
 plt.savefig(district + "_scatter" + ".png", bbox_inches='tight', transparent=True)
+plt.close()
+
     
 
 
