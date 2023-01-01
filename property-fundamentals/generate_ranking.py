@@ -24,14 +24,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
-desirability_with_burglary_count = []
-desirability_without_burglary_count = []
-affordability_count = []
+desirability_with_burglary_count = np.array([0]*len(wards[0]), dtype = float)
+desirability_without_burglary_count = np.array([0]*len(wards[0]), dtype = float)
+#affordability_count = []
+affordability_count = np.array([0]*len(wards[0]), dtype = float)
 property_ranking_all = property_ranking[0]
 desirability_with_burglary_ward_order = []
 desirability_without_burglary_ward_order = []
 affordability_ward_order = []
 price_order = []
+# affordability_ward_order = np.array([0]*len(wards[0]))
+# price_order = np.array([0]*len(wards[0]))
 universal_credit_order = []
 housing_benefit_order = []
 burglary_order = []
@@ -40,12 +43,26 @@ outstanding_order = []
 good_order = []
 require_improvement_order = []
 poor_order = []
-scaled_price = []
-scaled_burglary = []
-scaled_schools = []
-scaled_flood = []
-scaled_universal_credit = []
-scaled_housing_benefit = []
+# scaled_price = []
+# scaled_burglary = []
+# scaled_schools = []
+# scaled_flood = []
+# scaled_universal_credit = []
+# scaled_housing_benefit = []
+scaled_price = np.array([0]*len(wards[0]), dtype = float)
+scaled_burglary = np.array([0]*len(wards[0]), dtype = float)
+scaled_schools = np.array([0]*len(wards[0]), dtype = float)
+scaled_flood = np.array([0]*len(wards[0]), dtype = float)
+scaled_universal_credit = np.array([0]*len(wards[0]), dtype = float)
+scaled_housing_benefit = np.array([0]*len(wards[0]), dtype = float)
+
+scaled_burglary_hbar = np.array([0]*len(wards[0]), dtype = float)
+scaled_schools_hbar = np.array([0]*len(wards[0]), dtype = float)
+scaled_flood_hbar = np.array([0]*len(wards[0]), dtype = float)
+scaled_universal_credit_hbar = np.array([0]*len(wards[0]), dtype = float)
+scaled_housing_benefit_hbar = np.array([0]*len(wards[0]), dtype = float)
+y_pos = np.arange(len(wards[0]))
+barh_yaxis = []
 
 # hide axes
 fig.patch.set_visible(False)
@@ -80,25 +97,32 @@ print(min_housing_benefit)
 
 #normalise results
 for h in range(0,len(coordinates)):
-    #scale price
-    scaled_price_calculate = ((int(price_mean[0][h]) - int(min_price)) / (int(max_price) - int(min_price)))
-    scaled_price.insert(h,scaled_price_calculate)
-    #scale burglary
-    scaled_burglary_calculate = 1-((float(burglary_percentage[h]) - float(min_burglary)) / (float(max_burglary) - float(min_burglary)))
-    scaled_burglary.insert(h,scaled_burglary_calculate)
-    #scale schools
-    scaled_schools_calculate = ((int(school_count_overall[h]) - int(min_schools)) / (int(max_schools) - int(min_schools)))
-    scaled_schools.insert(h,scaled_schools_calculate)    
-    #scale flooding
-    scaled_flood_calculate = 1-((float(flood_percentage[h]) - float(min_flood)) / (float(max_flood) - float(min_flood)))
-    scaled_flood.insert(h,scaled_flood_calculate)    
-    #scale universal_credit
-    scaled_universal_credit_calculate = 1-((float(universal_credit_percentage[h]) - float(min_universal_credit)) / (float(max_universal_credit) - float(min_universal_credit)))
-    scaled_universal_credit.insert(h,scaled_universal_credit_calculate)     
-    #scale housing_benefit
-    scaled_housing_benefit_calculate = 1-((float(housing_benefit_percentage[h]) - float(min_housing_benefit)) / (float(max_housing_benefit) - float(min_housing_benefit)))
-    scaled_housing_benefit.insert(h,scaled_housing_benefit_calculate)     
-    
+    # #scale price
+    # scaled_price_calculate = ((int(price_mean[0][h]) - int(min_price)) / (int(max_price) - int(min_price)))
+    # scaled_price.insert(h,scaled_price_calculate)
+    # #scale burglary
+    # scaled_burglary_calculate = 1-((float(burglary_percentage[h]) - float(min_burglary)) / (float(max_burglary) - float(min_burglary)))
+    # scaled_burglary.insert(h,scaled_burglary_calculate)
+    # #scale schools
+    # scaled_schools_calculate = ((int(school_count_overall[h]) - int(min_schools)) / (int(max_schools) - int(min_schools)))
+    # scaled_schools.insert(h,scaled_schools_calculate)    
+    # #scale flooding
+    # scaled_flood_calculate = 1-((float(flood_percentage[h]) - float(min_flood)) / (float(max_flood) - float(min_flood)))
+    # scaled_flood.insert(h,scaled_flood_calculate)    
+    # #scale universal_credit
+    # scaled_universal_credit_calculate = 1-((float(universal_credit_percentage[h]) - float(min_universal_credit)) / (float(max_universal_credit) - float(min_universal_credit)))
+    # scaled_universal_credit.insert(h,scaled_universal_credit_calculate)     
+    # #scale housing_benefit
+    # scaled_housing_benefit_calculate = 1-((float(housing_benefit_percentage[h]) - float(min_housing_benefit)) / (float(max_housing_benefit) - float(min_housing_benefit)))
+    # scaled_housing_benefit.insert(h,scaled_housing_benefit_calculate)     
+
+    scaled_price[h] = ((int(price_mean[0][h]) - int(min_price)) / (int(max_price) - int(min_price)))
+    scaled_burglary[h] = 1-((float(burglary_percentage[h]) - float(min_burglary)) / (float(max_burglary) - float(min_burglary)))
+    scaled_schools[h] = ((int(school_count_overall[h]) - int(min_schools)) / (int(max_schools) - int(min_schools)))
+    scaled_flood[h] = 1-((float(flood_percentage[h]) - float(min_flood)) / (float(max_flood) - float(min_flood)))
+    scaled_universal_credit[h] = 1-((float(universal_credit_percentage[h]) - float(min_universal_credit)) / (float(max_universal_credit) - float(min_universal_credit)))
+    scaled_housing_benefit[h] = 1-((float(housing_benefit_percentage[h]) - float(min_housing_benefit)) / (float(max_housing_benefit) - float(min_housing_benefit)))
+
 print(scaled_price)
 print(scaled_burglary)
 print(scaled_schools)
@@ -108,8 +132,9 @@ print(scaled_housing_benefit)
 
 # Weight the scaled affordability results and normalise
 for h in range(0,len(coordinates)):
-    affordability_temp = float(scaled_price[h])
-    affordability_count.insert(h,affordability_temp)
+    #affordability_temp = float(scaled_price[h])
+    #affordability_count.insert(h,affordability_temp)
+    affordability_count[h] = float(scaled_price[h])
 print(affordability_count)
 affordability_order = sorted(range(len(affordability_count)), key=lambda k: affordability_count[k])
 print(affordability_order)
@@ -119,7 +144,10 @@ for j in range(0,len(wards[0])):
     b = affordability_order[j]
     affordability_ward_order.insert(j,wards[0][b])
     price_order.insert(j,price_mean[0][b])
-       
+#affordability_ward_order = wards[0][affordability_order]
+#price_order = price_mean[0][affordability_order]
+
+      
 #Create the affordability data
 affordability_data = {
     "Ward": affordability_ward_order,
@@ -132,7 +160,7 @@ affordability_df['Mean Sold Price \n (All Property Types) (£)'] = affordability
 Labels=affordability_df.columns
 affordability_table = ax.table(cellText=affordability_df.values, colLabels=Labels, loc='center', cellLoc='center')
 affordability_table.auto_set_font_size(False)
-affordability_table.set_fontsize(10)
+affordability_table.set_fontsize(7)
 affordability_table.auto_set_column_width(col=list(range(len(affordability_df.columns))))
 
 for r in range(0, len(Labels)):
@@ -143,16 +171,18 @@ for r in range(0, len(Labels)):
 plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  " Price Ranking")
+plt.title(district +  " Price Ranking", fontsize=10)
 plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', transparent=True)
 
     
 # Weight the scaled desirability results and normalise
 for h in range(0,len(coordinates)):
-    desirability_with_burglary_temp = ((float(scaled_burglary[h])*0.2) + (int(scaled_schools[h])*0.2) + (float(scaled_flood[h])*0.2) + (float(scaled_universal_credit[h])*0.2) + (float(scaled_housing_benefit[h])*0.2))
-    desirability_with_burglary_count.insert(h,desirability_with_burglary_temp)
-    desirability_without_burglary_temp = ((int(scaled_schools[h])*0.25) + (float(scaled_flood[h])*0.25) + (float(scaled_universal_credit[h])*0.25) + (float(scaled_housing_benefit[h])*0.25))
-    desirability_without_burglary_count.insert(h,desirability_without_burglary_temp)
+    # desirability_with_burglary_temp = ((float(scaled_burglary[h])*0.2) + (int(scaled_schools[h])*0.2) + (float(scaled_flood[h])*0.2) + (float(scaled_universal_credit[h])*0.2) + (float(scaled_housing_benefit[h])*0.2))
+    # desirability_with_burglary_count.insert(h,desirability_with_burglary_temp)
+    # desirability_without_burglary_temp = ((int(scaled_schools[h])*0.25) + (float(scaled_flood[h])*0.25) + (float(scaled_universal_credit[h])*0.25) + (float(scaled_housing_benefit[h])*0.25))
+    # desirability_without_burglary_count.insert(h,desirability_without_burglary_temp)
+    desirability_with_burglary_count[h] = ((float(scaled_burglary[h])*0.2) + (int(scaled_schools[h])*0.2) + (float(scaled_flood[h])*0.2) + (float(scaled_universal_credit[h])*0.2) + (float(scaled_housing_benefit[h])*0.2))
+    desirability_without_burglary_count[h] = ((int(scaled_schools[h])*0.25) + (float(scaled_flood[h])*0.25) + (float(scaled_universal_credit[h])*0.25) + (float(scaled_housing_benefit[h])*0.25))
 print(desirability_with_burglary_count)
 print(desirability_without_burglary_count)
 desirability_with_burglary_order = sorted(range(len(desirability_with_burglary_count)), key=lambda k: desirability_with_burglary_count[k], reverse=True)
@@ -239,7 +269,7 @@ desirability_df = desirability_df.round({'(%) of Ward area \n at Flooding Risk':
 Labels=desirability_df.columns
 desirability_table = ax.table(cellText=desirability_df.values, colLabels=Labels, loc='center', cellLoc='center')
 desirability_table.auto_set_font_size(False)
-desirability_table.set_fontsize(10)
+desirability_table.set_fontsize(7)
 desirability_table.auto_set_column_width(col=list(range(len(desirability_df.columns))))
 
 for r in range(0, len(Labels)):
@@ -249,10 +279,52 @@ for r in range(0, len(Labels)):
 #plot the data
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  ": Desirability Ranking", loc="center",
-)
+plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
+
+for j in range(0,len(wards[0])):
+    a = desirability_ward_order[j]
+    barh_yaxis.insert(j,wards[0][a])
+scaled_burglary_hbar = scaled_burglary[desirability_ward_order]
+scaled_schools_hbar = scaled_schools[desirability_ward_order]
+scaled_flood_hbar = scaled_flood[desirability_ward_order]
+scaled_universal_credit_hbar = scaled_universal_credit[desirability_ward_order]
+scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_ward_order]
+
+#plot the horizontal bar for desirability
+plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
+plt.rcParams["figure.dpi"] = 200
+#plt.rcParams.update({'font.size': 7})
+p1 = plt.barh(y_pos, scaled_burglary_hbar, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=scaled_schools_hbar+scaled_flood_hbar+scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
+p2 = plt.barh(y_pos, scaled_schools_hbar, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=scaled_flood_hbar+scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
+p3 = plt.barh(y_pos, scaled_flood_hbar, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
+p4 = plt.barh(y_pos, scaled_universal_credit_hbar, color = (0.03515625,0.44140625,0.21875), edgecolor='black', left=scaled_housing_benefit_hbar) #color = (R,G,B)
+p5 = plt.barh(y_pos, scaled_housing_benefit_hbar, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
+plt.yticks(y_pos,barh_yaxis)
+plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
+plt.gca().invert_yaxis()
+plt.title(district + ": Desirability Ranking")
+plt.legend([p5,p4,p3,p2,p1],["Burglary", "Schools", "UC", "HB", "Flooding"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
+plt.savefig(district + "_desirability_bar_char" + ".png", bbox_inches='tight', transparent=True)
+plt.clf()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 #plot the scatter
 text_labels = wards[0]
@@ -287,7 +359,7 @@ plt.rcParams["figure.figsize"] = (5.5,5)
 plt.title(district + ": Property Price vs. Relative Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
-plt.xlabel(str("{:.2f}".format(min(desirability_count))) + " = Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
+plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count)))
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 

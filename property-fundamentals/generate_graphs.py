@@ -14,17 +14,32 @@ y = np.array([20, 20, 20, 20, 20])
 mylabels = ["Burglary", "Flooding", "Universal Credit", "Housing benefit", "Schools"]
 myexplode = [0, 0, 0, 0, 0]
 mycolors = ["#FF0014", "#1478F0", "#F07800", "#B478FF", "green"]
+textprops = {"fontsize":7}
 
-plt.pie(y, labels = mylabels, explode = myexplode, shadow = True, colors = mycolors)
+plt.pie(y, labels = mylabels, explode = myexplode, shadow = False, colors = mycolors, textprops =textprops, autopct = "%0.2d%%")
 
 #plot the data
 plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title("Desirability Weighting", loc="center", fontsize=10)
-plt.savefig("desirability_weighting" + ".png", bbox_inches='tight', transparent=True)
+plt.title("Desirability Weighting with Burglary data", loc="center", fontsize=10)
+plt.savefig("desirability_weighting_with_burglary" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
     
 
+y2 = np.array([25, 25, 25, 25])
+mylabels2 = ["Flooding", "Universal Credit", "Housing benefit", "Schools"]
+myexplode2 = [0, 0, 0, 0]
+mycolors2 = ["#1478F0", "#F07800", "#B478FF", "green"]
+textprops2 = {"fontsize":7}
+
+plt.pie(y2, labels = mylabels2, explode = myexplode2, shadow = False, colors = mycolors2, textprops =textprops2, autopct = "%0.2d%%")
+
+#plot the data
+plt.rcParams["figure.dpi"] = 200
+plt.rcParams["figure.figsize"] = (4.5,5)
+plt.title("Desirability Weighting without Burglary data", loc="center", fontsize=10)
+plt.savefig("desirability_weighting_without_burglary" + ".png", bbox_inches='tight', transparent=True)
+plt.close()
 
 
 

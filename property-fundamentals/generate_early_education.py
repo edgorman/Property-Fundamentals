@@ -52,11 +52,6 @@ for h in range(0,len(coordinates)):
     pol[h].outerboundaryis.coords = coordinates[h]
     pol[h].style.polystyle.color = '32F07814' #= '19F07814'
     
-#xaxis_outstanding = np.array([0]*len(wards[0]))
-#xaxis_good = np.array([0]*len(wards[0]))
-#xaxis_requires_improvement = np.array([0]*len(wards[0]))
-#xaxis_poor = np.array([0]*len(wards[0]))
-
 school_data = school_ratings.get_schools_with_coordinates_from_district(doogal_api, district)
 
 
