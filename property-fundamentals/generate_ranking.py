@@ -24,6 +24,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
+desirability_count = np.array([0]*len(wards[0]), dtype = float)
 desirability_with_burglary_count = np.array([0]*len(wards[0]), dtype = float)
 desirability_without_burglary_count = np.array([0]*len(wards[0]), dtype = float)
 #affordability_count = []
@@ -31,10 +32,12 @@ affordability_count = np.array([0]*len(wards[0]), dtype = float)
 property_ranking_all = property_ranking[0]
 desirability_with_burglary_ward_order = []
 desirability_without_burglary_ward_order = []
+desirability_ward_order = []
 affordability_ward_order = []
 price_order = []
 # affordability_ward_order = np.array([0]*len(wards[0]))
 # price_order = np.array([0]*len(wards[0]))
+desirability_count_table = []
 universal_credit_order = []
 housing_benefit_order = []
 burglary_order = []
@@ -63,6 +66,12 @@ scaled_universal_credit_hbar = np.array([0]*len(wards[0]), dtype = float)
 scaled_housing_benefit_hbar = np.array([0]*len(wards[0]), dtype = float)
 y_pos = np.arange(len(wards[0]))
 barh_yaxis = []
+
+weighted_burglary_hbar = np.array([0]*len(wards[0]), dtype = float)
+weighted_schools_hbar = np.array([0]*len(wards[0]), dtype = float)
+weighted_flood_hbar = np.array([0]*len(wards[0]), dtype = float)
+weighted_universal_credit_hbar = np.array([0]*len(wards[0]), dtype = float)
+weighted_housing_benefit_hbar = np.array([0]*len(wards[0]), dtype = float)
 
 # hide axes
 fig.patch.set_visible(False)
@@ -199,6 +208,7 @@ if burglary_data =='Y':
     #arrange the data
     for j in range(0,len(wards[0])):
         a = desirability_with_burglary_order[j]
+        desirability_count_table.insert(j,desirability_with_burglary_count[a])
         desirability_with_burglary_ward_order.insert(j,wards[0][a])
         universal_credit_order.insert(j,universal_credit_percentage[a])
         housing_benefit_order.insert(j,housing_benefit_percentage[a])
@@ -210,9 +220,13 @@ if burglary_data =='Y':
     require_improvement_order = school_count_requires_improvement[desirability_with_burglary_order]
     poor_order = school_count_poor[desirability_with_burglary_order]
 
+    desirability_count = desirability_with_burglary_count
+    desirability_ward_order = desirability_with_burglary_order
+
     #Create the data
     desirability_data = {
       "Ward": desirability_with_burglary_ward_order,
+      "Desirability \nScore": desirability_count_table,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
       "(%) of Properties \n Burgled": burglary_order,
@@ -222,15 +236,13 @@ if burglary_data =='Y':
       "No. Requires \n Improvement Schools": require_improvement_order,
       "No. Poor Schools": poor_order
     }
-    
-    desirability_count = desirability_with_burglary_count
-    desirability_ward_order = desirability_with_burglary_order
 
 elif burglary_data =='N':
 
     #arrange the data
     for j in range(0,len(wards[0])):
         a = desirability_without_burglary_order[j]
+        desirability_count_table.insert(j,desirability_without_burglary_count[a])
         desirability_without_burglary_ward_order.insert(j,wards[0][a])
         universal_credit_order.insert(j,universal_credit_percentage[a])
         housing_benefit_order.insert(j,housing_benefit_percentage[a])
@@ -240,11 +252,15 @@ elif burglary_data =='N':
     outstanding_order = school_count_outstanding[desirability_without_burglary_order]
     good_order = school_count_good[desirability_without_burglary_order]
     require_improvement_order = school_count_requires_improvement[desirability_without_burglary_order]
-    poor_order = school_count_poor[desirability_without_burglary_order]   
+    poor_order = school_count_poor[desirability_without_burglary_order]
+
+    desirability_count = desirability_without_burglary_count
+    desirability_ward_order = desirability_without_burglary_order
     
     #Create the data
     desirability_data = {
       "Ward": desirability_without_burglary_ward_order,
+      "Desirability \nScore": desirability_count_table,
       "(%) of Households \n on Universal Credit": universal_credit_order,
       "(%) of Households \n on Housing Benefit": housing_benefit_order,
       "(%) of Ward area \n at Flooding Risk": flood_order,
@@ -252,16 +268,14 @@ elif burglary_data =='N':
       "No. Good Schools": good_order,
       "No. Requires \n Improvement Schools": require_improvement_order,
       "No. Poor Schools": poor_order
-    }
-    
-    desirability_count = desirability_without_burglary_count
-    desirability_ward_order = desirability_without_burglary_order
+    }    
     
 else:
     print("input error")    
 
 #Arrange the data
 desirability_df = pd.DataFrame(desirability_data, index = desirability_ward_order)
+desirability_df = desirability_df.round({'Desirability \nScore': 4})
 desirability_df = desirability_df.round({'(%) of Households \n on Universal Credit': 1})
 desirability_df = desirability_df.round({'(%) of Households \n on Housing Benefit': 1})
 desirability_df = desirability_df.round({'(%) of Properties \n Burgled': 2})
@@ -283,40 +297,66 @@ plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
 
-for j in range(0,len(wards[0])):
-    a = desirability_ward_order[j]
-    barh_yaxis.insert(j,wards[0][a])
 scaled_burglary_hbar = scaled_burglary[desirability_ward_order]
 scaled_schools_hbar = scaled_schools[desirability_ward_order]
 scaled_flood_hbar = scaled_flood[desirability_ward_order]
 scaled_universal_credit_hbar = scaled_universal_credit[desirability_ward_order]
 scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_ward_order]
 
+if burglary_data =='Y':
+    for j in range(0,len(wards[0])):
+        a = desirability_ward_order[j]
+        barh_yaxis.insert(j,wards[0][a])
+        weighted_burglary_hbar[j] = float(scaled_burglary_hbar[j]*0.2)
+        weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.2)
+        weighted_flood_hbar[j] = float(scaled_flood_hbar[j]*0.2)
+        weighted_universal_credit_hbar[j] = float(scaled_universal_credit_hbar[j]*0.2)
+        weighted_housing_benefit_hbar[j] = float(scaled_housing_benefit_hbar[j]*0.2)
+
+elif burglary_data =='N':
+    for j in range(0,len(wards[0])):
+        a = desirability_ward_order[j]
+        barh_yaxis.insert(j,wards[0][a])
+        weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.25)
+        weighted_flood_hbar[j] = float(scaled_flood_hbar[j]*0.25)
+        weighted_universal_credit_hbar[j] = float(scaled_universal_credit_hbar[j]*0.25)
+        weighted_housing_benefit_hbar[j] = float(scaled_housing_benefit_hbar[j]*0.25)
+
+else:
+    print("input error")
+
 #plot the horizontal bar for desirability
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
 plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 7})
-p1 = plt.barh(y_pos, scaled_burglary_hbar, color = (0.7578125,0.09375,0.35546875), edgecolor='black', left=scaled_schools_hbar+scaled_flood_hbar+scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
-p2 = plt.barh(y_pos, scaled_schools_hbar, color = (0.98046875,0.75,0.17578125), edgecolor='black', left=scaled_flood_hbar+scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
-p3 = plt.barh(y_pos, scaled_flood_hbar, color = (0.484375,0.69921875,0.2578125), edgecolor='black', left=scaled_universal_credit_hbar+scaled_housing_benefit_hbar) #color = (R,G,B)
-p4 = plt.barh(y_pos, scaled_universal_credit_hbar, color = (0.03515625,0.44140625,0.21875), edgecolor='black', left=scaled_housing_benefit_hbar) #color = (R,G,B)
-p5 = plt.barh(y_pos, scaled_housing_benefit_hbar, color = (0.03515625,0.44140625,0.21875), edgecolor='black') #color = (R,G,B)
+p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0.07843137,0.47058823,0.94117647), left=weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#006400"
+p3 = plt.barh(y_pos, weighted_flood_hbar, color = (0.94117647,0.47058823,0), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#1478F0"
+p4 = plt.barh(y_pos, weighted_universal_credit_hbar, color = (0.70588235,0.47058823,1), left=weighted_housing_benefit_hbar) #color = (R,G,B) "#F07800"
+p5 = plt.barh(y_pos, weighted_housing_benefit_hbar, color = (0,0.39215686,0)) #color = (R,G,B) "#B478FF"
+if burglary_data =='Y':
+    p1 = plt.barh(y_pos, weighted_burglary_hbar, color = (1,0,0.07843137), left=weighted_schools_hbar+weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#FF0014"
+elif burglary_data =='N':
+    print("burglary_data =='N'")
+else:
+    print("input error")
+    
 plt.yticks(y_pos,barh_yaxis)
 plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
 plt.gca().invert_yaxis()
 plt.title(district + ": Desirability Ranking")
-plt.legend([p5,p4,p3,p2,p1],["Burglary", "Schools", "UC", "HB", "Flooding"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
+
+if burglary_data =='Y':
+    plt.legend([p5,p4,p3,p2,p1],["Good \nSchools", "Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Low \nBurglary"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
+elif burglary_data =='N':
+    plt.legend([p5,p4,p3,p2],["Good \nSchools", "Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 4)
+else:
+    print("input error")
+
 plt.savefig(district + "_desirability_bar_char" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
 
-
-
-
-
-
-
-
-
+print(desirability_count)
+print(desirability_without_burglary_order)
 
 
 
@@ -336,8 +376,6 @@ r=0
 q=0
 
 for s in range(0, len(wards[0])):
-    print(r)
-    print(q)
     col.insert(s,unique_colours[r])
     markers.insert(s,unique_markers[q])
     r+=1
