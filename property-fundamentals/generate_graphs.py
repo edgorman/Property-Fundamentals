@@ -43,12 +43,6 @@ plt.savefig("desirability_weighting_without_burglary" + ".png", bbox_inches='tig
 plt.close()
 
 
-print(matplotlib.colors.hex2color("#FF0014"))
-print(matplotlib.colors.hex2color("#1478F0"))
-print(matplotlib.colors.hex2color("#F07800"))
-print(matplotlib.colors.hex2color("#B478FF"))
-print(matplotlib.colors.hex2color("#006400"))
-
 
 
 

@@ -238,23 +238,20 @@ plt.close()
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
 plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 7})
-p1 = plt.barh(y_pos, weighted_burglary_hbar, color = (1,0,0.07843137), left=weighted_schools_hbar+weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#FF0014"
-p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0.07843137,0.47058823,0.94117647), left=weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#006400"
-p3 = plt.barh(y_pos, weighted_flood_hbar, color = (0.94117647,0.47058823,0), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B) "#1478F0"
-p4 = plt.barh(y_pos, weighted_universal_credit_hbar, color = (0.70588235,0.47058823,1), left=weighted_housing_benefit_hbar) #color = (R,G,B) "#F07800"
-p5 = plt.barh(y_pos, weighted_housing_benefit_hbar, color = (0,0.39215686,0)) #color = (R,G,B) "#B478FF"
+p1 = plt.barh(y_pos, weighted_burglary_hbar, color = (1,0,0.07843137), left=weighted_schools_hbar+weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
+p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0,0.39215686,0), left=weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
+p3 = plt.barh(y_pos, weighted_flood_hbar, color = (0.07843137,0.47058823,0.94117647), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
+p4 = plt.barh(y_pos, weighted_universal_credit_hbar, color = (0.94117647,0.47058823,0), left=weighted_housing_benefit_hbar) #color = (R,G,B)
+p5 = plt.barh(y_pos, weighted_housing_benefit_hbar, color = (0.70588235,0.47058823,1)) #color = (R,G,B)
   
 plt.yticks(y_pos,barh_yaxis)
 plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
 plt.gca().invert_yaxis()
 plt.title(district + ": Desirability Ranking")
-plt.legend([p5,p4,p3,p2,p1],["Good \nSchools", "Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Low \nBurglary"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
-
+plt.legend([p5,p4,p3,p2,p1],["Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Good \nSchools", "Low \nBurglary"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
 
 plt.savefig(district + "_desirability_bar_char" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
-
-
 
 
 
