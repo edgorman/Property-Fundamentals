@@ -142,7 +142,7 @@ for r in range(0, len(Labels)):
     cell.set_height(0.1)
 
 #plot the price data
-plt.rcParams["figure.dpi"] = 200
+#plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.title(district +  " Price Ranking", fontsize=10)
@@ -183,14 +183,14 @@ poor_order = school_count_poor[desirability_order]
 #Create the data
 desirability_data = {
   "Ward": desirability_ward_order,
-  "weighted \n school": weighted_schools_hbar,
-  "weighted \n flood": weighted_flood_hbar,
-  "weighted \n uc": weighted_universal_credit_hbar,
-  "weighted \n hb": weighted_housing_benefit_hbar,
-  "Desirability \nScore": desirability_count_table,
-  "(%) of Households \n on Universal Credit": universal_credit_order,
-  "(%) of Households \n on Housing Benefit": housing_benefit_order,
-  "(%) of Ward area \n at Flooding Risk": flood_order,
+  # "weighted \n school": weighted_schools_hbar,
+  # "weighted \n flood": weighted_flood_hbar,
+  # "weighted \n uc": weighted_universal_credit_hbar,
+  # "weighted \n hb": weighted_housing_benefit_hbar,
+  # "Desirability \nScore": desirability_count_table,
+  "(%) of\nHouseholds\non Universal\nCredit": universal_credit_order,
+  "(%) of\nHouseholds\non Housing\nBenefit": housing_benefit_order,
+  "(%) of\nWard\narea at\nFlooding\nRisk": flood_order,
   "No. Outstanding \n Schools": outstanding_order,
   "No. Good Schools": good_order,
   "No. Requires \n Improvement Schools": require_improvement_order,
@@ -200,14 +200,14 @@ desirability_data = {
 
 #Arrange the data
 desirability_df = pd.DataFrame(desirability_data, index = desirability_ward_order)
-desirability_df = desirability_df.round({'Desirability \nScore': 4})
-desirability_df = desirability_df.round({'(%) of Households \n on Universal Credit': 1})
-desirability_df = desirability_df.round({'(%) of Households \n on Housing Benefit': 1})
-desirability_df = desirability_df.round({'(%) of Ward area \n at Flooding Risk': 1})
-desirability_df = desirability_df.round({'weighted \n school': 3})
-desirability_df = desirability_df.round({'weighted \n flood': 3})
-desirability_df = desirability_df.round({'weighted \n uc': 3})
-desirability_df = desirability_df.round({'weighted \n hb': 3})
+# desirability_df = desirability_df.round({'Desirability \nScore': 4})
+desirability_df = desirability_df.round({'(%) of\nHouseholds\non Universal\nCredit': 1})
+desirability_df = desirability_df.round({'(%) of\nHouseholds\non Housing\nBenefit': 1})
+desirability_df = desirability_df.round({'(%) of\nWard\narea at\nFlooding\nRisk': 1})
+# desirability_df = desirability_df.round({'weighted \n school': 3})
+# desirability_df = desirability_df.round({'weighted \n flood': 3})
+# desirability_df = desirability_df.round({'weighted \n uc': 3})
+# desirability_df = desirability_df.round({'weighted \n hb': 3})
 Labels=desirability_df.columns
 desirability_table = ax.table(cellText=desirability_df.values, colLabels=Labels, loc='center', cellLoc='center')
 desirability_table.auto_set_font_size(False)
@@ -216,10 +216,10 @@ desirability_table.auto_set_column_width(col=list(range(len(desirability_df.colu
 
 for r in range(0, len(Labels)):
     cell = desirability_table[0, r]
-    cell.set_height(0.1)
+    cell.set_height(0.15)
 
 #plot the data
-plt.rcParams["figure.dpi"] = 200
+#plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
 plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
@@ -287,9 +287,9 @@ plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 
-handles, labels = plt.gca().get_legend_handles_labels()
-by_label = dict(zip(labels, handles))
-plt.legend(by_label.values(), by_label.keys())
+# handles, labels = plt.gca().get_legend_handles_labels()
+# by_label = dict(zip(labels, handles))
+# plt.legend(by_label.values(), by_label.keys())
 
 plt.legend( labels = text_labels,
             title='Wards',
