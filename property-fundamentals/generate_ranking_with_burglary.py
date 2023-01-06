@@ -25,8 +25,8 @@ import matplotlib.pyplot as plt
 
 #Define variables / lists
 kml = simplekml.Kml()
-colour = ['2D0078F0', '320078F0', '370078F0', '3C0078F0', '410078F0', '460078F0', '4B0078F0', '500078F0', '550078F0' ,'5A0078F0', '5F0078F0', '640078F0', '690078F0', '6E0078F0', '730078F0', '780078F0', '7D0078F0', '820078F0', '870078F0', '8C0078F0', '910078F0', '960078F0', '9B0078F0', 'A00078F0', 'A50078F0', 'AA0078F0', 'AF0078F0', 'B40078F0', 'B90078F0', 'BE0078F0']
-colour_plot = ['#F078002D', '#F0780032', '#F0780037', '#F078003C', '#F0780041', '#F0780046', '#F078004B', '#F0780050', '#F0780055', '#F078005A', '#F078005F', '#F0780064', '#F0780069', '#F078006E', '#F0780073', '#F0780078', '#F078007D', '#F0780082', '#F0780087', '#F078008C', '#F0780091', '#F0780096', '#F078009B', '#F07800A0', '#F07800A5', '#F07800AA', '#F07800AF', '#F07800B4', '#F07800B9', '#F07800BE']
+colour = ['2D00D6FF', '3200D6FF', '3700D6FF', '3C00D6FF', '4100D6FF', '4600D6FF', '4B00D6FF', '5000D6FF', '5500D6FF' ,'5A00D6FF', '5F00D6FF', '6400D6FF', '6900D6FF', '6E00D6FF', '7300D6FF', '7800D6FF', '7D00D6FF', '8200D6FF', '8700D6FF', '8C00D6FF', '9100D6FF', '9600D6FF', '9B00D6FF', 'A000D6FF', 'A500D6FF', 'AA00D6FF', 'AF00D6FF', 'B400D6FF', 'B900D6FF', 'BE00D6FF']
+colour_plot = ['#FFD6002D', '#FFD60032', '#FFD60037', '#FFD6003C', '#FFD60041', '#FFD60046', '#FFD6004B', '#FFD60050', '#FFD60055', '#FFD6005A', '#FFD6005F', '#FFD60064', '#FFD60069', '#FFD6006E', '#FFD60073', '#FFD60078', '#FFD6007D', '#FFD60082', '#FFD60087', '#FFD6008C', '#FFD60091', '#FFD60096', '#FFD6009B', '#FFD600A0', '#FFD600A5', '#FFD600AA', '#FFD600AF', '#FFD600B4', '#FFD600B9', '#FFD600BE']
 pol = []
 colour_scale = []
 price_plot = []
@@ -42,6 +42,7 @@ scatter_scaled_price = np.array([0]*len(wards[0]), dtype = float)
 
 fig, ax = plt.subplots()
 desirability_count = np.array([0]*len(wards[0]), dtype = float)
+desirability_count_normalise = np.array([0]*len(wards[0]), dtype = float)
 affordability_count = np.array([0]*len(wards[0]), dtype = float)
 property_ranking_all = property_ranking[0]
 desirability_ward_order = []
@@ -166,12 +167,24 @@ plt.title(district +  " Price Ranking", fontsize=10)
 plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', transparent=True)
 
     
-# Weight the scaled desirability results and normalise
+# Weight the scaled desirability results
 for h in range(0,len(coordinates)):
     desirability_count[h] = (float(scaled_burglary[h]*0.125) + float(scaled_schools[h]*0.25) + float(scaled_flood[h]*0.125) + float(scaled_universal_credit[h]*0.25) + float(scaled_housing_benefit[h]*0.25))
 print(desirability_count)
 desirability_order = sorted(range(len(desirability_count)), key=lambda k: desirability_count[k], reverse=True)
 print(desirability_order)
+
+
+
+# normalise the desirability results
+min_desirability_count = min(desirability_count)
+max_desirability_count = max(desirability_count)
+print(desirability_count)
+print(min_desirability_count)
+print(max_desirability_count)
+for h in range(0,len(coordinates)):
+    desirability_count_normalise[h] = ((float(desirability_count[h]) - float(min_desirability_count)) / (float(max_desirability_count) - float(min_desirability_count)))
+print(desirability_count_normalise)
 
 scaled_burglary_hbar = scaled_burglary[desirability_order]
 scaled_schools_hbar = scaled_schools[desirability_order]
@@ -182,7 +195,7 @@ scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_order]
 #arrange the data
 for j in range(0,len(wards[0])):
     a = desirability_order[j]
-    desirability_count_table.insert(j,desirability_count[a])
+    desirability_count_table.insert(j,desirability_count_normalise[a])
     desirability_ward_order.insert(j,wards[0][a])
     universal_credit_order.insert(j,universal_credit_percentage[a])
     housing_benefit_order.insert(j,housing_benefit_percentage[a])
@@ -277,26 +290,26 @@ for h in range(0,len(coordinates)):
     pol[h].style.linestyle.width = "0"
     pol[h].outerboundaryis.coords = coordinates[h]
 
-#Generate universal credit scaling information
-max_desirability_count = max(desirability_count)
-min_desirability_count = min(desirability_count)
-delta = max_desirability_count - min_desirability_count
+#Generate scaling information
+max_desirability_count_normalise = max(desirability_count_normalise)
+min_desirability_count_normalise = min(desirability_count_normalise)
+delta = max_desirability_count_normalise - min_desirability_count_normalise
 step = delta / (len(colour)-1)
 
-print(max_desirability_count)
-print(min_desirability_count)
+print(desirability_count_normalise)
+print(desirability_count_normalise)
 print(delta)
 print(step)
 
 #Normalise the colours in the universal credit range
 for i in range(0,len(colour)):
-    colour_scale.insert(i,(min_desirability_count + (i*step)))
+    colour_scale.insert(i,(min_desirability_count_normalise + (i*step)))
 
 #Assign a colour to the normalised universal credit
 for j in range(0,len(coordinates)):
     desirability_count_percentage_scale.append([])
     for k in range(0,len(colour_scale)):
-        if (colour_scale[k] >= (desirability_count[j])):
+        if (colour_scale[k] >= (desirability_count_normalise[j])):
             desirability_count_percentage_scale.insert(j,colour[k])
             price_plot.insert(j,colour_plot[k])
             break
@@ -331,14 +344,14 @@ for s in range(0, len(wards[0])):
 
 print(col)
 print(markers)
-#scatter = plt.scatter(desirability_count,price_mean[0], s=20, c=colormap[color_categories], marker='o')
+#scatter = plt.scatter(desirability_count_normalise,price_mean[0], s=20, c=colormap[color_categories], marker='o')
 
 
-for xp, yp, m, c in zip(desirability_count, price_mean[0], markers, col):
+for xp, yp, m, c in zip(desirability_count_normalise, price_mean[0], markers, col):
    plt.scatter(xp, yp, marker=m, s=20, c=c)
 
 # for h, wards[0] in enumerate(wards[0]):
-    # plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
+    # plt.annotate(wards[0], (desirability_count_normalise[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
 plt.title(district + ": Property Price vs. Relative Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
@@ -364,47 +377,48 @@ plt.legend( labels = text_labels,
 plt.savefig(district + "_scatter" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
 
-print(price_mean[0])
-print(desirability_count)
-print(scaled_price)
+# print(price_mean[0])
+# print(desirability_count)
+# print(desirability_count_normalise)
+# print(scaled_price)
 
-for h in range(0,len(coordinates)):
-    scatter_scaled_price[h] = 1 - float(scaled_price[h])
-    scatter_count[h] = (float(desirability_count[h]*0.5) + float(scatter_scaled_price[h]*0.5))
+# for h in range(0,len(coordinates)):
+    # scatter_scaled_price[h] = 1 - float(scaled_price[h])
+    # scatter_count[h] = (float(desirability_count_normalise[h]*0.5) + float(scatter_scaled_price[h]*0.5))
 
-#Generate universal credit scaling information
-max_scatter_count = max(scatter_count)
-min_scatter_count = min(scatter_count)
-delta = max_scatter_count - min_scatter_count
-step = delta / (len(colour)-1)
+# #Generate scattter scaling information
+# max_scatter_count = max(scatter_count)
+# min_scatter_count = min(scatter_count)
+# delta = max_scatter_count - min_scatter_count
+# step = delta / (len(colour)-1)
 
-print(max_scatter_count)
-print(min_scatter_count)
-print(delta)
-print(step)
+# print(max_scatter_count)
+# print(min_scatter_count)
+# print(delta)
+# print(step)
 
-#Normalise the colours in the universal credit range
-for i in range(0,len(scatter_colour)):
-    scatter_colour_scale.insert(i,(min_scatter_count + (i*step)))
+# #Normalise the colours in the scattter range
+# for i in range(0,len(scatter_colour)):
+    # scatter_colour_scale.insert(i,(min_scatter_count + (i*step)))
 
-#Assign a colour to the normalised universal credit
-for j in range(0,len(coordinates)):
-    scatter_count_percentage_scale.append([])
-    for k in range(0,len(scatter_colour_scale)):
-        if (scatter_colour_scale[k] >= (scatter_count[j])):
-            scatter_count_percentage_scale.insert(j,scatter_colour[k])
-            scatter_price_plot.insert(j,scatter_colour_plot[k])
-            break
-        elif (k == len(colour_scale)-1):
-            scatter_count_percentage_scale.insert(j,scatter_colour[k])
-            scatter_price_plot.insert(j,scatter_colour_plot[k])
+# #Assign a colour to the normalised scattter
+# for j in range(0,len(coordinates)):
+    # scatter_count_percentage_scale.append([])
+    # for k in range(0,len(scatter_colour_scale)):
+        # if (scatter_colour_scale[k] >= (scatter_count[j])):
+            # scatter_count_percentage_scale.insert(j,scatter_colour[k])
+            # scatter_price_plot.insert(j,scatter_colour_plot[k])
+            # break
+        # elif (k == len(colour_scale)-1):
+            # scatter_count_percentage_scale.insert(j,scatter_colour[k])
+            # scatter_price_plot.insert(j,scatter_colour_plot[k])
             
-    #Add universal credit and colour to the polygons
-    #pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
-    pol[j].style.polystyle.color = scatter_count_percentage_scale[j]
+    # #Add universal credit and colour to the polygons
+    # #pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
+    # pol[j].style.polystyle.color = scatter_count_percentage_scale[j]
 
-#Save the polygons to a KML file
-kml.save(district + "_scatter" + ".kml")
+# #Save the polygons to a KML file
+# kml.save(district + "_scatter" + ".kml")
 
 
 
