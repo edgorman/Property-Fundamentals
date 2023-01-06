@@ -280,10 +280,10 @@ for xp, yp, m, c in zip(desirability_count, price_mean[0], markers, col):
 # for h, wards[0] in enumerate(wards[0]):
     # plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
-plt.title(district + ": Property Price vs. Relative Desirability", fontsize=10)
+plt.title(district + ": Property Price vs. Location Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
-plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count)))
+plt.xlabel( "0= Undesirable         Location Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count)))
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 
