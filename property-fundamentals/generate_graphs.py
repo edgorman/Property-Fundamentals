@@ -96,7 +96,7 @@ plt.close()
 
 #plot the scatter
 plt.rcParams["figure.figsize"] = (3.5,3)
-x = np.array([0.2,0.7,1])
+x = np.array([0.2,0.4,0.8])
 y = np.array([350000,240000,180000])
 colors = np.array(["red","green","blue"])
 #text_labels = np.array(["Ward A","Ward B","Ward C"])
@@ -105,19 +105,23 @@ for xp, yp, c in zip(x, y, colors):
    plt.scatter(xp, yp, s=800, c=c)
 
 #plt.rcParams["figure.figsize"] = (3.5,3)
-plt.title("Property Price vs. Location Desirability", fontsize=16)
+plt.title("Property Price vs. Location Desirability", fontsize=20, y=1.12)
 plt.ylabel("Property Price (£)", fontsize=16)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.gca().set_ylim(bottom=100000, top=400000)
+plt.gca().set_xlim(left=0, right=1)
+plt.locator_params(axis='x', nbins=2)
 plt.locator_params(axis='y', nbins=3)
+
 plt.xlabel( "Location Desirability" , fontsize=16)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 
-plt.legend( labels = ["Ward A","Ward B","Ward C"],
-            title='Wards',
+plt.legend( labels = ["A","B","C"],
+            title='Location',
             title_fontsize=16,
             loc="upper right",
-            bbox_to_anchor=(1.8,1),
+            bbox_to_anchor=(1.5,1),
             framealpha=0,
             ncol = 1,
             labelspacing = 1.2,
