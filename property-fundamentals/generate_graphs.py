@@ -133,3 +133,41 @@ plt.close()
 
 
 
+
+
+#plot the scatter
+plt.rcParams["figure.figsize"] = (7,7)
+x2 = np.array([0.2,0.4,0.8])
+y2 = np.array([350000,240000,180000])
+colors2 = np.array(["red","green","blue"])
+#text_labels = np.array(["Ward A","Ward B","Ward C"])
+
+for xp2, yp2, c2 in zip(x2, y2, colors2):
+   plt.scatter(xp2, yp2, s=800, c=c2)
+
+#plt.rcParams["figure.figsize"] = (3.5,3)
+plt.title("Average Property Price vs. Location Desirability", fontsize=28, y=1.12)
+plt.ylabel("Average Price (£)", fontsize=24)
+plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.gca().set_ylim(bottom=100000, top=400000)
+plt.gca().set_xlim(left=0, right=1)
+plt.locator_params(axis='x', nbins=2)
+plt.locator_params(axis='y', nbins=3)
+
+plt.xlabel( "Location Desirability\n(0=Not desirable)\n(1=Desirable)" , fontsize=24)
+plt.xticks(fontsize=24)
+plt.yticks(fontsize=24)
+
+plt.legend( labels = ["A","B","C"],
+            title='Location',
+            title_fontsize=24,
+            loc="upper right",
+            bbox_to_anchor=(1.5,1),
+            framealpha=0,
+            ncol = 1,
+            labelspacing = 1.2,
+            fontsize=24)
+
+
+plt.savefig("_scatter_generic_2" + ".png", bbox_inches='tight', transparent=True)
+plt.close()
