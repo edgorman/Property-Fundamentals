@@ -105,15 +105,15 @@ for xp, yp, c in zip(x, y, colors):
    plt.scatter(xp, yp, s=800, c=c)
 
 #plt.rcParams["figure.figsize"] = (3.5,3)
-plt.title("Property Price vs. Location Desirability", fontsize=20, y=1.12)
-plt.ylabel("Property Price (£)", fontsize=16)
+plt.title("Average Property Price vs. Location Desirability", fontsize=20, y=1.12)
+plt.ylabel("Average Price (£)", fontsize=16)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
 plt.gca().set_ylim(bottom=100000, top=400000)
 plt.gca().set_xlim(left=0, right=1)
 plt.locator_params(axis='x', nbins=2)
 plt.locator_params(axis='y', nbins=3)
 
-plt.xlabel( "Location Desirability" , fontsize=16)
+plt.xlabel( "Location Desirability\n(0=Not desirable)\n(1=Desirable)" , fontsize=16)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 
