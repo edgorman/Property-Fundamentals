@@ -64,6 +64,29 @@ plt.close()
 
 
 
+y3 = np.array([12.5, 27.5, 27.5, 32.5])
+mylabels2 = ["Burglary", "Universal Credit", "Housing benefit", "Schools"]
+mylabels_factor2 = ["Risk", "Push", "Push", "Pull"]
+myexplode2 = [0.2, 0, 0.1, 0]
+mycolors2 = ["#FF0014", "#F07800", "#B478FF", "#006400"]
+textprops2 = {"fontsize":16}
+
+plt.pie(y2, labels = mylabels2, explode = myexplode2, shadow = True, colors = mycolors2, textprops =textprops2, autopct = "%0.2f%%", startangle = 0)
+plt.legend( labels = mylabels_factor2,
+            title='Desirability Factor',
+            title_fontsize=16,
+            loc="lower center",
+            bbox_to_anchor=(0.4,-0.1),
+            framealpha=0,
+            ncol = 5,
+            fontsize=16)
+
+#plot the data
+#plt.rcParams["figure.dpi"] = 200
+#plt.rcParams["figure.figsize"] = (10,10)
+plt.title("Desirability Weighting without Flooding data", loc="center", fontsize=18)
+plt.savefig("desirability_weighting_without_flooding" + ".png", bbox_inches='tight', transparent=True)
+plt.close()
 
 
 
