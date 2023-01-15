@@ -179,7 +179,7 @@ print(desirability_count_normalise)
 
 
 scaled_schools_hbar = scaled_schools[desirability_order]
-scaled_burglary_hbar = scaled_flood[desirability_order]
+scaled_burglary_hbar = scaled_burglary[desirability_order]
 scaled_universal_credit_hbar = scaled_universal_credit[desirability_order]
 scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_order]
 
@@ -190,10 +190,10 @@ for j in range(0,len(wards[0])):
     desirability_ward_order.insert(j,wards[0][a])
     universal_credit_order.insert(j,universal_credit_percentage[a])
     housing_benefit_order.insert(j,housing_benefit_percentage[a])
-    burglary_order.insert(j,flood_percentage[a])
+    burglary_order.insert(j,burglary_percentage[a])
     barh_yaxis.insert(j,wards[0][a])
     weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.325)
-    weighted_flood_hbar[j] = float(scaled_burglary_hbar[j]*0.125)
+    weighted_burglary_hbar[j] = float(scaled_burglary_hbar[j]*0.125)
     weighted_universal_credit_hbar[j] = float(scaled_universal_credit_hbar[j]*0.275)
     weighted_housing_benefit_hbar[j] = float(scaled_housing_benefit_hbar[j]*0.275)
 
