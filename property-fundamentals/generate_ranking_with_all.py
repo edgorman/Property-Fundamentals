@@ -32,13 +32,13 @@ colour_scale = []
 price_plot = []
 desirability_count_percentage_scale = []
 
-scatter_colour = ['2D0078F0', '320078F0', '370078F0', '3C0078F0', '410078F0', '460078F0', '4B0078F0', '500078F0', '550078F0' ,'5A0078F0', '5F0078F0', '640078F0', '690078F0', '6E0078F0', '730078F0', '780078F0', '7D0078F0', '820078F0', '870078F0', '8C0078F0', '910078F0', '960078F0', '9B0078F0', 'A00078F0', 'A50078F0', 'AA0078F0', 'AF0078F0', 'B40078F0', 'B90078F0', 'BE0078F0']
-scatter_colour_plot = ['#F078002D', '#F0780032', '#F0780037', '#F078003C', '#F0780041', '#F0780046', '#F078004B', '#F0780050', '#F0780055', '#F078005A', '#F078005F', '#F0780064', '#F0780069', '#F078006E', '#F0780073', '#F0780078', '#F078007D', '#F0780082', '#F0780087', '#F078008C', '#F0780091', '#F0780096', '#F078009B', '#F07800A0', '#F07800A5', '#F07800AA', '#F07800AF', '#F07800B4', '#F07800B9', '#F07800BE']
-scatter_colour_scale = []
-scatter_price_plot = []
-scatter_count_percentage_scale = []
-scatter_count = np.array([0]*len(wards[0]), dtype = float)
-scatter_scaled_price = np.array([0]*len(wards[0]), dtype = float)
+# scatter_colour = ['2D0078F0', '320078F0', '370078F0', '3C0078F0', '410078F0', '460078F0', '4B0078F0', '500078F0', '550078F0' ,'5A0078F0', '5F0078F0', '640078F0', '690078F0', '6E0078F0', '730078F0', '780078F0', '7D0078F0', '820078F0', '870078F0', '8C0078F0', '910078F0', '960078F0', '9B0078F0', 'A00078F0', 'A50078F0', 'AA0078F0', 'AF0078F0', 'B40078F0', 'B90078F0', 'BE0078F0']
+# scatter_colour_plot = ['#F078002D', '#F0780032', '#F0780037', '#F078003C', '#F0780041', '#F0780046', '#F078004B', '#F0780050', '#F0780055', '#F078005A', '#F078005F', '#F0780064', '#F0780069', '#F078006E', '#F0780073', '#F0780078', '#F078007D', '#F0780082', '#F0780087', '#F078008C', '#F0780091', '#F0780096', '#F078009B', '#F07800A0', '#F07800A5', '#F07800AA', '#F07800AF', '#F07800B4', '#F07800B9', '#F07800BE']
+# scatter_colour_scale = []
+# scatter_price_plot = []
+# scatter_count_percentage_scale = []
+# scatter_count = np.array([0]*len(wards[0]), dtype = float)
+# scatter_scaled_price = np.array([0]*len(wards[0]), dtype = float)
 
 fig, ax = plt.subplots()
 desirability_count = np.array([0]*len(wards[0]), dtype = float)
@@ -351,12 +351,12 @@ for xp, yp, m, c in zip(desirability_count_normalise, price_mean[0], markers, co
    plt.scatter(xp, yp, marker=m, s=20, c=c)
 
 # for h, wards[0] in enumerate(wards[0]):
-    # plt.annotate(wards[0], (desirability_count_normalise[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
+    # plt.annotate(wards[0], (desirability_count_normalise[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count_normalise[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
 plt.title(district + ": Property Price vs. Location Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
-plt.xlabel( "0= Undesirable         Location Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count)))
+plt.xlabel( "0= Undesirable         Location Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count_normalise)))
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 

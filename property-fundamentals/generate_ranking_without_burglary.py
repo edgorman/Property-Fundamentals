@@ -17,14 +17,24 @@ from generate_households_universal_credit_percentage import yaxis_order as unive
 from generate_crime_burglary_percentage_heat_map import yaxis_order as burglary_ranking
 from generate_housing_benefit_claimants_percentage import yaxis_order as housing_benefit_ranking
 from generate_early_education import yaxis_order as school_ranking
-
+import simplekml
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#Define variables / lists
+kml = simplekml.Kml()
+colour = ['2D00D6FF', '3200D6FF', '3700D6FF', '3C00D6FF', '4100D6FF', '4600D6FF', '4B00D6FF', '5000D6FF', '5500D6FF' ,'5A00D6FF', '5F00D6FF', '6400D6FF', '6900D6FF', '6E00D6FF', '7300D6FF', '7800D6FF', '7D00D6FF', '8200D6FF', '8700D6FF', '8C00D6FF', '9100D6FF', '9600D6FF', '9B00D6FF', 'A000D6FF', 'A500D6FF', 'AA00D6FF', 'AF00D6FF', 'B400D6FF', 'B900D6FF', 'BE00D6FF']
+colour_plot = ['#FFD6002D', '#FFD60032', '#FFD60037', '#FFD6003C', '#FFD60041', '#FFD60046', '#FFD6004B', '#FFD60050', '#FFD60055', '#FFD6005A', '#FFD6005F', '#FFD60064', '#FFD60069', '#FFD6006E', '#FFD60073', '#FFD60078', '#FFD6007D', '#FFD60082', '#FFD60087', '#FFD6008C', '#FFD60091', '#FFD60096', '#FFD6009B', '#FFD600A0', '#FFD600A5', '#FFD600AA', '#FFD600AF', '#FFD600B4', '#FFD600B9', '#FFD600BE']
+pol = []
+colour_scale = []
+price_plot = []
+desirability_count_percentage_scale = []
+
 fig, ax = plt.subplots()
 desirability_count = np.array([0]*len(wards[0]), dtype = float)
+desirability_count_normalise = np.array([0]*len(wards[0]), dtype = float)
 affordability_count = np.array([0]*len(wards[0]), dtype = float)
 property_ranking_all = property_ranking[0]
 desirability_ward_order = []
@@ -156,6 +166,18 @@ print(desirability_count)
 desirability_order = sorted(range(len(desirability_count)), key=lambda k: desirability_count[k], reverse=True)
 print(desirability_order)
 
+
+# normalise the desirability results
+min_desirability_count = min(desirability_count)
+max_desirability_count = max(desirability_count)
+print(desirability_count)
+print(min_desirability_count)
+print(max_desirability_count)
+for h in range(0,len(coordinates)):
+    desirability_count_normalise[h] = ((float(desirability_count[h]) - float(min_desirability_count)) / (float(max_desirability_count) - float(min_desirability_count)))
+print(desirability_count_normalise)
+
+
 scaled_schools_hbar = scaled_schools[desirability_order]
 scaled_flood_hbar = scaled_flood[desirability_order]
 scaled_universal_credit_hbar = scaled_universal_credit[desirability_order]
@@ -164,7 +186,7 @@ scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_order]
 #arrange the data
 for j in range(0,len(wards[0])):
     a = desirability_order[j]
-    desirability_count_table.insert(j,desirability_count[a])
+    desirability_count_table.insert(j,desirability_count_normalise[a])
     desirability_ward_order.insert(j,wards[0][a])
     universal_credit_order.insert(j,universal_credit_percentage[a])
     housing_benefit_order.insert(j,housing_benefit_percentage[a])
@@ -247,6 +269,64 @@ plt.clf()
 
 
 
+#Generate / Draw polygons
+for h in range(0,len(coordinates)):
+    pol.insert(h,kml.newpolygon())
+    pol[h].name = wards[0][h]
+    pol[h].style.linestyle.width = "0"
+    pol[h].outerboundaryis.coords = coordinates[h]
+
+#Generate scaling information
+max_desirability_count_normalise = max(desirability_count_normalise)
+min_desirability_count_normalise = min(desirability_count_normalise)
+delta = max_desirability_count_normalise - min_desirability_count_normalise
+step = delta / (len(colour)-1)
+
+print(desirability_count_normalise)
+print(desirability_count_normalise)
+print(delta)
+print(step)
+
+#Normalise the colours in the universal credit range
+for i in range(0,len(colour)):
+    colour_scale.insert(i,(min_desirability_count_normalise + (i*step)))
+
+#Assign a colour to the normalised universal credit
+for j in range(0,len(coordinates)):
+    desirability_count_percentage_scale.append([])
+    for k in range(0,len(colour_scale)):
+        if (colour_scale[k] >= (desirability_count_normalise[j])):
+            desirability_count_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            break
+        elif (k == len(colour_scale)-1):
+            desirability_count_percentage_scale.insert(j,colour[k])
+            price_plot.insert(j,colour_plot[k])
+            
+    #Add universal credit and colour to the polygons
+    #pol[j].description = statxplore_api.get_universal_credit_date('table', ward_codes[h]) + ": " + str(universal_credit_percentage[j])[0:4] + "% of Households on Universal Credit"
+    pol[j].style.polystyle.color = desirability_count_percentage_scale[j]
+
+#Save the polygons to a KML file
+kml.save(district + "_desirability" + ".kml")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -271,19 +351,19 @@ for s in range(0, len(wards[0])):
 
 print(col)
 print(markers)
-#scatter = plt.scatter(desirability_count,price_mean[0], s=20, c=colormap[color_categories], marker='o')
+#scatter = plt.scatter(desirability_count_normalise,price_mean[0], s=20, c=colormap[color_categories], marker='o')
 
 
-for xp, yp, m, c in zip(desirability_count, price_mean[0], markers, col):
+for xp, yp, m, c in zip(desirability_count_normalise, price_mean[0], markers, col):
    plt.scatter(xp, yp, marker=m, s=20, c=c)
 
 # for h, wards[0] in enumerate(wards[0]):
-    # plt.annotate(wards[0], (desirability_count[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count[h]+0.03,price_mean[0][h]+0.03))
+    # plt.annotate(wards[0], (desirability_count_normalise[h],price_mean[0][h]), fontsize = 6, color = 'black', xytext=(desirability_count_normalise[h]+0.03,price_mean[0][h]+0.03))
 plt.rcParams["figure.figsize"] = (5.5,5)
 plt.title(district + ": Property Price vs. Location Desirability", fontsize=10)
 plt.ylabel("Mean Sold Price for All Property Types (£)", fontsize=7)
 plt.gca().yaxis.set_major_formatter(plt.matplotlib.ticker.StrMethodFormatter('{x:,.0f}'))
-plt.xlabel( "0= Undesirable         Location Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count)))
+plt.xlabel( "0= Undesirable         Location Desirability           Desirable = 1" , fontsize=7) #str("{:.2f}".format(min(desirability_count_normalise)))
 plt.xticks(fontsize=7)
 plt.yticks(fontsize=7)
 
