@@ -169,7 +169,7 @@ plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', tran
     
 # Weight the scaled desirability results
 for h in range(0,len(coordinates)):
-    desirability_count[h] = (float(scaled_burglary[h]*0.125) + float(scaled_schools[h]*0.25) + float(scaled_flood[h]*0.125) + float(scaled_universal_credit[h]*0.25) + float(scaled_housing_benefit[h]*0.25))
+    desirability_count[h] = (float(scaled_burglary[h]*0.1) + float(scaled_schools[h]*0.3) + float(scaled_flood[h]*0.1) + float(scaled_universal_credit[h]*0.25) + float(scaled_housing_benefit[h]*0.25))
 print(desirability_count)
 desirability_order = sorted(range(len(desirability_count)), key=lambda k: desirability_count[k], reverse=True)
 print(desirability_order)
@@ -202,9 +202,9 @@ for j in range(0,len(wards[0])):
     burglary_order.insert(j,burglary_percentage[a])
     flood_order.insert(j,flood_percentage[a])
     barh_yaxis.insert(j,wards[0][a])
-    weighted_burglary_hbar[j] = float(scaled_burglary_hbar[j]*0.125)
-    weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.25)
-    weighted_flood_hbar[j] = float(scaled_flood_hbar[j]*0.125)
+    weighted_burglary_hbar[j] = float(scaled_burglary_hbar[j]*0.1)
+    weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.3)
+    weighted_flood_hbar[j] = float(scaled_flood_hbar[j]*0.1)
     weighted_universal_credit_hbar[j] = float(scaled_universal_credit_hbar[j]*0.25)
     weighted_housing_benefit_hbar[j] = float(scaled_housing_benefit_hbar[j]*0.25)
 

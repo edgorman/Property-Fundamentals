@@ -161,7 +161,7 @@ plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', tran
     
 # Weight the scaled desirability results and normalise
 for h in range(0,len(coordinates)):
-    desirability_count[h] = (float(scaled_schools[h]*0.325) + float(scaled_flood[h]*0.125) + float(scaled_universal_credit[h]*0.275) + float(scaled_housing_benefit[h]*0.275))
+    desirability_count[h] = (float(scaled_schools[h]*0.325) + float(scaled_burglary[h]*0.125) + float(scaled_universal_credit[h]*0.275) + float(scaled_housing_benefit[h]*0.275))
 print(desirability_count)
 desirability_order = sorted(range(len(desirability_count)), key=lambda k: desirability_count[k], reverse=True)
 print(desirability_order)
@@ -179,7 +179,7 @@ print(desirability_count_normalise)
 
 
 scaled_schools_hbar = scaled_schools[desirability_order]
-scaled_flood_hbar = scaled_flood[desirability_order]
+scaled_burglary_hbar = scaled_flood[desirability_order]
 scaled_universal_credit_hbar = scaled_universal_credit[desirability_order]
 scaled_housing_benefit_hbar = scaled_housing_benefit[desirability_order]
 
@@ -190,10 +190,10 @@ for j in range(0,len(wards[0])):
     desirability_ward_order.insert(j,wards[0][a])
     universal_credit_order.insert(j,universal_credit_percentage[a])
     housing_benefit_order.insert(j,housing_benefit_percentage[a])
-    flood_order.insert(j,flood_percentage[a])
+    burglary_order.insert(j,flood_percentage[a])
     barh_yaxis.insert(j,wards[0][a])
     weighted_schools_hbar[j] = float(scaled_schools_hbar[j]*0.325)
-    weighted_flood_hbar[j] = float(scaled_flood_hbar[j]*0.125)
+    weighted_flood_hbar[j] = float(scaled_burglary_hbar[j]*0.125)
     weighted_universal_credit_hbar[j] = float(scaled_universal_credit_hbar[j]*0.275)
     weighted_housing_benefit_hbar[j] = float(scaled_housing_benefit_hbar[j]*0.275)
 
@@ -212,7 +212,7 @@ desirability_data = {
   # "Desirability \nScore": desirability_count_table,
   "(%) of\nHouseholds\non Universal\nCredit": universal_credit_order,
   "(%) of\nHouseholds\non Housing\nBenefit": housing_benefit_order,
-  "(%) of\nWard\narea at\nFlooding\nRisk": flood_order,
+  "(%) of\nProperties \n Burgled": burglary_order,
   "No. Outstanding \n Schools": outstanding_order,
   "No. Good Schools": good_order,
   "No. Requires \n Improvement Schools": require_improvement_order,
@@ -225,7 +225,7 @@ desirability_df = pd.DataFrame(desirability_data, index = desirability_ward_orde
 # desirability_df = desirability_df.round({'Desirability \nScore': 4})
 desirability_df = desirability_df.round({'(%) of\nHouseholds\non Universal\nCredit': 1})
 desirability_df = desirability_df.round({'(%) of\nHouseholds\non Housing\nBenefit': 1})
-desirability_df = desirability_df.round({'(%) of\nWard\narea at\nFlooding\nRisk': 1})
+desirability_df = desirability_df.round({'(%) of\nProperties \n Burgled': 2})
 # desirability_df = desirability_df.round({'weighted \n school': 3})
 # desirability_df = desirability_df.round({'weighted \n flood': 3})
 # desirability_df = desirability_df.round({'weighted \n uc': 3})
@@ -253,8 +253,8 @@ plt.close()
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
 plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 7})
-p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0,0.39215686,0), left=weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
-p3 = plt.barh(y_pos, weighted_flood_hbar, color = (0.07843137,0.47058823,0.94117647), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
+p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0,0.39215686,0), left=weighted_burglary_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
+p3 = plt.barh(y_pos, weighted_burglary_hbar, color = (1,0,0.07843137), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
 p4 = plt.barh(y_pos, weighted_universal_credit_hbar, color = (0.94117647,0.47058823,0), left=weighted_housing_benefit_hbar) #color = (R,G,B)
 p5 = plt.barh(y_pos, weighted_housing_benefit_hbar, color = (0.70588235,0.47058823,1)) #color = (R,G,B)
   
@@ -262,7 +262,7 @@ plt.yticks(y_pos,barh_yaxis)
 plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
 plt.gca().invert_yaxis()
 plt.title(district + ": Desirability Ranking")
-plt.legend([p5,p4,p3,p2],["Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Good \nSchools"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 4)
+plt.legend([p5,p4,p3,p2],["Low Housing \nBenefit", "Low Universal \nCredit", "Low \nBurglary", "Good \nSchools"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 4)
 
 plt.savefig(district + "_desirability_bar_char" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
