@@ -157,7 +157,7 @@ affordability_table.auto_set_column_width(col=list(range(len(affordability_df.co
 
 for r in range(0, len(Labels)):
     cell = affordability_table[0, r]
-    cell.set_height(0.1)
+    cell.set_height(0.15)
 
 #plot the price data
 #plt.rcParams["figure.dpi"] = 200
@@ -368,7 +368,7 @@ plt.legend( labels = text_labels,
             title='Wards',
             title_fontsize=7,
             loc="upper right",
-            bbox_to_anchor=(1.5,1),
+            bbox_to_anchor=(0.3,1),
             framealpha=0,
             ncol = 1,
             fontsize=6)
