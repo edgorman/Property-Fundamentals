@@ -278,7 +278,7 @@ plt.yticks(y_pos,barh_yaxis)
 plt.xlabel( "0= Undesirable         Relative Desirability           Desirable = 1" , fontsize=7)
 plt.gca().invert_yaxis()
 plt.title(district + ": Desirability Ranking")
-plt.legend([p5,p4,p3,p2,p1],["Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Good \nSchools", "Low \nBurglary"], loc="lower center", bbox_to_anchor=(0.2,-0.2), framealpha=0, ncol = 5)
+plt.legend([p5,p4,p3,p2,p1],["Low Housing \nBenefit", "Low Universal \nCredit", "Low Flooding \nRisk", "Good \nSchools", "Low \nBurglary"], loc="lower center", bbox_to_anchor=(0.4,-0.2), framealpha=0, ncol = 5)
 
 plt.savefig(district + "_desirability_bar_char" + ".png", bbox_inches='tight', transparent=True)
 plt.clf()
