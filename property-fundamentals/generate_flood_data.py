@@ -74,10 +74,10 @@ for j in range (0,len(flood_data_result)):
             for h in range(0,len(coordinates)):
                 p = Polygon(coordinates[h])
                 if (p.is_valid == False):
-                    p = p.buffer(0.017)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    p = p.buffer(0.17)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 q = Polygon(flood_data_result[j][k][l])
                 if (q.is_valid == False):
-                    q = q.buffer(0.017)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    q = q.buffer(0.17)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 print(p.is_valid)
                 print(q.is_valid)
                 print(p.intersects(q))
@@ -97,10 +97,10 @@ for j in range (0,len(flood_data_result)):
             for h in range(0,len(coordinates)):
                 p = Polygon(coordinates[h])
                 if (p.is_valid == False):
-                    p = p.buffer(0.017)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    p = p.buffer(0.17)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 q = Polygon(flood_data_result[j][k])
                 if (q.is_valid == False):
-                    q = q.buffer(0.017)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    q = q.buffer(0.17)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 print(p.is_valid)
                 print(q.is_valid)
                 print(p.intersects(q))
