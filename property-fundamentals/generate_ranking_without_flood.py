@@ -155,7 +155,7 @@ for r in range(0, len(Labels)):
 #plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  " Price Ranking", fontsize=10)
+#plt.title(district +  " Price Ranking", fontsize=10)
 plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', transparent=True)
 
     
@@ -243,7 +243,7 @@ for r in range(0, len(Labels)):
 #plot the data
 #plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
+#plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
 
@@ -375,7 +375,7 @@ plt.legend( labels = text_labels,
             title='Wards',
             title_fontsize=7,
             loc="upper right",
-            bbox_to_anchor=(0.3,1),
+            bbox_to_anchor=(0.6,1),
             framealpha=0,
             ncol = 1,
             fontsize=6)
