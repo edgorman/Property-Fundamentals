@@ -213,10 +213,10 @@ desirability_data = {
   "(%) of\nHouseholds\non Universal\nCredit": universal_credit_order,
   "(%) of\nHouseholds\non Housing\nBenefit": housing_benefit_order,
   "(%) of\nProperties \n Burgled": burglary_order,
-  "No. Outstanding \n Schools": outstanding_order,
-  "No. Good Schools": good_order,
-  "No. Requires \n Improvement Schools": require_improvement_order,
-  "No. Poor Schools": poor_order
+  "No.\nOutstanding\nSchools": outstanding_order,
+  "No.\nGood\nSchools": good_order,
+  "No.\nRequires\nImprovement\nSchools": require_improvement_order,
+  "No.\nPoor\nSchools": poor_order
 }
 
 
