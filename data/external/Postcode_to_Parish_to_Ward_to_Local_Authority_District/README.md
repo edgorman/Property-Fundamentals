@@ -1,1 +1,0 @@
-Data retrieved from: https://geoportal.statistics.gov.uk/datasets/postcode-to-parish-to-ward-to-local-authority-district-december-2011-lookup-in-england-and-wales/about
