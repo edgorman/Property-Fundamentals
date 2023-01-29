@@ -27,6 +27,7 @@ yaxis = []
 xaxis = []
 count=0
 colouraxis = ['#1478F0FF']*len(wards[0])
+new_list = []
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -59,30 +60,36 @@ print(x)
 
 
 for j in range (0,len(flood_data_result)):
-    print (len(flood_data_result[j]))
-    print (flood_data_result[j])
     for k in range (0,len(flood_data_result[j])):
         if str(flood_data_result[j])[0:4] == "[[[[":
         #if len(flood_data_result[j]) != 1:
             for l in range (0,len(flood_data_result[j][k])):
+                print(len(flood_data_result[j][k]))
+                print(flood_data_result[j][k][l])
+                print(count)
                 pol.insert(count,kml.newpolygon())
                 pol[count].style.linestyle.width = "0"
                 pol[count].outerboundaryis.coords = flood_data_result[j][k][l]
                 pol[count].style.polystyle.color = 'FFF07814'
             count +=1
             #find area of flooding which is overlapping with the wards
-            for h in range(0,len(coordinates)):
-                p = Polygon(coordinates[h])
-                if (p.is_valid == False):
-                    p = p.buffer(0.001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
-                q = Polygon(flood_data_result[j][k][l])
-                if (q.is_valid == False):
-                    q = q.buffer(0.001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
-                print(p.is_valid)
-                print(q.is_valid)
-                print(p.intersects(q))
-                print(p.intersection(q).area)
-                flood_area_count[h] += p.intersection(q).area
+            print(flood_data_result[j][k][l])
+            for l in range (0,len(flood_data_result[j][k])):
+                for h in range(0,len(coordinates)):
+                    #new_list = [[round(val, 5) for val in sublst] for sublst in coordinates[h]]
+                    #p = Polygon(new_list)
+                    p = Polygon(coordinates[h])
+                    if (p.is_valid == False):
+                        p = p.buffer(0.0001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    q = Polygon(flood_data_result[j][k][l])
+                    if (q.is_valid == False):
+                        q = q.buffer(0.0001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    print(p.is_valid)
+                    print(q.is_valid)
+                    print(p.intersects(q))
+                    print(p.disjoint(q))
+                    print(p.intersection(q).area)
+                    flood_area_count[h] += p.intersection(q).area
                 
             
         elif str(flood_data_result[j])[0:4] != "[[[[":
@@ -95,17 +102,21 @@ for j in range (0,len(flood_data_result)):
             
             #find area of flooding which is overlapping with the wards
             for h in range(0,len(coordinates)):
+                #new_list = [[round(val, 5) for val in sublst] for sublst in coordinates[h]]
+                #p = Polygon(new_list)
                 p = Polygon(coordinates[h])
                 if (p.is_valid == False):
-                    p = p.buffer(0.001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    p = p.buffer(0.0001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 q = Polygon(flood_data_result[j][k])
                 if (q.is_valid == False):
-                    q = q.buffer(0.001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
+                    q = q.buffer(0.0001)    # edit the value in the buffer to refine the results. Look at flooding graph, and refine
                 print(p.is_valid)
                 print(q.is_valid)
                 print(p.intersects(q))
+                print(p.disjoint(q))
                 print(p.intersection(q).area)
-                flood_area_count[h] += p.intersection(q).area
+                flood_area_count[h] += p.intersection(q).area              
+
             
         else:
             print("error")
