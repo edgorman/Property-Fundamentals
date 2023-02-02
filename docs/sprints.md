@@ -8,8 +8,8 @@ These will last approximately 2 weeks but may shift on my availability and prior
 
 ### Sprint 1
 
-* Set up developer environment with python installed
-* Set up recipedex module and initial structure
+* ~~Set up developer environment with python installed~~
+* Set up property fundamentals module and initial structure
 * Set up frontend/backend and make hello world application
 
 ## Sprint 2
