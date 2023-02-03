@@ -12,6 +12,8 @@ setup(
         "autopep8",
         "coverage",
         "regex",
+        "requests",
+        "pandas",
         "flake8",
         "pytest",
         "pytest-cov",
