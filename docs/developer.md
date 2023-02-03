@@ -4,7 +4,7 @@ This README contains instructions for setting up the developer environment, and 
 
 ## Structure
 
-TODO
+![System Diagram of Property Fundamentals](images/system-diagram.jpg)
 
 ## Installation
 
