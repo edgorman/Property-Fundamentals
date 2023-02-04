@@ -11,13 +11,18 @@ python -m pip install backend/.
 ```
 
 If you're developing this package a handy line to reinstall is:
+
 ```
 python -m pip uninstall backend -y; python -m pip install backend/.
 ```
 
 ## Usage
 
-TODO
+Run the `gunicorn` command in the base directory:
+
+```
+gunicorn -k uvicorn.workers.UvicornWorker backend.api:api
+```
 
 ## Testing
 
