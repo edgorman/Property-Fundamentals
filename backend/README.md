@@ -18,10 +18,10 @@ python -m pip uninstall backend -y; python -m pip install backend/.
 
 ## Usage
 
-Run the `gunicorn` command in the base directory:
+To run the backend locally, run the following and then open [the docs page](http://127.0.0.1:5000/docs) to prove it's working.
 
 ```
-gunicorn -k uvicorn.workers.UvicornWorker backend.api:api
+gunicorn -k uvicorn.workers.UvicornWorker -b 127.0.0.1:5000 backend.api:api
 ```
 
 ## Testing
