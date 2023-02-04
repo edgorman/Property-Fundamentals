@@ -21,7 +21,7 @@ To build the frontend for production:
 
 ```
 npm run build --prefix frontend
-serve -s build
+npm run serve --prefix frontend
 ```
 
 ## Testing
