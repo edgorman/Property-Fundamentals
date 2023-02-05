@@ -56,6 +56,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "prettier": "^2.7.1"
+    "json-loader": "^0.5.7",
+    "prettier": "^2.7.1",
+    "transform-loader": "^0.2.4",
+    "webworkify-webpack": "^1.0.6"
   }
 }
