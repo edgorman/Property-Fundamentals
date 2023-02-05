@@ -20,7 +20,7 @@ REACT_APP_MAPBOX_TOKEN=<your-token-here>
 To run the frontend in development mode:
 
 ```
-npm start --prefix frontend
+npm run start --prefix frontend
 ```
 
 To build the frontend for production:

@@ -2,7 +2,33 @@ body {
     margin: 0;
     font-family: Helvetica, Arial, sans-serif;
 }
+
 #root {
     width: 100vw;
     height: 100vh;
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib{
+    width: 50px !important;
+    height: 50px !important;
+    display: block !important;
+    margin: 5px 0 0 0 !important;
+    padding: 0px !important;
+    border-radius: 0px !important;
+    background-color: transparent !important;
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib .mapboxgl-ctrl-attrib-button{
+    display: block;
+    width: 50px !important;
+    height: 50px !important;
+    background-color: transparent !important;
+    background-image: url('../../public/logo_no_bg.png');
+    background-size: cover;
+    border-radius: 0px;
+}
+
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib .mapboxgl-ctrl-attrib-inner > *, 
+.mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib .mapboxgl-ctrl-icon{
+    display: none !important;
 }

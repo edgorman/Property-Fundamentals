@@ -13,6 +13,7 @@
     "d3-array": "^3.1.1",
     "d3-scale": "^4.0.2",
     "mapbox-gl": "^2.0.0",
+    "mapbox-gl-controls": "^2.3.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-map-gl": "^7.0.0",
@@ -23,8 +24,7 @@
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.0",
-    "eslint-plugin-react": "^7.32.2"
+    "babel-loader": "^8.0.0"
   },
   "browserslist": {
     "production": [
