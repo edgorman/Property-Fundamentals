@@ -1,3 +1,8 @@
-body{
-    margin: 0px;
+body {
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+#root {
+    width: 100vw;
+    height: 100vh;
 }

@@ -9,6 +9,12 @@ To install the frontend:
 npm install --prefix frontend
 ```
 
+You must also create an account at [mapbox.com](Mapbox) and copy an API token into a `.env` file with the following format:
+
+```
+REACT_APP_MAPBOX_TOKEN=<your-token-here>
+```
+
 ## Usage
 
 To run the frontend in development mode:
