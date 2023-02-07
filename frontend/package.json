@@ -10,9 +10,11 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "mapbox-gl": "^2.0.0",
     "mapbox-gl-controls": "^2.3.5",
     "react": "^17.0.0",
+    "react-bootstrap": "^2.7.0",
     "react-dom": "^17.0.0",
     "react-map-gl": "^7.0.0",
     "react-scripts": "^5.0.1",

@@ -44,3 +44,23 @@ body {
     cursor: pointer;
     z-index: 2;
 }
+
+.mapbox-controls{
+    position: absolute;
+    top: 0;
+    right: -30px;
+    max-height: 95vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding-right: 25px;
+    margin: 10px 10px 10px 10px;
+    z-index: 2;
+}
+
+.mapbox-controls .list-group-item{
+    width: 80vw;
+    max-width: 500px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}

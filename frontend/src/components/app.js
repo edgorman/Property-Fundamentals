@@ -1,5 +1,7 @@
 import React from 'react';
 import Map, {NavigationControl, GeolocateControl, AttributionControl} from 'react-map-gl';
+
+import Controls from './controls';
 import './app.css';
 
 export default class App extends React.Component {
@@ -43,11 +45,12 @@ export default class App extends React.Component {
         mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         ref={(e) => { this.map = e; }}
       >
-        <button className="mapbox-logo" onClick={this.handleResetViewState}>
-          <AttributionControl position="top-left"/>
-        </button>
+        <AttributionControl position="top-left"/>
         <NavigationControl position="top-left" visualizePitch={true} />
         <GeolocateControl position="top-left" />
+        <button className="mapbox-logo" onClick={this.handleResetViewState}></button>
+
+        <Controls />
       </Map>
     );
   }
