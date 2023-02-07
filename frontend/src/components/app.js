@@ -12,7 +12,7 @@ export default class App extends React.Component {
         longitude: -2,
         zoom: 4
       },
-      minZoom: 4,
+      minZoom: 5,
       maxBounds: [
         [-21, 49],
         [19, 59.7]
@@ -28,8 +28,9 @@ export default class App extends React.Component {
         this.state.initialViewState.longitude,
         this.state.initialViewState.latitude
       ],
-      zoom: this.state.minZoom,
-      essential: true
+      zoom: this.state.initialViewState.zoom,
+      essential: true,
+      duration: 1500
     });
   }
 
@@ -38,7 +39,6 @@ export default class App extends React.Component {
       <Map
         initialViewState={this.state.initialViewState}
         minZoom={this.state.minZoom}
-        maxBounds={this.state.maxBounds}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         ref={(e) => { this.map = e; }}
