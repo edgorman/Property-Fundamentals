@@ -25,10 +25,22 @@ body {
     background-color: transparent !important;
     background-image: url('../../public/logo_no_bg.png');
     background-size: cover;
-    border-radius: 0px;
 }
 
 .mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib .mapboxgl-ctrl-attrib-inner > *, 
 .mapboxgl-ctrl-top-left .mapboxgl-ctrl-attrib .mapboxgl-ctrl-icon{
     display: none !important;
+}
+
+.mapbox-logo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 50px;
+    margin: 5px;
+    border: 0px solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 2;
 }

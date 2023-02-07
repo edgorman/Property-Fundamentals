@@ -5,26 +5,48 @@ import './app.css';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      initialViewState: {
+        latitude: 54.8,
+        longitude: -2,
+        zoom: 4
+      },
+      minZoom: 4,
+      maxBounds: [
+        [-21, 49],
+        [19, 59.7]
+      ]
+    }
+
+    this.handleResetViewState = this.handleResetViewState.bind(this);
+  }
+
+  handleResetViewState() {
+    this.map.flyTo({
+      center: [
+        this.state.initialViewState.longitude,
+        this.state.initialViewState.latitude
+      ],
+      zoom: this.state.minZoom,
+      essential: true
+    });
   }
 
   render() {
     return (
       <Map
-        initialViewState={{
-          latitude: 54.8,
-          longitude: -2,
-          zoom: 4
-        }}
-        minZoom={4}
-        maxBounds={[
-          [-21, 49],
-          [19, 59.7]
-        ]}
+        initialViewState={this.state.initialViewState}
+        minZoom={this.state.minZoom}
+        maxBounds={this.state.maxBounds}
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+        ref={(e) => { this.map = e; }}
       >
-        <AttributionControl position="top-left" /* logo */ />
-        <NavigationControl position="top-left" />
+        <button className="mapbox-logo" onClick={this.handleResetViewState}>
+          <AttributionControl position="top-left"/>
+        </button>
+        <NavigationControl position="top-left" visualizePitch={true} />
         <GeolocateControl position="top-left" />
       </Map>
     );
