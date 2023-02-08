@@ -377,6 +377,19 @@ plt.legend( labels = text_labels,
 plt.savefig(district + "_scatter" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
 
+
+
+#Generate / Draw polygons
+for h in range(0,len(coordinates)):
+    pol.insert(h,kml.newpolygon())
+    pol[h].name = wards[0][h]
+    pol[h].style.linestyle.width = "0"
+    pol[h].outerboundaryis.coords = coordinates[h]
+    pol[h].style.polystyle.color = '32F07814' #= '19F07814'
+    
+#Save and zip the KML/KMZ  
+kml.save(district + "_scatter" + ".kml")
+
 # print(price_mean[0])
 # print(desirability_count)
 # print(desirability_count_normalise)
