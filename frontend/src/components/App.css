@@ -45,22 +45,35 @@ body {
     z-index: 2;
 }
 
+.mapbox-controls-toggle{
+    position: absolute;
+    bottom: 40px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    padding-top: 11px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 8px #888888;
+    text-align: center;
+    font-size: 28px;
+    cursor: pointer;
+}
+
 .mapbox-controls{
+    display: none;
     position: absolute;
     top: 0;
     right: -30px;
-    max-height: 95vh;
+    width: 90vw;
+    max-width: 500px;
+    height: 95vh;
     overflow-x: hidden;
     overflow-y: scroll;
     padding-right: 25px;
     margin: 10px 10px 10px 10px;
-    z-index: 2;
-}
-
-.mapbox-controls .list-group-item{
-    width: 80vw;
-    max-width: 500px;
-    margin-bottom: 10px;
     border-radius: 10px;
-    cursor: pointer;
+    background-color: white;
+    box-shadow: 5px 10px 18px #888888;
+    z-index: 3;
 }
