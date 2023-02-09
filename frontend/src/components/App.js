@@ -3,6 +3,8 @@ import Map, {NavigationControl, GeolocateControl, Source, Layer} from 'react-map
 import bbox from '@turf/bbox';
 
 import LogoControl from './LogoControl';
+import Sidebar from './Sidebar';
+import SidebarToggle from './SidebarToggle';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,20 +20,25 @@ export default class App extends React.Component {
         longitude: -2,
         zoom: 4
       },
+      mapboxAccessToken: process.env.REACT_APP_MAPBOX_TOKEN,
       minZoom: 5,
       maxBounds: [
         [-21, 49],
         [19, 59.7]
       ],
       mapStyle: "mapbox://styles/mapbox/streets-v9",
-      mapboxAccessToken: process.env.REACT_APP_MAPBOX_TOKEN
+      sidebarActive: false
     }
 
-    this.handleResetViewState = this.handleResetViewState.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleResetViewClick = this.handleResetViewClick.bind(this);
+    this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
+    this.handleMapClick = this.handleMapClick.bind(this);
   }
 
-  handleResetViewState() {
+  handleResetViewClick() {
+    // let feature = this.map.querySourceFeatures('test');
+    // then bbox(feature) to get min/max lng/lat
+    
     this.map.flyTo({
       center: [
         this.state.initialViewState.longitude,
@@ -43,11 +50,17 @@ export default class App extends React.Component {
     });
   }
 
-  handleClick(e) {
+  handleSidebarToggle() {
+    console.log("here");
+    this.setState({sidebarActive: !this.state.sidebarActive});
+  }
+
+  handleMapClick(e) {
     let feature = e.features[0];
 
     if (feature){
-      let [minLng, minLat, maxLng, maxLat] = bbox(e.features[0]);
+      console.log(feature.properties);
+      let [minLng, minLat, maxLng, maxLat] = bbox(feature);
 
       this.map.fitBounds(
         [
@@ -66,25 +79,36 @@ export default class App extends React.Component {
       paint: {
         'fill-color': '#222222',
         'fill-opacity': 0.2,
-        'fill-outline-color': '#000000'
       }
     };
 
     return (
       <Map
         initialViewState={this.state.initialViewState}
+        mapboxAccessToken={this.state.mapboxAccessToken}
         minZoom={this.state.minZoom}
         mapStyle={this.state.mapStyle}
-        mapboxAccessToken={this.state.mapboxAccessToken}
-        ref={(e) => { this.map = e; }}
-        onClick={this.handleClick}
         interactiveLayerIds={['point']}
+        onClick={this.handleMapClick}
+        ref={(e) => { this.map = e; }}
       >
-        <LogoControl position="top-left" onClick={this.handleResetViewState} />
+        { /* Map controls */}
+        <LogoControl position="top-left" onClick={this.handleResetViewClick} />
         <NavigationControl position="top-left" visualizePitch={true} />
         <GeolocateControl position="top-left" />
 
-        <Source type="geojson" data={"https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/eng/lad.json"}>
+        { /* Sidebar and toggle */}
+        <Sidebar isActive={this.state.sidebarActive} handleToggle={this.handleSidebarToggle} />
+        <SidebarToggle open={true} handleToggle={this.handleSidebarToggle} />
+
+        { /*
+
+          https://raw.githubusercontent.com/martinjc/UK-GeoJSON/master/json/administrative/eng/lad.json
+
+          https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Regions_December_2022_EN_BGC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson
+        
+        */}
+        <Source id="test" type="geojson" data="https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Regions_December_2022_EN_BGC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson">
           <Layer {...layerStyle} />
         </Source>
       </Map>

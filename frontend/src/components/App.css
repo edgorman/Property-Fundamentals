@@ -12,7 +12,7 @@ body {
     width: 50px !important;
     height: 50px !important;
     display: block !important;
-    margin: 5px 0 0 0 !important;
+    margin: 10px 0 0 0 !important;
     padding: 0px !important;
     border-radius: 0px !important;
     background-color: transparent !important;
@@ -36,16 +36,39 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 40px;
+    width: 50px;
     height: 50px;
-    margin: 5px;
+    margin: 10px 0px 5px 0px;
     border: 0px solid transparent;
     background-color: transparent;
     cursor: pointer;
     z-index: 2;
 }
 
-.mapbox-controls-toggle{
+.mapbox-sidebar{
+    position: absolute;
+    top: 0;
+    right: -530px;
+    width: 90vw;
+    max-width: 500px;
+    height: 95vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 5px 10px 18px #888888;
+    z-index: 3;
+
+    transition: right 1s;
+}
+
+.mapbox-sidebar.active{
+    right: -30px;
+}
+
+.mapbox-sidebar-toggle{
     position: absolute;
     bottom: 40px;
     right: 15px;
@@ -60,20 +83,8 @@ body {
     cursor: pointer;
 }
 
-.mapbox-controls{
-    display: none;
-    position: absolute;
-    top: 0;
-    right: -30px;
-    width: 90vw;
-    max-width: 500px;
-    height: 95vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-right: 25px;
-    margin: 10px 10px 10px 10px;
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 5px 10px 18px #888888;
-    z-index: 3;
+.mapbox-sidebar .mapbox-sidebar-toggle{
+    bottom: 10px;
+    color: white;
+    background-color: #007bff;
 }
