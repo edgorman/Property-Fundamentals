@@ -16,7 +16,11 @@ export default class Sidebar extends React.Component {
 
         return (
             <div className={classNames}>
-                <SidebarToggle open={false} handleToggle={this.props.handleToggle} />
+                <div className="content">
+                </div>
+                <div className="buttons">
+                    <SidebarToggle open={false} handleToggle={this.props.handleToggle} />
+                </div>
             </div>
         )
     }
