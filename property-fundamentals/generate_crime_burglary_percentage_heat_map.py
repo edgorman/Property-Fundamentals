@@ -39,6 +39,7 @@ colour = ['2D1400FF', '321400FF', '371400FF', '3C1400FF', '411400FF', '461400FF'
 #colour_plot = ['#FF001419', '#FF00141E', '#FF001423', '#FF001428', '#FF00142D', '#FF001432', '#FF001437', '#FF00143C', '#FF001441', '#FF001446', '#FF00144B', '#FF001450', '#FF001455', '#FF00145A', '#FF00145F', '#FF001464', '#FF001469', '#FF00146E', '#FF001473', '#FF001478', '#FF00147D', '#FF001482', '#FF001487', '#FF00148C', '#FF001491', '#FF001496', '#FF00149B', '#FF0014A0', '#FF0014A5', '#FF0014AA']
 colour_plot = ['#FF00142D', '#FF001432', '#FF001437', '#FF00143C', '#FF001441', '#FF001446', '#FF00144B', '#FF001450', '#FF001455', '#FF00145A', '#FF00145F', '#FF001464', '#FF001469', '#FF00146E', '#FF001473', '#FF001478', '#FF00147D', '#FF001482', '#FF001487', '#FF00148C', '#FF001491', '#FF001496', '#FF00149B', '#FF0014A0', '#FF0014A5', '#FF0014AA', '#FF0014AF', '#FF0014B4', '#FF0014B9', '#FF0014BE']
 burglary_percentage_scale = []
+new_burglary_ward = []
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -90,21 +91,27 @@ for crime in results1:
         
         #Check ward is present in list
         ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
-        
         if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    ward_found = True
+                elif burglary_ward.find("&") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+            if ward_found == True:
+                print("ward found")
+            elif ward_found == False:
+                print("ward not found.\n wards available are:\n")
+                print(wards[0])
+                print("Postcode is: ")
+                print(burglary_postcode)
+                print("burglary ward is currently: ")
+                print(burglary_ward)
+                burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+            
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     burglary_count[i] +=1
@@ -117,21 +124,27 @@ for crime in results2:
         
         #Check ward is present in list
         ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
-        
         if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    ward_found = True
+                elif burglary_ward.find("&") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+            if ward_found == True:
+                print("ward found")
+            elif ward_found == False:
+                print("ward not found.\n wards available are:\n")
+                print(wards[0])
+                print("Postcode is: ")
+                print(burglary_postcode)
+                print("burglary ward is currently: ")
+                print(burglary_ward)
+                burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+            
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     burglary_count[i] +=1
@@ -144,21 +157,27 @@ for crime in results3:
         
         #Check ward is present in list
         ward_found = False
-        for i in range (0,len(wards[0])):
-            if burglary_ward == wards[0][i]:
-                ward_found = True
-        if ward_found == True:
-            print("ward found")
-        elif ward_found == False:
-            print("ward not found.\n wards available are:\n")
-            print(wards[0])
-            print("Postcode is: ")
-            print(burglary_postcode)
-            print("burglary ward is currently: ")
-            print(burglary_ward)
-            burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
-        
         if burglary_ward is not None:
+            for i in range (0,len(wards[0])):
+                if burglary_ward == wards[0][i]:
+                    ward_found = True
+                elif burglary_ward.find("&") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+            if ward_found == True:
+                print("ward found")
+            elif ward_found == False:
+                print("ward not found.\n wards available are:\n")
+                print(wards[0])
+                print("Postcode is: ")
+                print(burglary_postcode)
+                print("burglary ward is currently: ")
+                print(burglary_ward)
+                burglary_ward = input("Please type a ward from the list and press enter:\n\n (If you don't choose a ward from the list it will not be included in the chart)")
+        
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     burglary_count[i] +=1
