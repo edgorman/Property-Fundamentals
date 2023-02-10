@@ -40,6 +40,7 @@ colour = ['2D1400FF', '321400FF', '371400FF', '3C1400FF', '411400FF', '461400FF'
 colour_plot = ['#FF00142D', '#FF001432', '#FF001437', '#FF00143C', '#FF001441', '#FF001446', '#FF00144B', '#FF001450', '#FF001455', '#FF00145A', '#FF00145F', '#FF001464', '#FF001469', '#FF00146E', '#FF001473', '#FF001478', '#FF00147D', '#FF001482', '#FF001487', '#FF00148C', '#FF001491', '#FF001496', '#FF00149B', '#FF0014A0', '#FF0014A5', '#FF0014AA', '#FF0014AF', '#FF0014B4', '#FF0014B9', '#FF0014BE']
 burglary_percentage_scale = []
 new_burglary_ward = []
+new_burglary_ward_2 = []
 
 #Generate / Draw polygons
 for h in range(0,len(coordinates)):
@@ -95,8 +96,21 @@ for crime in results1:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     ward_found = True
+                elif burglary_ward.find("&") != -1 and burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    new_burglary_ward_2 = new_burglary_ward.replace(".", "")
+                    print(new_burglary_ward_2)
+                    if new_burglary_ward_2 == wards[0][i]:
+                        burglary_ward = new_burglary_ward_2
+                        ward_found = True
                 elif burglary_ward.find("&") != -1:
                     new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+                elif burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace(".", "")
                     print(new_burglary_ward)
                     if new_burglary_ward == wards[0][i]:
                         burglary_ward = new_burglary_ward
@@ -128,8 +142,21 @@ for crime in results2:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     ward_found = True
+                elif burglary_ward.find("&") != -1 and burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    new_burglary_ward_2 = new_burglary_ward.replace(".", "")
+                    print(new_burglary_ward_2)
+                    if new_burglary_ward_2 == wards[0][i]:
+                        burglary_ward = new_burglary_ward_2
+                        ward_found = True
                 elif burglary_ward.find("&") != -1:
                     new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+                elif burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace(".", "")
                     print(new_burglary_ward)
                     if new_burglary_ward == wards[0][i]:
                         burglary_ward = new_burglary_ward
@@ -161,8 +188,21 @@ for crime in results3:
             for i in range (0,len(wards[0])):
                 if burglary_ward == wards[0][i]:
                     ward_found = True
+                elif burglary_ward.find("&") != -1 and burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace("&", "and")
+                    new_burglary_ward_2 = new_burglary_ward.replace(".", "")
+                    print(new_burglary_ward_2)
+                    if new_burglary_ward_2 == wards[0][i]:
+                        burglary_ward = new_burglary_ward_2
+                        ward_found = True
                 elif burglary_ward.find("&") != -1:
                     new_burglary_ward = burglary_ward.replace("&", "and")
+                    print(new_burglary_ward)
+                    if new_burglary_ward == wards[0][i]:
+                        burglary_ward = new_burglary_ward
+                        ward_found = True
+                elif burglary_ward.find(".") != -1:
+                    new_burglary_ward = burglary_ward.replace(".", "")
                     print(new_burglary_ward)
                     if new_burglary_ward == wards[0][i]:
                         burglary_ward = new_burglary_ward

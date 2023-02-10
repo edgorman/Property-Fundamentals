@@ -30,6 +30,7 @@ y_pos = np.arange(len(wards[0]))
 point = []
 school_ward = []
 new_school_ward = []
+new_school_ward_2 = []
 icon_style = ['images/icon-1.png', 'images/icon-2.png', 'images/icon-3.png', 'images/icon-4.png']
 ofsted_rating = ['Outstanding', 'Good', 'Requires improvement', 'Poor']
 school_count_outstanding = np.array([0]*len(wards[0]))
@@ -75,12 +76,26 @@ for name, postcode, rating, ward, school_coordinates, date in school_data:
         for j in range (0,len(wards[0])):
             if school_ward[0][6] == wards[0][j]:
                 ward_found = True
+            elif school_ward[0][6].find("&") != -1 and school_ward[0][6].find(".") != -1:
+                new_school_ward = school_ward[0][6].replace("&", "and")
+                new_school_ward_2 = new_school_ward.replace(".", "")
+                print(new_school_ward_2)
+                if new_school_ward_2 == wards[0][j]:
+                    school_ward[0][6] = new_school_ward_2
+                    ward_found = True
             elif school_ward[0][6].find("&") != -1:
                 new_school_ward = school_ward[0][6].replace("&", "and")
                 print(new_school_ward)
                 if new_school_ward == wards[0][j]:
                     school_ward[0][6] = new_school_ward
                     ward_found = True
+            elif school_ward[0][6].find(".") != -1:
+                new_school_ward = school_ward[0][6].replace(".", "")
+                print(new_school_ward)
+                if new_school_ward == wards[0][j]:
+                    school_ward[0][6] = new_school_ward
+                    ward_found = True
+
         if ward_found == True:
             print("ward found")
         elif ward_found == False:
