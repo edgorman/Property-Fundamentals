@@ -116,3 +116,15 @@ body {
 .mapbox-sidebar .buttons .breadcrumb{
     margin: 0;
 }
+
+.location-buttons .badge{
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 30px;
+    height: 17px;
+    font-size: 10px;
+    color: white;
+    cursor: pointer;
+}
