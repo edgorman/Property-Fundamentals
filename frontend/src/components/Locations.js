@@ -10,7 +10,13 @@ export default class Locations extends React.Component {
     }
 
     render() {
-        const data = [{id: "Southampton", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]}];
+        const data = [
+            {id: "Southampton", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
+            {id: "Southampton1", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
+            {id: "Southampton2", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
+            {id: "Southampton3", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
+            {id: "Southampton4", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
+        ];
         const count = 2;
 
         return (
@@ -24,7 +30,7 @@ export default class Locations extends React.Component {
                 <ReactSearchBox placeholder="e.g. London" />
                 <br />
                 <span>Total number of wards selected: <b>{count}</b></span>
-                <LocationResults id="root" data={data}/>
+                <LocationResults className="" data={data} show={true}/>
             </div>
         )
     }

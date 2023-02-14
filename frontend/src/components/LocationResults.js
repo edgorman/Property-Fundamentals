@@ -1,7 +1,7 @@
 import React from "react";
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from "react-bootstrap/ListGroup";
-import { XLg } from "react-bootstrap-icons";
+import { CaretDownFill, XLg } from "react-bootstrap-icons";
 
 
 export default class LocationResults extends React.Component {
@@ -14,17 +14,15 @@ export default class LocationResults extends React.Component {
             return <></>;
         }
 
-        console.log(this.props);
-        
-        const id = "lr-" + this.props.id;
-        const classNames = "collapse show " + this.props.className;
+        let classNames = this.props.className + " collapse ";
+        classNames += this.props.show ? "show" : "";
+
         return (
-            <ListGroup id={id} className={classNames}>
+            <ListGroup className={classNames}>
                 {
                     this.props.data.map((d) => 
                         <ListGroup.Item key={d.id}>
-                            <LocationResult id={d.id} data={d.data} />
-                            <LocationResults id={d.id} data={d.data} className="mt-2"/>
+                            <LocationResult id={d.id} data={d.data}/>
                         </ListGroup.Item>
                     )
                 }
@@ -37,33 +35,51 @@ export default class LocationResults extends React.Component {
 class LocationResult extends React.Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            show: true
+        }
+
+        this.handleCollapseToggle = this.handleCollapseToggle.bind(this);
+        this.handleRemoveClick = this.handleRemoveClick.bind(this);
+    }
+
+    handleCollapseToggle(){
+        this.setState({
+            show: !this.state.show
+        })
+    }
+
+    handleRemoveClick(){
+        console.log("Remove", this.props.id);
     }
 
     render() {
-        const target = "#lr-" + this.props.id;
-
         return (
-            <div 
-                className="d-flex justify-content-between align-items-start"
-                data-toggle="collapse" 
-                data-target={target}
-                role="button"
-                aria-expanded="false"
-                aria-controls={target}
-            >
-                <span className="pt-1">{this.props.id}</span>
-                <div className="location-buttons">
-                    {
-                        this.props.data.length > 0 ? (
-                            <Badge bg="primary" pill>
-                                {this.props.data.length}
-                            </Badge>
-                        ) : null
-                    }
-                    <Badge bg="danger" pill>
-                        <XLg />
-                    </Badge>
+            <div>
+                <div className="d-flex">
+                    <span className="pt-1 flex-grow-1" role="button" onClick={this.handleCollapseToggle}>
+                        {this.props.id}
+                        {
+                            this.props.data.length > 0 ? (
+                                <CaretDownFill style={{color: "#898989", marginLeft: "10px"}}/>
+                            ) : null
+                        }
+                    </span>
+                    <div className="location-buttons">
+                        {
+                            this.props.data.length > 0 ? (
+                                <Badge bg="primary" pill>
+                                    {this.props.data.length}
+                                </Badge>
+                            ) : null
+                        }
+                        <Badge bg="danger" pill role="button" onClick={this.handleRemoveClick}>
+                            <XLg />
+                        </Badge>
+                    </div>
                 </div>
+                <LocationResults id={this.props.id} data={this.props.data} show={this.state.show} className="mt-2"/>
             </div>
         );
     }
