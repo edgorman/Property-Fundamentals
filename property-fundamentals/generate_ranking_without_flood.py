@@ -135,12 +135,12 @@ for j in range(0,len(wards[0])):
 #Create the affordability data
 affordability_data = {
     "Ward": affordability_ward_order,
-    "Mean Sold Price \n (All Property Types) (£)": price_order
+    "Mean Sold\nPrice (All Property\nTypes) (£)": price_order
 }
 
 #Arrange the affordability data
 affordability_df = pd.DataFrame(affordability_data, index = affordability_ward_order)
-affordability_df['Mean Sold Price \n (All Property Types) (£)'] = affordability_df['Mean Sold Price \n (All Property Types) (£)'].apply(lambda x : "{:,d}".format(x))
+affordability_df['Mean Sold\nPrice (All Property\nTypes) (£)'] = affordability_df['Mean Sold\nPrice (All Property\nTypes) (£)'].apply(lambda x : "{:,d}".format(x))
 Labels=affordability_df.columns
 affordability_table = ax.table(cellText=affordability_df.values, colLabels=Labels, loc='center', cellLoc='center')
 affordability_table.auto_set_font_size(False)
