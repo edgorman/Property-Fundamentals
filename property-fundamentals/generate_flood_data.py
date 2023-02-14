@@ -131,7 +131,14 @@ for h in range(0,len(coordinates)):
         flood_percentage_calculate = ((float(a)/float(b))*100)
         flood_percentage.insert(h,flood_percentage_calculate)
     print(flood_percentage)
+
+for h in range(0,len(coordinates)):
+    if (float(flood_percentage[h]) >= 100):
+        for h in range(0,len(coordinates)):
+            flood_percentage[h] = float(input("Flood percentage for " + wards[0][h] + " is currently " + str(flood_percentage[h]) + " Please type what it should be?"))
+
     
+
         
 #Save the polygons to a KML file
 kml.save(district + "_flood_data" + ".kml")
