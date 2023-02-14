@@ -1,8 +1,10 @@
 import React from "react";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
+import Features from "../Features/Features";
 
 import Locations from "../Locations/Locations";
+import Outputs from "../Outputs/Outputs";
 import SidebarToggle from './Toggle';
 
 
@@ -25,10 +27,10 @@ export default class Sidebar extends React.Component {
                             <Locations />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
-                            <p>second</p>
+                            <Features />
                         </Tab.Pane>
                         <Tab.Pane eventKey="third">
-                            <p>third</p>
+                            <Outputs />
                         </Tab.Pane>
                     </Tab.Content>
                     <Nav className="buttons d-flex align-items-center">
