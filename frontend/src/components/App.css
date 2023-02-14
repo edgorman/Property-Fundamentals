@@ -113,8 +113,14 @@ body {
     border-top: 1px solid #CCCCCC;
 }
 
-.mapbox-sidebar .buttons .breadcrumb{
-    margin: 0;
+.mapbox-sidebar .buttons .nav-item a{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mapbox-sidebar .buttons .nav-item a.active{
+    color: #555555;
+    cursor: auto;
 }
 
 .location-buttons .badge{
