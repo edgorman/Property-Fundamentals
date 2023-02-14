@@ -4,7 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { CaretDownFill, XLg } from "react-bootstrap-icons";
 
 
-export default class LocationResults extends React.Component {
+export default class Results extends React.Component {
     constructor(props){
         super(props);
     }
@@ -22,7 +22,7 @@ export default class LocationResults extends React.Component {
                 {
                     this.props.data.map((d) => 
                         <ListGroup.Item key={d.id}>
-                            <LocationResult id={d.id} data={d.data}/>
+                            <Result id={d.id} data={d.data}/>
                         </ListGroup.Item>
                     )
                 }
@@ -32,7 +32,7 @@ export default class LocationResults extends React.Component {
 }
 
 
-class LocationResult extends React.Component {
+class Result extends React.Component {
     constructor(props){
         super(props);
 
@@ -79,7 +79,7 @@ class LocationResult extends React.Component {
                         </Badge>
                     </div>
                 </div>
-                <LocationResults id={this.props.id} data={this.props.data} show={this.state.show} className="mt-2"/>
+                <Results id={this.props.id} data={this.props.data} show={this.state.show} className="mt-2"/>
             </div>
         );
     }

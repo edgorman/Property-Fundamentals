@@ -2,9 +2,9 @@ import React from 'react';
 import Map, {NavigationControl, GeolocateControl, Source, Layer} from 'react-map-gl';
 import bbox from '@turf/bbox';
 
-import LogoControl from './LogoControl';
-import Sidebar from './Sidebar';
-import SidebarToggle from './SidebarToggle';
+import Sidebar from './Sidebar/Sidebar';
+import SidebarToggle from './Sidebar/Toggle';
+import LogoControl from './Controls/LogoControl';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

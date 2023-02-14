@@ -1,7 +1,7 @@
 import React from "react";
 import ReactSearchBox from "react-search-box";
 
-import LocationResults from "./LocationResults";
+import Results from "./Results";
 
 
 export default class Locations extends React.Component {
@@ -30,7 +30,7 @@ export default class Locations extends React.Component {
                 <ReactSearchBox placeholder="e.g. London" />
                 <br />
                 <span>Total number of wards selected: <b>{count}</b></span>
-                <LocationResults className="" data={data} show={true}/>
+                <Results className="" data={data} show={true}/>
             </div>
         )
     }
