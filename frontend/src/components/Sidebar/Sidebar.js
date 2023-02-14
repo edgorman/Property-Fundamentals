@@ -15,7 +15,7 @@ export default class Sidebar extends React.Component {
 
     render() {
         let classNames = "mapbox-sidebar";
-        if (this.props.isActive){
+        if (this.props.active){
             classNames += " active";
         }
 
