@@ -85,7 +85,7 @@ for n in range (0,len(house_types[0])):
     plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
     #plt.rcParams["figure.figsize"] = (5.5,5)
     plt.rcParams["figure.dpi"] = 200
-    plt.rcParams.update({'font.size': 7})
+    plt.rcParams.update({'font.size': 5})
     #plt.rc('ytick', labelsize=4)
     plt.locator_params(axis='x', nbins=4)
     plt.ticklabel_format(useOffset=False, style='plain')
