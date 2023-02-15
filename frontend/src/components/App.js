@@ -6,7 +6,7 @@ import SidebarToggle from './Sidebar/Toggle';
 import LogoControl from './Controls/LogoControl';
 import MapLayers from './Map/Layers';
 import { MapStyle } from './Map/Style';
-import { ZoomToFeature, ZoomToInitialViewState } from './Map/Utils';
+import { ZoomToFeature, ZoomToInitialViewState, GetWDsFromLAD } from './Map/Utils';
 
 import './App.css';
 
@@ -45,6 +45,12 @@ export default class App extends React.Component {
 
     if (e.features[0]){
       console.log("add", e.features[0].source, e.features[0].properties);
+      
+      // GetWDsFromLAD(e.features[0].properties['LAD22CD'])
+      //   .then(wards => {
+      //     console.log("here")
+      //     console.log(wards);
+      //   });
     }
   }
 
@@ -87,7 +93,7 @@ export default class App extends React.Component {
         <Sidebar active={this.state.sidebarActive} handleToggle={this.handleSidebarToggle} />
         <SidebarToggle open={true} handleToggle={this.handleSidebarToggle} />
 
-        <MapLayers highlight={this.state.highlight} />
+        <MapLayers highlight={this.state.highlight} select={this.state.selections} />
       </Map>
     );
   }

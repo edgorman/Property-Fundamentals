@@ -1,7 +1,11 @@
 import bbox from '@turf/bbox';
 import { MapStyle } from './Style';
 
-export function ZoomToFeature(map, event){
+export function EncodeGetParams(params) {
+    return Object.entries(params).map(kv => kv.map(encodeURIComponent).join("=").replace(/'/g, "%27")).join("&");
+}
+
+export function ZoomToFeature(map, event) {
     let feature = event.features[0]
 
     if (feature) {
@@ -17,7 +21,7 @@ export function ZoomToFeature(map, event){
     }
 }
 
-export function ZoomToInitialViewState(map){
+export function ZoomToInitialViewState(map) {
     map.flyTo({
         center: [
           MapStyle.initialViewState.longitude,
@@ -27,4 +31,20 @@ export function ZoomToInitialViewState(map){
         essential: true,
         duration: 1500
     });
+}
+
+export function GetWDsFromLAD(lad) {
+    const params = {
+        "where": "LAD22CD like '" + lad + "'",
+        "outfields": "WD22CD, WD22NM, LAD22CD, LAD22NM, LAT, LONG",
+        "f": "pgeojson"
+    };
+
+    fetch("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Wards_December_2022_Boundaries_GB_BGC/FeatureServer/0/query" + "?" + EncodeGetParams(params))
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            return response.features;
+        })
+        .catch(error => console.log(error));
 }
