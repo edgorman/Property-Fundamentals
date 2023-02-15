@@ -16,12 +16,17 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      sidebarActive: false
+      sidebarActive: false,
+      locations: {
+        //E05002456: {LADCD: "E060000001", LADNM: "Hartlepool", WDNM: "Hartlepool"}
+      }
     }
 
     this.handleResetViewClick = this.handleResetViewClick.bind(this);
     this.handleSidebarToggle = this.handleSidebarToggle.bind(this);
-    this.handleMapClick = this.handleMapClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleDoubleClick = this.handleDoubleClick.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
   }
 
   handleResetViewClick() {
@@ -33,15 +38,33 @@ export default class App extends React.Component {
     this.setState({sidebarActive: !this.state.sidebarActive});
   }
 
-  handleMapClick(e) {
+  handleClick(e) {
+    this.setState({sidebarActive: false});
+
+    if (e.features[0]){
+      console.log("add", e.features[0].source, e.features[0].properties);
+    }
+  }
+
+  handleDoubleClick(e) {
     this.setState({sidebarActive: false});
     ZoomToFeature(this.map, e);
+  }
+
+  handleRightClick(e) {
+    this.setState({sidebarActive: false});
+    
+    if (e.features[0]){
+      console.log("remove", e.features[0].source, e.features[0].properties);
+    }
   }
 
   render() {
     return (
       <Map
-        onClick={this.handleMapClick}
+        onClick={this.handleClick}
+        onDblClick={this.handleDoubleClick}
+        onContextMenu={this.handleRightClick}
         ref={(e) => { this.map = e; }}
         {...MapStyle}
       >

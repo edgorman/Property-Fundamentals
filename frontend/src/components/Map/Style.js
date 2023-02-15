@@ -2,7 +2,8 @@
 export const MapStyle = {
     mapboxAccessToken: process.env.REACT_APP_MAPBOX_TOKEN,
     initialViewState: {latitude: 54.8, longitude: -2, zoom: 4},
-    interactiveLayerIds: ['OutlineStyle', 'FillStyle'],
+    interactiveLayerIds: ['OutlineStyle'], //, 'OutlineStyle2', 'FillStyle'],
+    doubleClickZoom: false,
     mapStyle: "mapbox://styles/mapbox/streets-v9",
     minZoom: "5",
 }
@@ -14,6 +15,15 @@ export const OutlineStyle = {
       'fill-color': 'transparent',
       'fill-outline-color': '#555',
     }
+};
+
+export const OutlineStyle2 = {
+  id: 'OutlineStyle2',
+  type: 'fill',
+  paint: {
+    'fill-color': 'transparent',
+    'fill-outline-color': 'red',
+  }
 };
 
 export const FillStyle = {
