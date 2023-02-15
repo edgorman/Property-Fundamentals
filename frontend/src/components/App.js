@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
     this.state = {
       sidebarActive: false,
+      highlight: {},
       locations: {
         //E05002456: {LADCD: "E060000001", LADNM: "Hartlepool", WDNM: "Hartlepool"}
       }
@@ -27,6 +28,7 @@ export default class App extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
   }
 
   handleResetViewClick() {
@@ -59,12 +61,22 @@ export default class App extends React.Component {
     }
   }
 
+  handleMouseMove(e) {
+    if (e.features[0]){
+      this.setState({highlight: e.features[0].properties});
+    }
+    else{
+      this.setState({highlight: {}});
+    }
+  }
+
   render() {
     return (
       <Map
         onClick={this.handleClick}
         onDblClick={this.handleDoubleClick}
         onContextMenu={this.handleRightClick}
+        onMouseMove={this.handleMouseMove}
         ref={(e) => { this.map = e; }}
         {...MapStyle}
       >
@@ -75,7 +87,7 @@ export default class App extends React.Component {
         <Sidebar active={this.state.sidebarActive} handleToggle={this.handleSidebarToggle} />
         <SidebarToggle open={true} handleToggle={this.handleSidebarToggle} />
 
-        <MapLayers />
+        <MapLayers highlight={this.state.highlight} />
       </Map>
     );
   }
