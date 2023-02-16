@@ -163,7 +163,7 @@ for r in range(0, len(Labels)):
 #plt.rcParams["figure.dpi"] = 200
 #plt.rcParams.update({'font.size': 12})
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  " Price Ranking", fontsize=10)
+#plt.title(district +  " Price Ranking", fontsize=10)
 plt.savefig(district + "_ward_affordability" + ".png", bbox_inches='tight', transparent=True)
 
     
@@ -258,7 +258,7 @@ for r in range(0, len(Labels)):
 #plot the data
 #plt.rcParams["figure.dpi"] = 200
 plt.rcParams["figure.figsize"] = (4.5,5)
-plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
+#plt.title(district +  ": Desirability Ranking", loc="center", fontsize=10)
 plt.savefig(district + "_ward_desirability" + ".png", bbox_inches='tight', transparent=True)
 plt.close()
 
@@ -267,7 +267,7 @@ plt.close()
 #plot the horizontal bar for desirability
 plt.rcParams["figure.figsize"] = (4.5,5) # if there are many wards
 plt.rcParams["figure.dpi"] = 200
-#plt.rcParams.update({'font.size': 7})
+plt.rcParams.update({'font.size': 7})
 p1 = plt.barh(y_pos, weighted_burglary_hbar, color = (1,0,0.07843137), left=weighted_schools_hbar+weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
 p2 = plt.barh(y_pos, weighted_schools_hbar, color = (0,0.39215686,0), left=weighted_flood_hbar+weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
 p3 = plt.barh(y_pos, weighted_flood_hbar, color = (0.07843137,0.47058823,0.94117647), left=weighted_universal_credit_hbar+weighted_housing_benefit_hbar) #color = (R,G,B)
@@ -368,7 +368,7 @@ plt.legend( labels = text_labels,
             title='Wards',
             title_fontsize=7,
             loc="upper right",
-            bbox_to_anchor=(0.55,1),
+            bbox_to_anchor=(1.65,1),
             framealpha=0,
             ncol = 1,
             fontsize=6)
