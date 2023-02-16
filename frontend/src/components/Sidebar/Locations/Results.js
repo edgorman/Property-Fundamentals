@@ -10,7 +10,7 @@ export default class Results extends React.Component {
     }
 
     render() {
-        if (this.props.data.length == 0){
+        if (Object.keys(this.props.data).length <= 0 || "LAD22CD" in this.props.data){
             return <></>;
         }
 
@@ -20,9 +20,9 @@ export default class Results extends React.Component {
         return (
             <ListGroup className={classNames}>
                 {
-                    this.props.data.map((d) => 
-                        <ListGroup.Item key={d.id}>
-                            <Result id={d.id} data={d.data}/>
+                    Object.entries(this.props.data).map(([k, v]) =>
+                        <ListGroup.Item key={k}>
+                            <Result name={k} data={v}/>
                         </ListGroup.Item>
                     )
                 }
@@ -55,22 +55,24 @@ class Result extends React.Component {
     }
 
     render() {
+        const count = "LAD22CD" in this.props.data ? 0 : Object.keys(this.props.data).length
+
         return (
             <div>
                 <div className="d-flex">
                     <span className="pt-1 flex-grow-1" role="button" onClick={this.handleCollapseToggle}>
-                        {this.props.id}
+                        {this.props.name}
                         {
-                            this.props.data.length > 0 ? (
+                            count > 0 ? (
                                 <CaretDownFill style={{color: "#898989", marginLeft: "10px"}}/>
                             ) : null
                         }
                     </span>
                     <div className="location-buttons">
                         {
-                            this.props.data.length > 0 ? (
+                            count > 0 ? (
                                 <Badge bg="primary" pill>
-                                    {this.props.data.length}
+                                    {count}
                                 </Badge>
                             ) : null
                         }
@@ -79,7 +81,7 @@ class Result extends React.Component {
                         </Badge>
                     </div>
                 </div>
-                <Results id={this.props.id} data={this.props.data} show={this.state.show} className="mt-2"/>
+                <Results data={this.props.data} show={this.state.show} className="mt-2"/>
             </div>
         );
     }

@@ -1,10 +1,10 @@
 import React from "react";
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import Features from "../Features/Features";
+import Features from "./Features/Features";
 
-import Locations from "../Locations/Locations";
-import Outputs from "../Outputs/Outputs";
+import Locations from "./Locations/Locations";
+import Outputs from "./Outputs/Outputs";
 import SidebarToggle from './Toggle';
 
 
@@ -24,7 +24,10 @@ export default class Sidebar extends React.Component {
                 <Tab.Container defaultActiveKey="first">
                     <Tab.Content className="content">
                         <Tab.Pane eventKey="first">
-                            <Locations />
+                            <Locations
+                                wards={this.props.wards}
+                                addWard={this.props.addWard}
+                                removeWard={this.props.removeWard} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                             <Features />

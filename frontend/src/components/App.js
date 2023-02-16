@@ -17,10 +17,8 @@ export default class App extends React.Component {
 
     this.state = {
       sidebarActive: false,
-      highlight: {},
-      locations: {
-        //E05002456: {LADCD: "E060000001", LADNM: "Hartlepool", WDNM: "Hartlepool"}
-      }
+      mouseHoverElement: {},
+      wards: {}
     }
 
     this.handleResetViewClick = this.handleResetViewClick.bind(this);
@@ -29,6 +27,9 @@ export default class App extends React.Component {
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+
+    this.addWard = this.addWard.bind(this);
+    this.removeWard = this.removeWard.bind(this);
   }
 
   handleResetViewClick() {
@@ -41,27 +42,31 @@ export default class App extends React.Component {
   }
 
   handleClick(e) {
-    this.setState({sidebarActive: false});
+    const feature = e.features[0];
 
-    if (e.features[0]){
-      console.log("add", e.features[0].source, e.features[0].properties);
-      
-      // GetWDsFromLAD(e.features[0].properties['LAD22CD'])
-      //   .then(wards => {
-      //     console.log("here")
-      //     console.log(wards);
-      //   });
+    if (feature) {
+      if (feature.source == 'LADOptions') {
+        GetWDsFromLAD(feature.properties['LAD22CD'])
+          .then(wards => {
+            for (const ward of wards){
+              this.addWard(ward.properties);
+            }
+          });
+      }
+      else if (feature.source == 'WDOptions') {
+        this.addWard(feature.properties)
+      }
+      else {
+        console.log("Error: unrecognized source, click event ignored: '" + feature.source + "'");
+      }
     }
   }
 
   handleDoubleClick(e) {
-    this.setState({sidebarActive: false});
     ZoomToFeature(this.map, e);
   }
 
   handleRightClick(e) {
-    this.setState({sidebarActive: false});
-    
     if (e.features[0]){
       console.log("remove", e.features[0].source, e.features[0].properties);
     }
@@ -69,10 +74,30 @@ export default class App extends React.Component {
 
   handleMouseMove(e) {
     if (e.features[0]){
-      this.setState({highlight: e.features[0].properties});
+      this.setState({mouseHoverElement: e.features[0].properties});
     }
     else{
-      this.setState({highlight: {}});
+      this.setState({mouseHoverElement: {}});
+    }
+  }
+
+  addWard(ward) {
+    if (!(ward['WD22CD'] in this.state.wards)) {
+      this.setState(prevState => ({wards: {...prevState.wards, [ward['WD22CD']]: ward}}))
+    }
+    else{
+      console.log("Info: this map already has ward '" + code + "' in it's list of wards, not adding this.");
+    }
+  }
+
+  removeWard(ward) {
+    if (ward['WD22CD'] in this.state.wards) {
+      let new_wards = this.state.wards;
+      delete new_wards[ward['WD22CD']];
+      this.setState({wards: new_wards});
+    }
+    else{
+      console.log("Info: this map does not have ward '" + code + "' in it's list of wards, not removing this.");
     }
   }
 
@@ -90,10 +115,15 @@ export default class App extends React.Component {
         <NavigationControl position="top-left" visualizePitch={true} />
         <GeolocateControl position="top-left" />
 
-        <Sidebar active={this.state.sidebarActive} handleToggle={this.handleSidebarToggle} />
+        <Sidebar
+          active={this.state.sidebarActive}
+          handleToggle={this.handleSidebarToggle}
+          wards={this.state.wards} 
+          addWard={this.addWard}
+          removeWard={this.removeWard} />
         <SidebarToggle open={true} handleToggle={this.handleSidebarToggle} />
 
-        <MapLayers highlight={this.state.highlight} select={this.state.selections} />
+        <MapLayers hover={this.state.mouseHoverElement} wards={this.state.wards} />
       </Map>
     );
   }

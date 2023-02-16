@@ -37,14 +37,18 @@ export function GetWDsFromLAD(lad) {
     const params = {
         "where": "LAD22CD like '" + lad + "'",
         "outfields": "WD22CD, WD22NM, LAD22CD, LAD22NM, LAT, LONG",
+        "returnGeometry": false,
         "f": "pgeojson"
     };
 
-    fetch("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Wards_December_2022_Boundaries_GB_BGC/FeatureServer/0/query" + "?" + EncodeGetParams(params))
-        .then(response => response.json())
-        .then(response => {
-            console.log(response);
-            return response.features;
-        })
-        .catch(error => console.log(error));
+    return new Promise(
+        resolve => {
+            fetch("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Wards_December_2022_Boundaries_GB_BGC/FeatureServer/0/query" + "?" + EncodeGetParams(params))
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response.features);
+                })
+                .catch(error => console.log(error));
+        }
+    );
 }

@@ -4,8 +4,8 @@ export const MapStyle = {
     initialViewState: {latitude: 54.8, longitude: -2, zoom: 4},
     interactiveLayerIds: [
       'LADHiddenStyle', 'LADHoverStyle', 
-      'WDHiddenStyle', 'WDHoverStyle',
-      //'WDSelectedStyle', 'WDOptionalStyle'
+      'WDHoverStyle',
+      'WDSelectedStyle'
     ],
     doubleClickZoom: false,
     mapStyle: "mapbox://styles/mapbox/streets-v9",
@@ -16,7 +16,9 @@ export const LADHiddenStyle = {
   id: 'LADHiddenStyle',
   type: 'fill',
   paint: {
-    'fill-color': 'transparent'
+    'fill-opacity': 0.25,
+    'fill-color': 'transparent',
+    'fill-outline-color': 'black'
   }
 }
 
@@ -24,8 +26,8 @@ export const LADHoverStyle = {
   id: 'LADHoverStyle',
   type: 'fill',
   paint: {
-    'fill-opacity': 0.2,
-    'fill-color': '#555'
+    'fill-opacity': 0.1,
+    'fill-color': 'black'
   }
 }
 
