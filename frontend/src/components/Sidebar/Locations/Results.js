@@ -22,7 +22,11 @@ export default class Results extends React.Component {
                 {
                     Object.entries(this.props.data).map(([k, v]) =>
                         <ListGroup.Item key={k}>
-                            <Result name={k} data={v}/>
+                            <Result 
+                                name={k}
+                                data={v}
+                                addWard={this.props.addWard}
+                                removeWard={this.props.removeWard} />
                         </ListGroup.Item>
                     )
                 }
@@ -51,7 +55,14 @@ class Result extends React.Component {
     }
 
     handleRemoveClick(){
-        console.log("Remove", this.props.id);
+        if ("WD22CD" in this.props.data) {
+            this.props.removeWard(this.props.data);
+        }
+        else {
+            for (const ward of Object.values(this.props.data)) {
+                this.props.removeWard(ward);
+            }
+        }
     }
 
     render() {
@@ -81,7 +92,12 @@ class Result extends React.Component {
                         </Badge>
                     </div>
                 </div>
-                <Results data={this.props.data} show={this.state.show} className="mt-2"/>
+                <Results 
+                    className="mt-2"
+                    data={this.props.data}
+                    show={this.state.show}
+                    addWard={this.props.addWard}
+                    removeWard={this.props.removeWard} />
             </div>
         );
     }

@@ -10,8 +10,6 @@ export default class Locations extends React.Component {
     }
 
     render() {
-        const count = Object.keys(this.props.wards).length;
-        
         // Create nested dictionary of LAD22CD to WD22CD
         let data = {};
         for (const value of Object.values(this.props.wards)) {
@@ -19,14 +17,6 @@ export default class Locations extends React.Component {
             const wardName = value['WD22NM'];
             data[ladName] = ladName in data ? {...data[ladName], [wardName]: value} : {[wardName]: value}
         }
-
-        // const data = [
-        //     {id: "Southampton", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
-        //     {id: "Southampton1", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
-        //     {id: "Southampton2", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
-        //     {id: "Southampton3", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
-        //     {id: "Southampton4", data:[{id: "Basset", data:[]}, {id:"Portswood", data:[]}]},
-        // ];
 
         return (
             <div id="locations">
@@ -36,10 +26,16 @@ export default class Locations extends React.Component {
                 </div>
                 <br />
                 <span>Search for a location in the England...</span>
-                <ReactSearchBox placeholder="e.g. London" />
+                <ReactSearchBox 
+                    placeholder="e.g. London" />
                 <br />
-                <span>Total number of wards selected: <b>{count}</b></span>
-                <Results className="" data={data} show={true}/>
+                <span>Total number of wards selected: <b>{Object.keys(this.props.wards).length}</b></span>
+                <Results 
+                    className=""
+                    data={data}
+                    show={true}
+                    addWard={this.props.addWard}
+                    removeWard={this.props.removeWard} />
             </div>
         )
     }

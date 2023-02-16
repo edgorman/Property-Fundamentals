@@ -57,7 +57,7 @@ export default class App extends React.Component {
         this.addWard(feature.properties)
       }
       else {
-        console.log("Error: unrecognized source, click event ignored: '" + feature.source + "'");
+        console.log("Info: no event configured for event from source: '" + feature.source + "'.");
       }
     }
   }
@@ -67,14 +67,23 @@ export default class App extends React.Component {
   }
 
   handleRightClick(e) {
-    if (e.features[0]){
-      console.log("remove", e.features[0].source, e.features[0].properties);
+    const feature = e.features[0];
+
+    if (feature){
+      if (feature.source == 'WDSelections') {
+        this.removeWard(feature.properties)
+      }
+      else {
+        console.log("Info: no event configured for event from source: '" + feature.source + "'.");
+      }
     }
   }
 
   handleMouseMove(e) {
-    if (e.features[0]){
-      this.setState({mouseHoverElement: e.features[0].properties});
+    const feature = e.features[0];
+
+    if (feature){
+      this.setState({mouseHoverElement: feature.properties});
     }
     else{
       this.setState({mouseHoverElement: {}});
@@ -86,7 +95,7 @@ export default class App extends React.Component {
       this.setState(prevState => ({wards: {...prevState.wards, [ward['WD22CD']]: ward}}))
     }
     else{
-      console.log("Info: this map already has ward '" + code + "' in it's list of wards, not adding this.");
+      console.log("Info: this map already has ward '" + ward['WD22CD'] + "' in it's list of wards, not adding this.");
     }
   }
 
@@ -97,7 +106,7 @@ export default class App extends React.Component {
       this.setState({wards: new_wards});
     }
     else{
-      console.log("Info: this map does not have ward '" + code + "' in it's list of wards, not removing this.");
+      console.log("Info: this map does not have ward '" + ward['WD22CD'] + "' in it's list of wards, not removing this.");
     }
   }
 
