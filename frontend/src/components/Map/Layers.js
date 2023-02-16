@@ -40,18 +40,13 @@ export default class MapLayers extends React.Component {
     }
 
     requestWDSelections() {
-        // WD selections are wards that have been selected by the user
-        const wardKeys = Object.keys(this.props.wards);
-
-        if (wardKeys == 0) {
-            return null;
-        }
-
-        const params = {
-            "where": "WD22CD in ('" + wardKeys.join("', '") + "')",
+        let params = {
             "outfields": "WD22CD, WD22NM, LAD22CD, LAD22NM, LAT, LONG",
             "f": "pgeojson"
         }
+        
+        const wardKeys = Object.keys(this.props.wards);
+        params["where"] = wardKeys.length == 0 ? "1=0" : "WD22CD in ('" + wardKeys.join("', '") + "')";
         return this.state.WDUrl + "?" + EncodeGetParams(params);
     }
 

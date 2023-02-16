@@ -127,6 +127,7 @@ export default class App extends React.Component {
         <Sidebar
           active={this.state.sidebarActive}
           handleToggle={this.handleSidebarToggle}
+          map={this.map}
           wards={this.state.wards} 
           addWard={this.addWard}
           removeWard={this.removeWard} />

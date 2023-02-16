@@ -1,7 +1,9 @@
 import React from "react";
-import Badge from 'react-bootstrap/Badge';
+import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
-import { CaretDownFill, XLg } from "react-bootstrap-icons";
+import { CaretDownFill, GeoAltFill, XLg } from "react-bootstrap-icons";
+
+import { ZoomToFeature } from "../../Map/Utils";
 
 
 export default class Results extends React.Component {
@@ -25,6 +27,7 @@ export default class Results extends React.Component {
                             <Result 
                                 name={k}
                                 data={v}
+                                map={this.props.map}
                                 addWard={this.props.addWard}
                                 removeWard={this.props.removeWard} />
                         </ListGroup.Item>
@@ -45,16 +48,30 @@ class Result extends React.Component {
         }
 
         this.handleCollapseToggle = this.handleCollapseToggle.bind(this);
+        this.handleZoomClick = this.handleZoomClick.bind(this);
         this.handleRemoveClick = this.handleRemoveClick.bind(this);
     }
 
-    handleCollapseToggle(){
+    handleCollapseToggle() {
         this.setState({
             show: !this.state.show
         })
     }
 
-    handleRemoveClick(){
+    handleZoomClick() {
+        // TODO: This requires the positional information for LADs and WDs
+        // Only wards are available at this time
+        if ("WD22CD" in this.props.data) {
+            console.log("Zoom to WD", this.props.data);
+            // ZoomToFeature(this.props.map, this.props.data);
+        }
+        else {
+            console.log("Zoom to LAD", this.props.data);
+            // ZoomToFeature(this.props.map, this.props.data);
+        }
+    }
+
+    handleRemoveClick() {
         if ("WD22CD" in this.props.data) {
             this.props.removeWard(this.props.data);
         }
@@ -87,6 +104,9 @@ class Result extends React.Component {
                                 </Badge>
                             ) : null
                         }
+                        <Badge bg="secondary" pill role="button" onClick={this.handleZoomClick}>
+                            <GeoAltFill />
+                        </Badge>
                         <Badge bg="danger" pill role="button" onClick={this.handleRemoveClick}>
                             <XLg />
                         </Badge>
@@ -94,6 +114,7 @@ class Result extends React.Component {
                 </div>
                 <Results 
                     className="mt-2"
+                    map={this.props.map}
                     data={this.props.data}
                     show={this.state.show}
                     addWard={this.props.addWard}

@@ -32,6 +32,7 @@ export default class Locations extends React.Component {
                 <span>Total number of wards selected: <b>{Object.keys(this.props.wards).length}</b></span>
                 <Results 
                     className=""
+                    map={this.props.map}
                     data={data}
                     show={true}
                     addWard={this.props.addWard}

@@ -25,6 +25,7 @@ export default class Sidebar extends React.Component {
                     <Tab.Content className="content">
                         <Tab.Pane eventKey="first">
                             <Locations
+                                map={this.props.map}
                                 wards={this.props.wards}
                                 addWard={this.props.addWard}
                                 removeWard={this.props.removeWard} />
