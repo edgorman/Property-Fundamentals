@@ -58,7 +58,7 @@ class API:
           "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME": {
             "map": [
               [
-                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202211"
+                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202305"
               ]
             ],
             "total": False
@@ -108,7 +108,7 @@ class API:
           "str:field:UC_Households:F_UC_HH_DATE:DATE_NAME": {
             "map": [
               [
-                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202211"
+                "str:value:UC_Households:F_UC_HH_DATE:DATE_NAME:C_UC_HH_DATE:202305"
               ]
             ],
             "total": False
@@ -160,7 +160,7 @@ class API:
               "str:field:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME": {
                 "map": [
                   [
-                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202211"
+                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202305"
                   ]
                 ],
                 "total": False
@@ -211,7 +211,7 @@ class API:
               "str:field:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME": {
                 "map": [
                   [
-                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202211"
+                    "str:value:hb_new:F_HB_NEW_DATE:NEW_DATE_NAME:C_HB_NEW_DATE:202305"
                   ]
                 ],
                 "total": False

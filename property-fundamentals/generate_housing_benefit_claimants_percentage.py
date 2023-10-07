@@ -8,6 +8,7 @@ from development_district import ward_codes
 from development_district import population
 from statxplore_api.api import API as STATXPLORE_API
 import json
+import zipfile
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -72,6 +73,10 @@ for j in range(0,len(coordinates)):
     
 #Save the polygons to a KML file
 kml.save(district + "_housing_benefit_percentage" + ".kml")
+
+zf = zipfile.ZipFile(district + "_housing_benefit_percentage" + ".kmz", "w")
+zf.write(district + "_housing_benefit_percentage" + ".kml")
+zf.close()
 
 #Arrange the data for the plot
 yaxis_order = sorted(range(len(housing_benefit_percentage)), key=lambda k: housing_benefit_percentage[k])

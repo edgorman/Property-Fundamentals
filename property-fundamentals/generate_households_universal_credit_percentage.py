@@ -8,6 +8,7 @@ from development_district import ward_codes
 from development_district import households
 from statxplore_api.api import API as STATXPLORE_API
 import json
+import zipfile
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -80,6 +81,10 @@ for j in range(0,len(coordinates)):
     
 #Save the polygons to a KML file
 kml.save(district + "_universal_credit_percentage" + ".kml")
+
+zf = zipfile.ZipFile(district + "_universal_credit_percentage" + ".kmz", "w")
+zf.write(district + "_universal_credit_percentage" + ".kml")
+zf.close()
 
 #Arrange the data for the plot
 yaxis_order = sorted(range(len(universal_credit_percentage)), key=lambda k: universal_credit_percentage[k])

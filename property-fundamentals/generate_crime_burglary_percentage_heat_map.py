@@ -259,6 +259,10 @@ for j in range(0,len(coordinates)):
     
 #Save the polygons to a KML file
 kml.save(district + "_crime_burglary_percentage" + ".kml")
+
+zf = zipfile.ZipFile(district + "_crime_burglary_percentage" + ".kmz", "w")
+zf.write(district + "_crime_burglary_percentage" + ".kml")
+zf.close()
     
 #Arrange the data for the plot
 yaxis_order = sorted(range(len(burglary_percentage)), key=lambda k: burglary_percentage[k])

@@ -13,6 +13,7 @@ from shapely.geometry import Polygon
 import numpy as np
 import json
 import matplotlib.pyplot as plt
+import zipfile
 
 flood_api = FLOOD_API()
 import simplekml
@@ -142,6 +143,10 @@ for h in range(0,len(coordinates)):
         
 #Save the polygons to a KML file
 kml.save(district + "_flood_data" + ".kml")
+
+zf = zipfile.ZipFile(district + "_flood_data" + ".kmz", "w")
+zf.write(district + "_flood_data" + ".kml")
+zf.close()
 
 #Arrange the data for the plot
 yaxis_order = sorted(range(len(flood_percentage)), key=lambda k: flood_percentage[k])

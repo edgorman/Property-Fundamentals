@@ -8,6 +8,7 @@ from missing_data import price_mean
 from property_price import house_types
 from govuk_ws.ofns.meanprice import MeanPrice
 mean_price = MeanPrice()
+import zipfile
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -66,6 +67,10 @@ for n in range (0,len(house_types[0])):
        
     #Save the polygons to a KML file
     kml.save(district + "_mean_" + house_types[0][n] + ".kml")
+    
+    zf = zipfile.ZipFile(district + "_mean_" + house_types[0][n] + ".kmz", "w")
+    zf.write(district + "_mean_" + house_types[0][n] + ".kml")
+    zf.close()
     
     #Arrange the data for the plot
     #yaxis_order = sorted(range(len(price_mean[n])), key=lambda k: price_mean[n][k])
