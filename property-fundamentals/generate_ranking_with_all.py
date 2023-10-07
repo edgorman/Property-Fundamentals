@@ -18,6 +18,7 @@ from generate_crime_burglary_percentage_heat_map import yaxis_order as burglary_
 from generate_housing_benefit_claimants_percentage import yaxis_order as housing_benefit_ranking
 from generate_early_education import yaxis_order as school_ranking
 import simplekml
+import zipfile
 
 import numpy as np
 import pandas as pd
@@ -324,6 +325,10 @@ for j in range(0,len(coordinates)):
 #Save the polygons to a KML file
 kml.save(district + "_desirability" + ".kml")
 
+zf = zipfile.ZipFile(district + "_desirability" + ".kmz", "w")
+zf.write(district + "_desirability" + ".kml")
+zf.close()
+
     
 #plot the scatter
 text_labels = wards[0]
@@ -368,7 +373,7 @@ plt.legend( labels = text_labels,
             title='Wards',
             title_fontsize=7,
             loc="upper right",
-            bbox_to_anchor=(1.25,1),
+            bbox_to_anchor=(1.7,1),
             framealpha=0,
             ncol = 1,
             fontsize=6)
@@ -389,6 +394,10 @@ for h in range(0,len(coordinates)):
     
 #Save and zip the KML/KMZ  
 kml.save(district + "_scatter" + ".kml")
+
+zf = zipfile.ZipFile(district + "_scatter" + ".kmz", "w")
+zf.write(district + "_scatter" + ".kml")
+zf.close()
 
 # print(price_mean[0])
 # print(desirability_count)

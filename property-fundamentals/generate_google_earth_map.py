@@ -2,6 +2,7 @@ import simplekml
 from development_district import wards
 from development_district import coordinates
 from development_district import district
+import zipfile
 
 #Define variables / lists
 kml = simplekml.Kml()
@@ -15,7 +16,11 @@ for h in range(0,len(coordinates)):
     pol[h].outerboundaryis.coords = coordinates[h]
     pol[h].style.polystyle.color = '64FFFFFF'#'0FF07814'
     
-kml.save(district + "_Google_Earth" + ".kml") 
+kml.save(district + "_Google_Earth" + ".kml")
+
+zf = zipfile.ZipFile(district + "_Google_Earth" + ".kmz", "w")
+zf.write(district + "_Google_Earth" + ".kml")
+zf.close()
 
 
 

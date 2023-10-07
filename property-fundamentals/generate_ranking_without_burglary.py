@@ -18,6 +18,7 @@ from generate_crime_burglary_percentage_heat_map import yaxis_order as burglary_
 from generate_housing_benefit_claimants_percentage import yaxis_order as housing_benefit_ranking
 from generate_early_education import yaxis_order as school_ranking
 import simplekml
+import zipfile
 
 import numpy as np
 import pandas as pd
@@ -310,7 +311,9 @@ for j in range(0,len(coordinates)):
 #Save the polygons to a KML file
 kml.save(district + "_desirability" + ".kml")
 
-
+zf = zipfile.ZipFile(district + "_desirability" + ".kmz", "w")
+zf.write(district + "_desirability" + ".kml")
+zf.close()
 
 
 
@@ -395,6 +398,10 @@ for h in range(0,len(coordinates)):
     
 #Save and zip the KML/KMZ  
 kml.save(district + "_scatter" + ".kml")
+
+zf = zipfile.ZipFile(district + "_scatter" + ".kmz", "w")
+zf.write(district + "_scatter" + ".kml")
+zf.close()
 
 
 
