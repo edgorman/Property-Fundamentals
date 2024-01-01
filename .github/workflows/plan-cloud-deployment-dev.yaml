@@ -6,10 +6,10 @@ on:
       - develop
 
 env:
-  TERRAFORM_CLOUD_ORGANIZATION: "property-fundamentals-dev"
-  TERRAFORM_CLOUD_WORKSPACE: "property-fundamentals"
-  TERRAFORM_CLOUD_API_TOKEN: "${{ secrets.TERRAFORM_CLOUD_API_TOKEN }}"
-  TERRAFORM_LOCAL_DIRECTORY: "property_fundamentals/infrastructure/dev/."
+  TF_CLOUD_ORGANIZATION: "property-fundamentals-dev"
+  TF_WORKSPACE: "property-fundamentals"
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_LOCAL_DIRECTORY: "property_fundamentals/infrastructure/dev/."
 
 jobs:
   terraform:
@@ -26,15 +26,15 @@ jobs:
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: plan-upload
         with:
-          workspace: ${{ env.TERRAFORM_CLOUD_WORKSPACE }}
-          directory: ${{ env.TERRAFORM_LOCAL_DIRECTORY }}
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.TF_LOCAL_DIRECTORY }}
           speculative: true
 
       - name: Create Plan Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
         id: plan-run
         with:
-          workspace: ${{ env.TERRAFORM_CLOUD_WORKSPACE }}
+          workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
           plan_only: true
 
