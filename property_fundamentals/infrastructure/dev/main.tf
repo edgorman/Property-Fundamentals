@@ -7,7 +7,7 @@ terraform {
   }
 
   cloud {
-    organization = "property-fundamentals-develop"
+    organization = "property-fundamentals-dev"
     workspaces {
       name = "property-fundamentals"
     }
@@ -19,8 +19,4 @@ provider "google" {
   region      = var.gcp_project_region
   zone        = var.gcp_project_zone
   credentials = var.gcp_terraform_sa_credentials
-}
-
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
 }

@@ -1,6 +1,6 @@
 variable "gcp_project_id" {
   type    = string
-  default = "property-fundamentals-develop"
+  default = "property-fundamentals-dev"
 }
 
 variable "gcp_project_region" {
