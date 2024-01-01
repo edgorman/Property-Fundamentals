@@ -20,7 +20,3 @@ provider "google" {
   zone        = var.gcp_project_zone
   credentials = var.gcp_terraform_sa_credentials
 }
-
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
-}
