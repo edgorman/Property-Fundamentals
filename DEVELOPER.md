@@ -12,4 +12,16 @@ TBD
 
 ## Cloud Deployment
 
-TBD
+### Setup
+
+Install Terraform:
+
+```
+https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli
+```
+
+Install GCloud:
+
+```
+https://cloud.google.com/sdk/docs/install#deb
+```
