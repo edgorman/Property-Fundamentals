@@ -25,3 +25,22 @@ Install GCloud:
 ```
 https://cloud.google.com/sdk/docs/install#deb
 ```
+
+Install Kubectl:
+
+```
+https://kubernetes.io/docs/tasks/tools/
+```
+
+To connect to the dev cluster:
+
+```
+gcloud container clusters get-credentials property-fundamentals-dev-cluster --region=europe-west1
+```
+
+To connect to the prod cluster:
+
+```
+gcloud container clusters get-credentials property-fundamentals-prod-cluster --region=europe-west1
+
+```

@@ -17,3 +17,8 @@ variable "gcp_terraform_sa_credentials" {
   type    = string
   default = ""
 }
+
+variable "gcp_kubernetes_num_nodes" {
+  type    = number
+  default = 1
+}
