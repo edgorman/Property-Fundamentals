@@ -1,8 +1,3 @@
-variable "environment" {
-  type    = string
-  default = "dev"
-}
-
 variable "gcp_project_id" {
   type    = string
   default = "property-fundamentals-dev"
