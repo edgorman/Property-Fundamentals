@@ -8,7 +8,7 @@ on:
 env:
   GCP_PROJET_ID: "property-fundamentals-dev"
   GCP_DOCKER_CREDENTIALS: "${{ secrets.GCP_DOCKER_CREDENTIALS }}"
-  GCP_LOCATION: "europe-west1-b"
+  GCP_LOCATION: "europe-west1"
   TF_CLOUD_ORGANIZATION: "property-fundamentals-dev"
   TF_WORKSPACE: "property-fundamentals"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
