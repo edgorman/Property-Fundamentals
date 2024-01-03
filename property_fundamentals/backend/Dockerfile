@@ -1,7 +1,7 @@
-FROM python:3.10
+FROM python:3.11
 
 WORKDIR /backend
 ADD . /backend/
 
 RUN python -m pip install -r requirements.txt
-RUN uvicorn main:app
+CMD uvicorn main:app
