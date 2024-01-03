@@ -23,16 +23,17 @@ jobs:
     steps:
       - name: GCP Authenticate
         id: gcp_auth
-        uses: "google-github-actions/auth@v1"
+        uses: google-github-actions/auth@v1
         with:
-          credentials_json: "${{ env.GCP_DOCKER_CREDENTIALS }}"
+          token_format: access_token
+          credentials_json: ${{ env.GCP_DOCKER_CREDENTIALS }}
 
       - name: Docker Authenticate
         uses: docker/login-action@v3
         with:
-          registry: "gcr.io"
-          username: "oauth2accesstoken"
-          password: "${{ steps.gcp_auth.outputs.access_token }}"
+          registry: gcr.io
+          username: oauth2accesstoken
+          password: ${{ steps.gcp_auth.outputs.access_token }}
 
       - name: Checkout
         uses: actions/checkout@v3
