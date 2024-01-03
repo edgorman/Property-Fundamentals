@@ -6,44 +6,12 @@ on:
       - develop
 
 env:
-  GCP_PROJET_ID: "property-fundamentals-dev"
-  GCP_DOCKER_CREDENTIALS: "${{ secrets.GCP_DOCKER_CREDENTIALS }}"
-  GCP_LOCATION: "europe-west1"
   TF_CLOUD_ORGANIZATION: "property-fundamentals-dev"
   TF_WORKSPACE: "property-fundamentals"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
   TF_LOCAL_DIRECTORY: "property_fundamentals/infrastructure/dev/."
 
 jobs:
-  docker:
-    name: "Push Docker Images"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: GCP Authenticate
-        id: gcp_auth
-        uses: google-github-actions/auth@v1
-        with:
-          token_format: access_token
-          credentials_json: ${{ env.GCP_DOCKER_CREDENTIALS }}
-
-      - name: Docker Authenticate
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.GCP_LOCATION }}-docker.pkg.dev
-          username: oauth2accesstoken
-          password: ${{ steps.gcp_auth.outputs.access_token }}
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Docker build
-        run: docker build property_fundamentals/backend/. -t "${{ env.GCP_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJET_ID }}/backend/main:develop"
-
-      - name: Docker push
-        run: docker push "${{ env.GCP_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJET_ID }}/backend/main:develop"
-
   terraform:
     name: "Terraform Plan"
     runs-on: ubuntu-latest
