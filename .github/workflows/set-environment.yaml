@@ -1,4 +1,5 @@
-name: "Set Environment"
+name: "set-environment"
+run-name: "Set Workflow Environment"
 
 on:
   workflow_call:
@@ -8,11 +9,11 @@ on:
         type: string
     outputs:
       environment:
-        value: ${{ jobs.set-job.outputs.environment }}
+        value: ${{ jobs.set.outputs.environment }}
 
 jobs:
-  set-job:
-    name: "Set Environment Job"
+  set:
+    name: "Set Environment"
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set.outputs.environment }}
