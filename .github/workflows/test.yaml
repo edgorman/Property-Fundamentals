@@ -12,6 +12,7 @@ jobs:
 
   test:
     uses: ./.github/workflows/reusable.yaml
+    needs: set-environment
     with:
       environment: ${{ needs.set-environment.outputs.environment }}
     secrets: inherit
