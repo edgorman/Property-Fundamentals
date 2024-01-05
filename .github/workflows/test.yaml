@@ -4,8 +4,14 @@ on:
   push:
 
 jobs:
+  set-environment:
+    uses: ./.github/workflows/set-environment.yaml
+    with:
+      branch-name: develop
+    secrets: inherit
+
   test:
     uses: ./.github/workflows/reusable.yaml
     with:
-      environment: dev
+      environment: ${{ needs.set-environment.outputs.environment }}
     secrets: inherit
