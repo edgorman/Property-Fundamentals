@@ -1,0 +1,13 @@
+name: "Test"
+
+on:
+  push:
+
+jobs:
+  plan:
+    name: "test"
+    runs-on: ubuntu-latest
+    # environment: ${{ github.head_ref }}
+
+    steps:
+      - uses: ./.github/workflows/reusable.yaml
