@@ -8,3 +8,4 @@ jobs:
     uses: ./.github/workflows/reusable.yaml
     with:
       environment: dev
+    secrets: inherit
