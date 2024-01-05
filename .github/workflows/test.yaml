@@ -4,18 +4,5 @@ on:
   push:
 
 jobs:
-  plan:
-    name: "test"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    # environment: ${{ github.head_ref }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-    
-      - name: cat
-        run: cat ./.github/workflows/reusable.yaml
-
-      - uses: ./.github/workflows/reusable.yaml
+  test:
+    uses: ./.github/workflows/reusable.yaml
