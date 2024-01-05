@@ -15,4 +15,4 @@ jobs:
     
     steps:
       - name: "test step"
-        run: echo "${{ vars.GCP_DOCKER_BRANCH }}"
+        run: echo "${{ secrets.FAKE_SECRET }}"
