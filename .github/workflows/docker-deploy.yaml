@@ -30,22 +30,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: docker-auth
+      - id: docker-build-and-push-auth
         name: Authenticate
         uses: docker/login-action@v3
         with:
           registry: ${{ vars.GCP_LOCATION }}-docker.pkg.dev
           username: oauth2accesstoken
-          password: ${{ inputs.gcp_token }}
+          password: ${{ inputs.gcp-token }}
 
-      - id: docker-build
+      - id: docker-build-and-push-build
         name: Build
         run: |
-          docker build property_fundamentals/${{ inputs.docker_folder }}/. -t \ 
-          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker_folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+          docker build property_fundamentals/${{ inputs.docker-folder }}/. -t \ 
+          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
 
-      - id: docker-push
+      - id: docker-build-and-push-push
         name: Push
         run: | 
           docker push \ 
-          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker_folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"

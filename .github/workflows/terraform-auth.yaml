@@ -22,8 +22,7 @@ jobs:
       contents: read
 
     steps:
-      - id: terraform-auth
+      - id: terraform-auth-auth
         name: Authenticate
         run: |
-          // Token stored in Environment secrets
           echo "token=${{ secrets.TERRAFORM_TOKEN }}" >> $GITHUB_OUTPUT
