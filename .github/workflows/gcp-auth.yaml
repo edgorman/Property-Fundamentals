@@ -33,4 +33,6 @@ jobs:
         name: Encrypt Token
         run: |
           ENCRYPTED_TOKEN=$(echo -n "${{ steps.gcp-auth-auth.outputs.access_token }}" | openssl enc -A -aes-256-cbc -pbkdf2 -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" | base64);
-          echo "encrypted_token=$ENCRYPTED_TOKEN" >> $GITHUB_OUTPUT
+          echo 'encrypted_token<<EOF' >> $GITHUB_OUTPUT
+          echo -n $ENCRYPTED_TOKEN >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
