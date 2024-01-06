@@ -28,8 +28,10 @@ jobs:
         run: |
           BASE64_TOKEN=${{ inputs.terraform-token }};
           ENCRYPTED_TOKEN=$(echo -n "$BASE64_TOKEN" | base64 --decode);
-          TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
-          echo "terraform_token=$TOKEN" >> $GITHUB_OUTPUT
+          TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
+          echo "terraform_token<<EOF" >> $GITHUB_OUTPUT
+          echo $TOKEN >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - id: terraform-apply-environment
         name: Set Environment Variables
