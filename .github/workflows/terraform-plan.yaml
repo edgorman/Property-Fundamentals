@@ -13,8 +13,9 @@ on:
 jobs:
   terraform-plan:
     name: Plan
-    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
 
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
