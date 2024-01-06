@@ -12,7 +12,7 @@ on:
 
 jobs:
   terraform-apply:
-    name: Apply
+    name: Terraform Apply
     environment: ${{ inputs.environment }}
 
     runs-on: ubuntu-latest

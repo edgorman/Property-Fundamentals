@@ -12,7 +12,7 @@ on:
 
 jobs:
   terraform-plan:
-    name: Plan
+    name: Terraform Plan
     environment: ${{ inputs.environment }}
 
     runs-on: ubuntu-latest
