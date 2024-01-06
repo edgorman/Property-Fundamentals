@@ -13,3 +13,10 @@ jobs:
     - name: test
       run: |
         echo "made it"
+
+  # Set the workflow environment
+  set-environment:
+    uses: .github/workflows/templates/environment.yaml
+    with:
+      branch-name: ${{ github.base_ref }}
+    secrets: inherit
