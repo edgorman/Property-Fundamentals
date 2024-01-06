@@ -25,4 +25,4 @@ jobs:
       - id: terraform-auth-auth
         name: Authenticate
         run: |
-          echo "token=${{ secrets.TERRAFORM_TOKEN }}" >> $GITHUB_OUTPUT
+          echo "token=${{ secrets.TF_TOKEN }}" >> $GITHUB_OUTPUT

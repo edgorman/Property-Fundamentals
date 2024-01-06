@@ -29,7 +29,7 @@ jobs:
           echo "TF_WORKSPACE=${{ vars.TF_WORKSPACE }}" >> $GITHUB_ENV
           echo "TF_LOCAL_DIRECTORY=${{ vars.TF_DIRECTORY }}" >> $GITHUB_ENV
           echo "TF_CLOUD_ORGANIZATION=${{ vars.TF_ORGANIZATION }}" >> $GITHUB_ENV
-          echo "TF_API_TOKEN=${{ inputs.terraform-token }}" >> $GITHUB_ENV
+          echo "TF_API_TOKEN=${{ secrets.TF_TOKEN }}" >> $GITHUB_ENV
 
 
       - id: terraform-plan-upload
