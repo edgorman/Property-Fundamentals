@@ -13,9 +13,8 @@ on:
         required: true
         type: string
       docker-image:
-        required: false
+        required: true
         type: string
-        default: main
       
 jobs:
   docker-deploy:
