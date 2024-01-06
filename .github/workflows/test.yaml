@@ -1,0 +1,15 @@
+name: Test
+
+on:  
+  pull_request:
+    branches:
+      - develop
+
+jobs:  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: test
+      run: |
+        echo "made it"
