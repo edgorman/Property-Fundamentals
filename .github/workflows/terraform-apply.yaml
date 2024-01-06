@@ -26,10 +26,10 @@ jobs:
       - id: terraform-apply-decrypt
         name: Decrypt token
         run: |
-          ENCRYPTED_TOKEN=${{ inputs.terraform-token }};
-          BINARY_ENCRYPTED_TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | base64 --decode);
-          TOKEN=$(echo -n "$BINARY_ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
-          echo "terraform_token='$TOKEN'" >> $GITHUB_OUTPUT
+          BASE64_TOKEN=${{ inputs.terraform-token }};
+          ENCRYPTED_TOKEN=$(echo -n "$BASE64_TOKEN" | base64 --decode);
+          TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
+          echo "terraform_token=$TOKEN" >> $GITHUB_OUTPUT
 
       - id: terraform-apply-environment
         name: Set Environment Variables
