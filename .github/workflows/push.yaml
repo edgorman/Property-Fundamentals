@@ -2,16 +2,16 @@ name: Push Event
 
 on:
   push:
-    # branches:
-    #   - main
-    #   - develop
+    branches:
+      - main
+      - develop
 
 jobs:
   # Set the workflow environment
   set-environment:
     uses: ./.github/workflows/environment.yaml
     with:
-      branch-name: develop  # TODO: Replace with {{ github.ref_name }}
+      branch-name: ${{ github.ref_name }}
     secrets: inherit
   
   # Authentication jobs
@@ -51,6 +51,5 @@ jobs:
       environment: ${{ needs.set-environment.outputs.environment }}
       gcp-token: ${{ needs.gcp-auth.outputs.token }}
       docker-folder: backend
-      docker-image: main
     secrets: inherit
     
