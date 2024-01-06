@@ -8,14 +8,14 @@ on:
         type: string
     outputs:
       token:
-        value: ${{ jobs.auth.outputs.token }}
+        value: ${{ jobs.terraform-auth.outputs.token }}
 
 jobs:
   terraform-auth:
     name: Generate authentication credentials
     environment: ${{ inputs.ENVIRONMENT }}
     outputs:
-      token: ${{ steps.auth.outputs.token }}
+      token: ${{ steps.terraform-auth-auth.outputs.token }}
 
     runs-on: ubuntu-latest
     permissions:
