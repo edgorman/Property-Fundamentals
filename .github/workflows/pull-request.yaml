@@ -33,3 +33,38 @@ jobs:
       environment: ${{ needs.set-environment.outputs.environment }}
       terraform-token: ${{ needs.terraform-auth.outputs.token }}
     secrets: inherit
+
+  # Delete deployment
+  # Annoying Github Actions feature where each workflow with an environment deploys to that environment
+  # Source: https://github.com/actions/runner/issues/2120#issuecomment-1406793500
+  delete-deployment:
+    runs-on: ubuntu-latest
+    needs: plan-infrastructure
+    steps:
+      - name: Delete Deployments
+        uses: actions/github-script@v6
+        env:
+          GITHUB_SHA_HEAD: ${{ github.event.pull_request.head.sha }}
+        with:
+          script: |
+            const { GITHUB_SHA_HEAD } = process.env
+            const deployments = await github.rest.repos.listDeployments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: GITHUB_SHA_HEAD
+            });
+            await Promise.all(
+              deployments.data.map(async (deployment) => {
+                await github.rest.repos.createDeploymentStatus({ 
+                  owner: context.repo.owner, 
+                  repo: context.repo.repo, 
+                  deployment_id: deployment.id, 
+                  state: 'inactive' 
+                });
+                return github.rest.repos.deleteDeployment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  deployment_id: deployment.id
+                });
+              })
+            );
