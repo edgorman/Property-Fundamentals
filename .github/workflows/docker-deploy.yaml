@@ -13,8 +13,9 @@ on:
         required: true
         type: string
       docker-image:
-        required: true
+        required: false
         type: string
+        default: main
       
 jobs:
   docker-deploy:
@@ -46,11 +47,9 @@ jobs:
       - id: docker-deploy-build
         name: Build
         run: |
-          docker build property_fundamentals/${{ inputs.docker-folder }}/. -t \ 
-          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+          docker build property_fundamentals/${{ inputs.docker-folder }}/. -t "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
 
       - id: docker-deploy-push
         name: Push
         run: | 
-          docker push \ 
-          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+          docker push "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
