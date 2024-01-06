@@ -1,0 +1,35 @@
+name: "Pull Request Event"
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  # Set the workflow environment
+  set-environment:
+    uses: .github/workflows/templates/environment.yaml
+    with:
+      branch-name: ${{ github.base_ref }}
+    secrets: inherit
+
+  # Authenticate jobs
+  terraform-auth:
+    uses: .github/workflows/templates/terraform-auth.yaml
+    needs: 
+      - set-environment
+    with: 
+      environment: ${{ needs.set-environment.outputs.environment }}
+    secrets: inherit
+  
+  # Plan resources
+  plan-infrastructure:
+    uses: .github/workflows/templates/terraform-apply.yaml
+    needs:
+      - set-environment
+      - terraform-auth
+    with:
+      environment: ${{ needs.set-environment.outputs.environment }}
+      terraform-token: ${{ needs.terraform-auth.outputs.token }}
+    secrets: inherit

@@ -1,5 +1,4 @@
-name: "set-environment"
-run-name: "Set Workflow Environment"
+name: "environment"
 
 on:
   workflow_call:
@@ -9,10 +8,10 @@ on:
         type: string
     outputs:
       environment:
-        value: ${{ jobs.set.outputs.environment }}
+        value: ${{ jobs.set-environment.outputs.environment }}
 
 jobs:
-  set:
+  set-environment:
     name: "Set Environment"
     runs-on: ubuntu-latest
     outputs:
@@ -20,12 +19,13 @@ jobs:
     
     steps:
       - id: set
+        name: Set Environment from Branch Name
         run: |
           if [ ${{ inputs.branch-name }} = "main" ]; then
-            echo "Setting environment to 'prod'"
+            echo "Setting environment to 'prod'..."
             echo "environment=prod" >> $GITHUB_OUTPUT
           elif [ ${{ inputs.branch-name }} = "develop" ]; then
-            echo "Setting environment to 'dev'"
+            echo "Setting environment to 'dev'..."
             echo "environment=dev" >> $GITHUB_OUTPUT
           else
             echo "Could not determine environment from branch name '${{ inputs.branch-name }}'"

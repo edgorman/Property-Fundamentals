@@ -1,0 +1,51 @@
+name: "Docker Deploy"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      gcp-token:
+        required: true
+        type: string
+      docker-folder:
+        required: true
+        type: string
+      docker-image:
+        required: false
+        type: string
+        default: main
+      
+jobs:
+  build-and-push:
+    name: Docker Build and Push
+    environment: ${{ inputs.ENVIRONMENT }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: auth
+        name: Authenticate
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.GCP_LOCATION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ inputs.gcp_token }}
+
+      - id: build
+        name: Build
+        run: |
+          docker build property_fundamentals/${{ inputs.docker_folder }}/. -t \ 
+          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker_folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+
+      - id: push
+        name: Push
+        run: | 
+          docker push \ 
+          "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker_folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"

@@ -1,0 +1,54 @@
+name: "Push Event"
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  # Set the workflow environment
+  set-environment:
+    uses: .github/workflows/templates/environment.yaml
+    with:
+      branch-name: develop  # TODO: Replace with {{ github.ref_name }}
+    secrets: inherit
+  
+  # Authentication jobs
+  gcp-auth:
+    uses: .github/workflows/templates/gcp-auth.yaml
+    needs: 
+      - set-environment
+    with:
+      environment: ${{ needs.set-environment.outputs.environment }}
+    secrets: inherit
+
+  terraform-auth:
+    uses: .github/workflows/templates/terraform-auth.yaml
+    needs: 
+      - set-environment
+    with: 
+      environment: ${{ needs.set-environment.outputs.environment }}
+    secrets: inherit
+
+  # Deploy resources
+  deploy-infrastructure:
+    uses: .github/workflows/templates/terraform-deploy.yaml
+    needs:
+      - set-environment
+      - terraform-auth
+    with:
+      environment: ${{ needs.set-environment.outputs.environment }}
+      terraform-token: ${{ needs.terraform-auth.outputs.token }}
+    secrets: inherit
+
+  deploy-backend:
+    uses: .github/workflows/templates/docker-deploy.yaml
+    needs:
+      - set-environment
+      - gcp-auth
+    with:
+      environment: ${{ needs.set-environment.outputs.environment }}
+      gcp-token: ${{ needs.gcp-auth.outputs.token }}
+      docker-folder: backend
+    

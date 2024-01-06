@@ -1,0 +1,29 @@
+name: Terraform Authentication
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    outputs:
+      token:
+        value: ${{ jobs.auth.outputs.token }}
+
+jobs:
+  auth:
+    name: Generate authentication credentials
+    environment: ${{ inputs.ENVIRONMENT }}
+    outputs:
+      token: ${{ steps.auth.outputs.token }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - id: auth
+        name: Authenticate
+        run: |
+          // Token stored in Environment secrets
+          echo "token=${{ secrets.TERRAFORM_TOKEN }}" >> $GITHUB_OUTPUT

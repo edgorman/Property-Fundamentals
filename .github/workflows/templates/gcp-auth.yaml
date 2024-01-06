@@ -1,0 +1,30 @@
+name: GCP Authentication
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    outputs:
+      token:
+        value: ${{ jobs.auth.outputs.access_token }}
+
+jobs:
+  auth:
+    name: Generate authentication credentials
+    environment: ${{ inputs.ENVIRONMENT }}
+    outputs:
+      access_token: ${{ steps.auth.outputs.access_token }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - id: auth
+        name: Authenticate
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_DOCKER_TOKEN }}
