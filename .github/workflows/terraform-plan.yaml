@@ -26,7 +26,6 @@ jobs:
       - id: terraform-plan-environment
         name: Set Environment Variables
         run: |
-          // Env vars needed for terraform cloud workflows
           echo "TF_WORKSPACE=${{ vars.TF_WORKSPACE }}" >> $GITHUB_ENV
           echo "TF_LOCAL_DIRECTORY=${{ vars.TF_DIRECTORY }}" >> $GITHUB_ENV
           echo "TF_CLOUD_ORGANIZATION=${{ vars.TF_ORGANIZATION }}" >> $GITHUB_ENV
