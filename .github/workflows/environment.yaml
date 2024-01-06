@@ -11,14 +11,14 @@ on:
         value: ${{ jobs.set-environment.outputs.environment }}
 
 jobs:
-  set-environment:
+  environment-set:
     name: "Set Environment"
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set.outputs.environment }}
     
     steps:
-      - id: set
+      - id: environment-set
         name: Set Environment from Branch Name
         run: |
           if [ ${{ inputs.branch-name }} = "main" ]; then

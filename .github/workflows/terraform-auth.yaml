@@ -11,7 +11,7 @@ on:
         value: ${{ jobs.auth.outputs.token }}
 
 jobs:
-  auth:
+  terraform-auth:
     name: Generate authentication credentials
     environment: ${{ inputs.ENVIRONMENT }}
     outputs:
@@ -22,7 +22,7 @@ jobs:
       contents: read
 
     steps:
-      - id: auth
+      - id: terraform-auth
         name: Authenticate
         run: |
           // Token stored in Environment secrets

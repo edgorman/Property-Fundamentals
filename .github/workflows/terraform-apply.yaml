@@ -11,7 +11,7 @@ on:
         type: string
 
 jobs:
-  apply:
+  terraform-apply:
     name: Apply
     environment: ${{ inputs.environment }}
 
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: environment
+      - id: terraform-apply-environment
         name: Set Environment Variables
         run: |
           // Env vars needed for terraform cloud workflows
@@ -33,29 +33,26 @@ jobs:
           echo "TF_CLOUD_ORGANIZATION=${{ vars.TF_ORGANIZATION }}" >> $GITHUB_ENV
           echo "TF_API_TOKEN=${{ inputs.terraform-token }}" >> $GITHUB_ENV
 
-      - id: upload
+      - id: terraform-apply-upload
         name: Upload
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-        id: plan-upload
         with:
           workspace: ${{ vars.TF_WORKSPACE }}
           directory: ${{ vars.TF_DIRECTORY }}
           speculative: true
 
-      - id: create
+      - id: terraform-apply-create
         name: Create
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
-        id: apply-run
         with:
           workspace: ${{ vars.TF_WORKSPACE }}
-          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+          configuration_version: ${{ steps.terraform-apply-upload.outputs.configuration_version_id }}
           plan_only: true
 
-      - id: apply
+      - id: terraform-apply-apply
         name: Apply
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
-        if: fromJSON(steps.apply-run.outputs.payload).data.attributes.actions.IsConfirmable
-        id: apply
+        if: fromJSON(steps.terraform-apply-create.outputs.payload).data.attributes.actions.IsConfirmable
         with:
-          run: ${{ steps.apply-run.outputs.run_id }}
+          run: ${{ steps.terraform-apply-create.outputs.run_id }}
           comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"

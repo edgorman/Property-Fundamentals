@@ -18,7 +18,7 @@ on:
         default: main
       
 jobs:
-  build-and-push:
+  docker-build-and-push:
     name: Docker Build and Push
     environment: ${{ inputs.ENVIRONMENT }}
 
@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: auth
+      - id: docker-auth
         name: Authenticate
         uses: docker/login-action@v3
         with:
@@ -38,13 +38,13 @@ jobs:
           username: oauth2accesstoken
           password: ${{ inputs.gcp_token }}
 
-      - id: build
+      - id: docker-build
         name: Build
         run: |
           docker build property_fundamentals/${{ inputs.docker_folder }}/. -t \ 
           "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker_folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
 
-      - id: push
+      - id: docker-push
         name: Push
         run: | 
           docker push \ 

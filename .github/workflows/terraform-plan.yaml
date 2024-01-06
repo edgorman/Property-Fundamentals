@@ -11,7 +11,7 @@ on:
         type: string
 
 jobs:
-  plan:
+  terraform-plan:
     name: Plan
     runs-on: ubuntu-latest
 
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: environment
+      - id: terraform-plan-environment
         name: Set Environment Variables
         run: |
           // Env vars needed for terraform cloud workflows
@@ -33,35 +33,31 @@ jobs:
           echo "TF_API_TOKEN=${{ secrets.tf-token }}" >> $GITHUB_ENV
 
 
-      - id: upload
+      - id: terraform-plan-upload
         name: Upload
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-        id: plan-upload
         with:
           workspace: ${{ vars.TF_WORKSPACE }}
           directory: ${{ vars.TF_DIRECTORY }}
           speculative: true
 
-      - id: create
+      - id: terraform-plan-create
         name: Create
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
-        id: plan-run
         with:
           workspace: ${{ vars.TF_WORKSPACE }}
-          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+          configuration_version: ${{ steps.terraform-plan-upload.outputs.configuration_version_id }}
           plan_only: true
 
-      - id: plan
+      - id: terraform-plan-plan
         name: Plan
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
-        id: plan-output
         with:
-          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+          plan: ${{ fromJSON(steps.terraform-plan-create.outputs.payload).data.relationships.plan.data.id }}
     
-      - id: update-pr
+      - id: terraform-plan-pr
         name: Update PR
         uses: actions/github-script@v6
-        id: plan-comment
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -76,9 +72,9 @@ jobs:
             });
             const output = `#### Terraform Cloud Plan Output
                 \`\`\`
-                Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
+                Plan: ${{ steps.terraform-plan-plan.outputs.add }} to add, ${{ steps.terraform-plan-plan.outputs.change }} to change, ${{ steps.terraform-plan-plan.outputs.destroy }} to destroy.
                 \`\`\`
-                [Terraform Cloud Plan](${{ steps.plan-run.outputs.run_link }})
+                [Terraform Cloud Plan](${{ steps.terraform-plan-create.outputs.run_link }})
                 `;
             // 3. Delete previous comment so PR timeline makes sense
             if (botComment) {
