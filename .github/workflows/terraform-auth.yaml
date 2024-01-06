@@ -30,9 +30,5 @@ jobs:
       - id: terraform-auth-encrypt
         name: Encrypt Token
         run: |
-          TOKEN=${{ steps.terraform-auth-auth.outputs.token }};
-          ENCRYPTED_TOKEN=$(echo -n "$TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
-          BASE64_TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | base64);
-          echo "encrypted_token<<EOF" >> $GITHUB_OUTPUT
-          echo $ENCRYPTED_TOKEN >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          ENCRYPTED_TOKEN=$(echo -n "${{ steps.terraform-auth-auth.outputs.token }}" | openssl enc -A -aes-256-cbc -pbkdf2 -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" | base64);
+          echo "encrypted_token=$ENCRYPTED_TOKEN" >> $GITHUB_OUTPUT
