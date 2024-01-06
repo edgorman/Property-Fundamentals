@@ -1,9 +1,8 @@
-name: "Pull Request Event"
+name: Pull Request Event
 
 on:
   pull_request:
     branches:
-      - main
       - develop
 
 jobs:
