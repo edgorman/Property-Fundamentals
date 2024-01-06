@@ -6,6 +6,14 @@ on:
       - develop
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: test
+      run: |
+        echo "made it"
+
   # Set the workflow environment
   set-environment:
     uses: .github/workflows/templates/environment.yaml
