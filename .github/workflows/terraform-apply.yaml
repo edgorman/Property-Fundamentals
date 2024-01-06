@@ -1,0 +1,62 @@
+name: Terraform Apply
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      terraform-token:
+        required: true
+        type: string
+
+jobs:
+  terraform-apply:
+    name: Terraform Apply
+    environment: ${{ inputs.environment }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: terraform-apply-decrypt
+        name: Decrypt token
+        run: |
+          TOKEN=$(echo -n "${{ inputs.terraform-token }}" | base64 --decode -i | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
+          echo "terraform_token=$TOKEN" >> $GITHUB_OUTPUT
+
+      - id: terraform-apply-environment
+        name: Set Environment Variables
+        run: |
+          echo "TF_WORKSPACE=${{ vars.TF_WORKSPACE }}" >> $GITHUB_ENV
+          echo "TF_LOCAL_DIRECTORY=${{ vars.TF_DIRECTORY }}" >> $GITHUB_ENV
+          echo "TF_CLOUD_ORGANIZATION=${{ vars.TF_ORGANIZATION }}" >> $GITHUB_ENV
+          echo "TF_API_TOKEN=${{ steps.terraform-apply-decrypt.outputs.terraform_token }}" >> $GITHUB_ENV
+
+      - id: terraform-apply-upload
+        name: Upload
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        with:
+          workspace: ${{ vars.TF_WORKSPACE }}
+          directory: ${{ vars.TF_DIRECTORY }}
+          speculative: true
+
+      - id: terraform-apply-create
+        name: Create
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+        with:
+          workspace: ${{ vars.TF_WORKSPACE }}
+          configuration_version: ${{ steps.terraform-apply-upload.outputs.configuration_version_id }}
+          plan_only: true
+
+      - id: terraform-apply-apply
+        name: Apply
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
+        if: fromJSON(steps.terraform-apply-create.outputs.payload).data.attributes.actions.IsConfirmable
+        with:
+          run: ${{ steps.terraform-apply-create.outputs.run_id }}
+          comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"

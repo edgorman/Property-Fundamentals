@@ -1,0 +1,36 @@
+name: GCP Authentication
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    outputs:
+      token:
+        value: ${{ jobs.gcp-auth.outputs.token }}
+
+jobs:
+  gcp-auth:
+    name: Generate authentication credentials
+    environment: ${{ inputs.ENVIRONMENT }}
+    outputs:
+      token: ${{ steps.gcp-auth-encrypt.outputs.encrypted_token }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - id: gcp-auth-auth
+        name: Authenticate
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_DOCKER_TOKEN }}
+      
+      - id: gcp-auth-encrypt
+        name: Encrypt Token
+        run: |
+          ENCRYPTED_TOKEN=$(echo -n "${{ steps.gcp-auth-auth.outputs.access_token }}" | openssl enc -A -aes-256-cbc -pbkdf2 -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}" | base64 -w 0);
+          echo "encrypted_token<<EOF"$'\n'"$ENCRYPTED_TOKEN"$'\n'EOF >> $GITHUB_OUTPUT

@@ -1,0 +1,55 @@
+name: "Docker Deploy"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      gcp-token:
+        required: true
+        type: string
+      docker-folder:
+        required: true
+        type: string
+      docker-image:
+        required: false
+        type: string
+        default: main
+      
+jobs:
+  docker-deploy:
+    name: Docker Deploy
+    environment: ${{ inputs.environment }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: docker-deploy-decrypt
+        name: Decrypt token
+        run: |
+          TOKEN=$(echo -n "${{ inputs.gcp-token }}" | base64 --decode -i | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
+          echo "gcp_token=$TOKEN" >> $GITHUB_OUTPUT
+
+      - id: docker-deploy-auth
+        name: Authenticate
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.GCP_LOCATION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.docker-deploy-decrypt.outputs.gcp_token }}
+
+      - id: docker-deploy-build
+        name: Build
+        run: |
+          docker build property_fundamentals/${{ inputs.docker-folder }}/. -t "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
+
+      - id: docker-deploy-push
+        name: Push
+        run: | 
+          docker push "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
