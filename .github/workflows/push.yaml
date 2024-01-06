@@ -2,9 +2,9 @@ name: Push Event
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    # branches:
+    #   - main
+    #   - develop
 
 jobs:
   # Set the workflow environment
