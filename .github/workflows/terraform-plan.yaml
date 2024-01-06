@@ -27,9 +27,9 @@ jobs:
       - id: terraform-plan-decrypt
         name: Decrypt token
         run: |
-          ENCRYPTED_TOKEN='${{ inputs.terraform-token }}';
-          BINARY_ENCRYPTED_TOKEN='$(echo -n "$ENCRYPTED_TOKEN" | base64 --decode)';
-          TOKEN='$(echo -n "$BINARY_ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}")';
+          ENCRYPTED_TOKEN=${{ inputs.terraform-token }};
+          BINARY_ENCRYPTED_TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | base64 --decode);
+          TOKEN=$(echo -n "$BINARY_ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
           echo "terraform_token='$TOKEN'" >> $GITHUB_OUTPUT
 
       - id: terraform-plan-environment
