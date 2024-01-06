@@ -51,4 +51,5 @@ jobs:
       environment: ${{ needs.set-environment.outputs.environment }}
       gcp-token: ${{ needs.gcp-auth.outputs.token }}
       docker-folder: backend
+    secrets: inherit
     
