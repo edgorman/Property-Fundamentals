@@ -33,7 +33,7 @@ jobs:
       - id: docker-deploy-decrypt
         name: Decrypt token
         run: |
-          TOKEN=$(echo -n "${{ inputs.gcp-token }}" | base64 --decode -i | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
+          TOKEN=$(echo -n "${{ inputs.gcp-token }}" | base64 --decode -i | openssl enc -A -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
           echo "gcp_token=$TOKEN" >> $GITHUB_OUTPUT
 
       - id: docker-deploy-auth
