@@ -1,10 +1,9 @@
 name: Test
 
 on:
-  push:
-  # pull_request:
-  #   branches:
-  #     - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:  
   test:
@@ -17,7 +16,7 @@ jobs:
 
   # Set the workflow environment
   set-environment:
-    uses: .github/workflows/templates/environment.yaml
+    uses: ./.github/workflows/templates/environment.yaml
     with:
       branch-name: ${{ github.base_ref }}
     secrets: inherit
