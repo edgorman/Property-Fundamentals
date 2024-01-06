@@ -20,7 +20,7 @@ on:
 jobs:
   docker-deploy:
     name: Docker Deploy
-    environment: ${{ inputs.ENVIRONMENT }}
+    environment: ${{ inputs.environment }}
 
     runs-on: ubuntu-latest
     permissions:
