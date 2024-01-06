@@ -8,14 +8,14 @@ on:
         type: string
     outputs:
       environment:
-        value: ${{ jobs.set-environment.outputs.environment }}
+        value: ${{ jobs.environment-set.outputs.environment }}
 
 jobs:
   environment-set:
     name: "Set Environment"
     runs-on: ubuntu-latest
     outputs:
-      environment: ${{ steps.set.outputs.environment }}
+      environment: ${{ steps.environment-set.outputs.environment }}
     
     steps:
       - id: environment-set
