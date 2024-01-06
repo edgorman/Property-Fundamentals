@@ -16,7 +16,7 @@ jobs:
 
   # Set the workflow environment
   set-environment:
-    uses: ./.github/workflows/templates/environment.yaml
+    uses: ./.github/workflows/environment.yaml
     with:
       branch-name: ${{ github.base_ref }}
     secrets: inherit

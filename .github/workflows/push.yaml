@@ -9,14 +9,14 @@ on:
 jobs:
   # Set the workflow environment
   set-environment:
-    uses: .github/workflows/templates/environment.yaml
+    uses: .github/workflows/environment.yaml
     with:
       branch-name: develop  # TODO: Replace with {{ github.ref_name }}
     secrets: inherit
   
   # Authentication jobs
   gcp-auth:
-    uses: .github/workflows/templates/gcp-auth.yaml
+    uses: .github/workflows/gcp-auth.yaml
     needs: 
       - set-environment
     with:
@@ -24,7 +24,7 @@ jobs:
     secrets: inherit
 
   terraform-auth:
-    uses: .github/workflows/templates/terraform-auth.yaml
+    uses: .github/workflows/terraform-auth.yaml
     needs: 
       - set-environment
     with: 
@@ -33,7 +33,7 @@ jobs:
 
   # Deploy resources
   deploy-infrastructure:
-    uses: .github/workflows/templates/terraform-deploy.yaml
+    uses: .github/workflows/terraform-deploy.yaml
     needs:
       - set-environment
       - terraform-auth
@@ -43,7 +43,7 @@ jobs:
     secrets: inherit
 
   deploy-backend:
-    uses: .github/workflows/templates/docker-deploy.yaml
+    uses: .github/workflows/docker-deploy.yaml
     needs:
       - set-environment
       - gcp-auth

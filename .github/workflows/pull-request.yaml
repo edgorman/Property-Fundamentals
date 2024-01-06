@@ -3,27 +3,20 @@ name: Pull Request Event
 on:
   pull_request:
     branches:
+      - main
       - develop
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: test
-      run: |
-        echo "made it"
-
   # Set the workflow environment
   set-environment:
-    uses: .github/workflows/templates/environment.yaml
+    uses: .github/workflows/environment.yaml
     with:
       branch-name: ${{ github.base_ref }}
     secrets: inherit
 
   # Authenticate jobs
   terraform-auth:
-    uses: .github/workflows/templates/terraform-auth.yaml
+    uses: .github/workflows/terraform-auth.yaml
     needs: 
       - set-environment
     with: 
@@ -32,7 +25,7 @@ jobs:
   
   # Plan resources
   plan-infrastructure:
-    uses: .github/workflows/templates/terraform-apply.yaml
+    uses: .github/workflows/terraform-apply.yaml
     needs:
       - set-environment
       - terraform-auth
