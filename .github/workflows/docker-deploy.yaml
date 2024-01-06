@@ -18,8 +18,8 @@ on:
         default: main
       
 jobs:
-  docker-build-and-push:
-    name: Docker Build and Push
+  docker-deploy:
+    name: Docker Deploy
     environment: ${{ inputs.ENVIRONMENT }}
 
     runs-on: ubuntu-latest
@@ -30,21 +30,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: docker-build-and-push-auth
+      - id: docker-deploy-decrypt
+        name: Decrypt token
+        run: |
+          ENCRYPTED_TOKEN=${{ inputs.gcp-token }};
+          BINARY_ENCRYPTED_TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | base64 --decode);
+          TOKEN=$(echo -n "$BINARY_ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
+          echo "gcp_token=$TOKEN" >> $GITHUB_OUTPUT
+
+      - id: docker-deploy-auth
         name: Authenticate
         uses: docker/login-action@v3
         with:
           registry: ${{ vars.GCP_LOCATION }}-docker.pkg.dev
           username: oauth2accesstoken
-          password: ${{ inputs.gcp-token }}
+          password: ${{ steps.docker-deploy-decrypt.outputs.gcp_token }}
 
-      - id: docker-build-and-push-build
+      - id: docker-deploy-build
         name: Build
         run: |
           docker build property_fundamentals/${{ inputs.docker-folder }}/. -t \ 
           "${{ vars.GCP_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJET_ID }}/${{ inputs.docker-folder }}/${{ inputs.docker-image }}:${{ vars.GCP_DOCKER_BRANCH }}"
 
-      - id: docker-build-and-push-push
+      - id: docker-deploy-push
         name: Push
         run: | 
           docker push \ 

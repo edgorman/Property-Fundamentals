@@ -15,7 +15,7 @@ jobs:
     name: Generate authentication credentials
     environment: ${{ inputs.ENVIRONMENT }}
     outputs:
-      token: ${{ steps.terraform-auth-auth.outputs.token }}
+      token: ${{ steps.terraform-auth-encrypt.outputs.encrypted_token }}
 
     runs-on: ubuntu-latest
     permissions:
@@ -26,3 +26,12 @@ jobs:
         name: Authenticate
         run: |
           echo "token=${{ secrets.TF_TOKEN }}" >> $GITHUB_OUTPUT
+      
+      - id: terraform-auth-encrypt
+        name: Encrypt Token
+        run: |
+          TOKEN=${{ needs.terraform-auth-auth.outputs.token }};
+          BINARY_TOKEN=$(echo -n "$TOKEN" | base64 --decode);
+          ENCRYPTED_TOKEN=$(echo -n "$BINARY_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
+          echo "encrypted_token=$ENCRYPTED_TOKEN" >> $GITHUB_OUTPUT
+

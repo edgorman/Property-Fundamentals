@@ -23,6 +23,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
+      - id: terraform-plan-decrypt
+        name: Decrypt token
+        run: |
+          ENCRYPTED_TOKEN=${{ inputs.terraform-token }};
+          BINARY_ENCRYPTED_TOKEN=$(echo -n "$ENCRYPTED_TOKEN" | base64 --decode);
+          TOKEN=$(echo -n "$BINARY_ENCRYPTED_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.ENCRYPTION_PASSWORD }}");
+          echo "terraform_token=$TOKEN" >> $GITHUB_OUTPUT
 
       - id: terraform-plan-environment
         name: Set Environment Variables
@@ -30,7 +38,7 @@ jobs:
           echo "TF_WORKSPACE=${{ vars.TF_WORKSPACE }}" >> $GITHUB_ENV
           echo "TF_LOCAL_DIRECTORY=${{ vars.TF_DIRECTORY }}" >> $GITHUB_ENV
           echo "TF_CLOUD_ORGANIZATION=${{ vars.TF_ORGANIZATION }}" >> $GITHUB_ENV
-          echo "TF_API_TOKEN=${{ secrets.TF_TOKEN }}" >> $GITHUB_ENV
+          echo "TF_API_TOKEN=${{ steps.terraform-plan-decrypt.outputs.terraform_token }}" >> $GITHUB_ENV
 
       - id: terraform-plan-upload
         name: Upload

@@ -8,14 +8,14 @@ on:
         type: string
     outputs:
       token:
-        value: ${{ jobs.gcp-auth.outputs.access_token }}
+        value: ${{ jobs.gcp-auth.outputs.token }}
 
 jobs:
   gcp-auth:
     name: Generate authentication credentials
     environment: ${{ inputs.ENVIRONMENT }}
     outputs:
-      access_token: ${{ steps.gcp-auth-auth.outputs.access_token }}
+      token: ${{ steps.gcp-auth-encrypt.outputs.encrypted_token }}
 
     runs-on: ubuntu-latest
     permissions:
@@ -28,3 +28,11 @@ jobs:
         with:
           token_format: access_token
           credentials_json: ${{ secrets.GCP_DOCKER_TOKEN }}
+      
+      - id: gcp-auth-encrypt
+        name: Encrypt Token
+        run: |
+          TOKEN=${{ needs.gcp-auth-auth.outputs.access_token }};
+          BINARY_TOKEN=$(echo -n "$TOKEN" | base64 --decode);
+          ENCRYPTED_TOKEN=$(echo -n "$BINARY_TOKEN" | openssl enc -aes-256-cbc -pbkdf2 -d -salt -k "${{ secrets.GH_ENCRYPTION_PASSWORD }}");
+          echo "encrypted_token=$ENCRYPTED_TOKEN" >> $GITHUB_OUTPUT
