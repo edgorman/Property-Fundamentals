@@ -33,7 +33,7 @@ jobs:
 
   # Deploy resources
   deploy-infrastructure:
-    uses: ./.github/workflows/terraform-deploy.yaml
+    uses: ./.github/workflows/terraform-apply.yaml
     needs:
       - set-environment
       - terraform-auth

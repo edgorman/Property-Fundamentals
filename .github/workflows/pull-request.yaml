@@ -25,7 +25,7 @@ jobs:
   
   # Plan resources
   plan-infrastructure:
-    uses: ./.github/workflows/terraform-apply.yaml
+    uses: ./.github/workflows/terraform-plan.yaml
     needs:
       - set-environment
       - terraform-auth
