@@ -1,3 +1,5 @@
+data "google_client_config" "current" {}
+
 resource "google_container_cluster" "primary" {
   name                     = "${var.gcp_project_id}-cluster"
   location                 = var.gcp_project_zone
